@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kbajrang.github.io/resizeforjob/sitemap.xml
