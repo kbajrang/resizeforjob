@@ -414,10 +414,10 @@ canvas{display:none}
 
       <div class="section-title" style="margin-bottom:8px">Common portal limits</div>
       <div class="icon-btn-row" style="flex-wrap:wrap;gap:7px;margin-bottom:14px" id="kbPresets">
-        <button class="icon-btn" data-kb="20"><strong>20 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Govt forms</span></button>
-        <button class="icon-btn" data-kb="50"><strong>50 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Naukri / UPSC</span></button>
-        <button class="icon-btn" data-kb="100"><strong>100 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Shine / Monster</span></button>
-        <button class="icon-btn" data-kb="200"><strong>200 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">LinkedIn / Indeed</span></button>
+        <button class="icon-btn" data-kb="20"><strong>20 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Govt portals</span></button>
+        <button class="icon-btn" data-kb="50"><strong>50 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Job portals</span></button>
+        <button class="icon-btn" data-kb="100"><strong>100 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Profile photo</span></button>
+        <button class="icon-btn" data-kb="200"><strong>200 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Social profile</span></button>
         <button class="icon-btn" data-kb="500"><strong>500 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Resume attach</span></button>
       </div>
 
@@ -540,9 +540,9 @@ const PRESETS = [
   {name:'Passport (India)',  w:35,  h:45,  unit:'mm', cat:'india', flag:'🇮🇳'},
   {name:'Visa (India)',      w:51,  h:51,  unit:'mm', cat:'india', flag:'🇮🇳'},
   {name:'Aadhar Photo',      w:200, h:200, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Naukri.com',        w:200, h:200, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Shine.com',         w:300, h:300, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Monster India',     w:400, h:400, unit:'px', cat:'india', flag:'🇮🇳'},
+  {name:'Job Portal Photo',  w:200, h:200, unit:'px', cat:'india', flag:'🇮🇳'},
+  {name:'Job Portal (Med)',  w:300, h:300, unit:'px', cat:'india', flag:'🇮🇳'},
+  {name:'Job Portal (Lg)',   w:400, h:400, unit:'px', cat:'india', flag:'🇮🇳'},
   {name:'Govt Job Portal',   w:50,  h:50,  unit:'mm', cat:'india', flag:'🇮🇳'},
   // US
   {name:'US Passport',       w:2,   h:2,   unit:'in', cat:'us', flag:'🇺🇸'},
@@ -567,16 +567,16 @@ const PRESETS = [
   {name:'Resume Photo',      w:150, h:200, unit:'px', cat:'jobs', flag:'📄'},
   {name:'CV Photo (3x4cm)',  w:30,  h:40,  unit:'mm', cat:'jobs', flag:'📄'},
   {name:'CV Square',         w:300, h:300, unit:'px', cat:'jobs', flag:'📄'},
-  {name:'Indeed Profile',    w:200, h:200, unit:'px', cat:'jobs', flag:'💼'},
-  {name:'Glassdoor',         w:300, h:300, unit:'px', cat:'jobs', flag:'💼'},
+  {name:'Profile Photo (Sm)',w:200, h:200, unit:'px', cat:'jobs', flag:'💼'},
+  {name:'Profile Photo (Md)',w:300, h:300, unit:'px', cat:'jobs', flag:'💼'},
   {name:'Govt Form Photo',   w:3.5, h:4.5, unit:'cm', cat:'jobs', flag:'🏛️'},
   // Social
-  {name:'LinkedIn Profile',  w:400, h:400, unit:'px', cat:'social', flag:'💼'},
-  {name:'LinkedIn Banner',   w:1584,h:396, unit:'px', cat:'social', flag:'💼'},
-  {name:'WhatsApp DP',       w:500, h:500, unit:'px', cat:'social', flag:'💬'},
-  {name:'Twitter/X Profile', w:400, h:400, unit:'px', cat:'social', flag:'🐦'},
-  {name:'Facebook Profile',  w:180, h:180, unit:'px', cat:'social', flag:'📘'},
-  {name:'Instagram Post',    w:1080,h:1080,unit:'px', cat:'social', flag:'📸'},
+  {name:'Profile Photo',     w:400, h:400, unit:'px', cat:'social', flag:'👤'},
+  {name:'Profile Banner',    w:1584,h:396, unit:'px', cat:'social', flag:'🖼️'},
+  {name:'Messenger DP',      w:500, h:500, unit:'px', cat:'social', flag:'💬'},
+  {name:'Square Profile',    w:400, h:400, unit:'px', cat:'social', flag:'🟦'},
+  {name:'Small Profile',     w:180, h:180, unit:'px', cat:'social', flag:'👤'},
+  {name:'Square Post',       w:1080,h:1080,unit:'px', cat:'social', flag:'📸'},
 ];
 
 // Convert preset to px
