@@ -11,377 +11,475 @@
 <meta property="og:type" content="website"/>
 <link rel="canonical" href="https://kbajrang.github.io/resizeforjob/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --pri:#1a56db;--pri-h:#1e429f;--pri-l:#ebf5ff;
-  --border:#e5e7eb;--bg:#f3f4f8;--card:#fff;
-  --text:#111928;--muted:#6b7280;--muted-l:#9ca3af;
-  --green:#065f46;--green-bg:#ecfdf5;--green-bd:#6ee7b7;
-  --red-bg:#fef2f2;--red-bd:#fca5a5;--red:#991b1b;
-  --yellow:#92400e;--yellow-bg:#fffbeb;--yellow-bd:#fcd34d;
-  --r:10px;--rs:7px;
+  --blue:#2563eb;--blue-d:#1d4ed8;--blue-l:#eff6ff;--blue-b:#bfdbfe;
+  --green:#16a34a;--green-l:#f0fdf4;--green-b:#bbf7d0;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-900:#111827;
+  --red:#dc2626;--red-l:#fef2f2;--red-b:#fecaca;
+  --r:12px;
 }
+html,body{height:100%;font-family:'Inter',sans-serif;background:#fff;color:var(--gray-900)}
 
-html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text)}
-
-/* THIN HEADER */
+/* ── HEADER ────────────────────────────────── */
 header{
-  height:42px;background:var(--pri);
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  height:48px;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 16px;flex-shrink:0;
+  padding:0 20px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--gray-200);
 }
-.logo{font-size:.92rem;font-weight:800;color:#fff;text-decoration:none;display:flex;align-items:center;gap:6px}
-.logo-dot{width:7px;height:7px;background:#fcd34d;border-radius:50%}
-.htrust{display:flex;gap:10px}
-.htag{font-size:.65rem;color:rgba(255,255,255,.75)}
+.logo{font-size:.95rem;font-weight:700;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:7px}
+.logo-sq{width:26px;height:26px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-sq svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5}
+.htags{display:flex;gap:14px}
+.htag{font-size:.7rem;color:var(--gray-500);display:flex;align-items:center;gap:4px}
+.htag::before{content:'✓';color:var(--green);font-weight:700}
 
-/* FULL-PAGE LAYOUT */
-.page{
-  height:calc(100vh - 42px);
+/* ── PHASES ─────────────────────────────────── */
+/* Phase 1: upload screen */
+#phase1{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 20px 40px;
+  background:#fff;
+}
+#phase1 h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;text-align:center;margin-bottom:8px;color:var(--gray-900)}
+#phase1 h1 span{color:var(--blue)}
+#phase1 .sub{font-size:.9rem;color:var(--gray-500);text-align:center;margin-bottom:36px}
+
+.drop-wrap{position:relative;width:100%;max-width:520px}
+.drop{
+  border:2px dashed var(--gray-200);
+  border-radius:20px;
+  background:var(--gray-50);
+  padding:52px 32px;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+  position:relative;
+}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop:hover,.drop.drag{border-color:var(--blue);background:var(--blue-l)}
+.drop-icon{
+  width:60px;height:60px;
+  background:var(--blue-l);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+}
+.drop-icon svg{width:26px;height:26px;stroke:var(--blue);fill:none;stroke-width:1.8}
+.drop h2{font-size:1.05rem;font-weight:600;margin-bottom:6px}
+.drop h2 span{color:var(--blue)}
+.drop p{font-size:.82rem;color:var(--gray-400)}
+.drop-hint{margin-top:10px;font-size:.72rem;color:var(--gray-400)}
+
+.trust-row{display:flex;gap:20px;margin-top:28px;justify-content:center;flex-wrap:wrap}
+.trust-item{font-size:.75rem;color:var(--gray-500);display:flex;align-items:center;gap:5px}
+.trust-item svg{width:13px;height:13px;stroke:var(--green);fill:none;stroke-width:2.5}
+
+/* Phase 2: editor screen */
+#phase2{
+  display:none;
+  min-height:100vh;
+  padding-top:48px;
+}
+#phase2.on{display:flex;flex-direction:column}
+
+.editor{
+  flex:1;
   display:grid;
   grid-template-columns:1fr 1fr;
-  grid-template-rows:1fr auto;
-  gap:0;
+  min-height:calc(100vh - 48px - 42px);
+}
+@media(max-width:700px){
+  .editor{grid-template-columns:1fr;min-height:auto}
+}
+
+/* LEFT PANE */
+.pane-left{
+  background:var(--gray-50);
+  border-right:1px solid var(--gray-200);
+  display:flex;flex-direction:column;
+  padding:20px;
+  gap:12px;
+}
+
+/* image preview box */
+.img-preview{
+  flex:1;
+  border-radius:var(--r);
   overflow:hidden;
+  background:#fff;
+  border:1px solid var(--gray-200);
+  display:flex;align-items:center;justify-content:center;
+  min-height:220px;
 }
+.img-preview img{max-width:100%;max-height:340px;object-fit:contain;display:block}
 
-/* LEFT PANEL */
-.left{
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  border-right:1px solid var(--border);
-  overflow-y:auto;
-  background:var(--bg);
+/* file strip */
+.file-strip{
+  display:flex;align-items:center;gap:10px;
+  background:#fff;border:1px solid var(--gray-200);
+  border-radius:var(--r);padding:10px 12px;
 }
-
-/* RIGHT PANEL */
-.right{
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  overflow-y:auto;
-  background:var(--bg);
-}
-
-/* FOOTER STRIP */
-.foot{
-  grid-column:1/-1;
-  background:var(--card);
-  border-top:1px solid var(--border);
-  padding:5px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  flex-wrap:wrap;
-}
-.foot-left{font-size:.65rem;color:var(--muted)}
-.foot-left a{color:var(--pri);text-decoration:none}
-.foot-right{font-size:.6rem;color:var(--muted-l);text-align:right;max-width:340px;line-height:1.4}
-
-/* SECTION LABEL */
-.slabel{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);display:flex;align-items:center;gap:5px}
-.snum{width:17px;height:17px;background:var(--pri);color:#fff;border-radius:50%;font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* DROP ZONE */
-.drop{border:2px dashed var(--border);border-radius:var(--r);background:var(--card);padding:20px 14px;text-align:center;cursor:pointer;position:relative;transition:all .2s;flex-shrink:0}
-.drop:hover,.drop.drag{border-color:var(--pri);background:var(--pri-l)}
-.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.drop-icon{font-size:1.8rem;margin-bottom:6px}
-.drop h3{font-size:.85rem;font-weight:700;margin-bottom:3px}
-.drop h3 span{color:var(--pri)}
-.drop p{font-size:.72rem;color:var(--muted)}
-
-/* FILE BAR */
-.fbar{display:none;align-items:center;gap:8px;background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--rs);padding:8px 10px;flex-shrink:0}
-.fbar.on{display:flex}
-.fthumb{width:38px;height:38px;object-fit:cover;border-radius:5px;border:1px solid var(--border);flex-shrink:0}
+.fthumb{width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--gray-200);flex-shrink:0}
 .fdets{flex:1;min-width:0}
-.fname{font-size:.75rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--green)}
-.fdim{font-size:.65rem;color:var(--muted)}
-.rbtn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:.8rem;padding:3px;border-radius:4px;flex-shrink:0}
-.rbtn:hover{color:var(--red);background:var(--red-bg)}
+.fname{font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gray-900)}
+.fdim{font-size:.68rem;color:var(--gray-400)}
+.rbtn{background:none;border:none;cursor:pointer;color:var(--gray-400);font-size:.85rem;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rbtn:hover{background:var(--red-l);color:var(--red)}
 
-/* PREVIEW AREA */
-.preview-area{flex:1;border:1px solid var(--border);border-radius:var(--r);background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:80px}
-.preview-area img{max-width:100%;max-height:100%;object-fit:contain;display:none}
-.preview-area img.on{display:block}
-.preview-placeholder{font-size:.75rem;color:var(--muted-l);text-align:center;padding:10px}
-
-/* RESULT COMPARE */
-.compare{display:none;gap:8px;flex-shrink:0}
+/* compare strip */
+.compare{display:none;gap:8px}
 .compare.on{display:grid;grid-template-columns:1fr 1fr}
-.rc{border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--card)}
-.rch{padding:4px 8px;border-bottom:1px solid var(--border);font-size:.62rem;font-weight:700;color:var(--muted);display:flex;justify-content:space-between;text-transform:uppercase}
-.rc img{width:100%;height:80px;object-fit:contain;background:#f9fafb;display:block}
-.ok-b{color:var(--green);font-weight:700}
-.warn-b{color:var(--yellow);font-weight:700}
+.ccard{border-radius:var(--r);overflow:hidden;border:1px solid var(--gray-200);background:#fff}
+.ccard-hdr{padding:5px 10px;font-size:.65rem;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;border-bottom:1px solid var(--gray-200)}
+.ccard img{width:100%;height:80px;object-fit:contain;background:var(--gray-50);display:block}
+.sz-ok{color:var(--green);font-weight:700}
+.sz-warn{color:#d97706;font-weight:700}
 
-/* FORM ELEMENTS */
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.f label{display:block;font-size:.72rem;font-weight:600;color:var(--text);margin-bottom:4px}
-.f .hint{font-size:.62rem;color:var(--muted-l);margin-top:2px}
-.f input{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.88rem;color:var(--text);background:#fff;outline:none;transition:border-color .15s}
-.f input:focus{border-color:var(--pri);box-shadow:0 0 0 2px rgba(26,86,219,.1)}
-.f input.err{border-color:var(--red-bd);background:var(--red-bg)}
-.f input.ok{border-color:var(--green-bd)}
-.err-msg{font-size:.63rem;color:var(--red);margin-top:2px;display:none}
-.err-msg.on{display:block}
+/* RIGHT PANE */
+.pane-right{
+  background:#fff;
+  display:flex;flex-direction:column;
+  padding:24px;
+  gap:16px;
+  overflow-y:auto;
+}
+
+.field-label{font-size:.75rem;font-weight:600;color:var(--gray-700);margin-bottom:6px;display:block}
+.field-hint{font-size:.67rem;color:var(--gray-400);margin-top:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input[type=number]{
+  width:100%;padding:9px 12px;
+  border:1.5px solid var(--gray-200);border-radius:8px;
+  font-family:inherit;font-size:.93rem;color:var(--gray-900);
+  background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;
+}
+input[type=number]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+input[type=number].e{border-color:var(--red);background:var(--red-l)}
+input[type=number].ok{border-color:var(--green-b)}
+.err{font-size:.66rem;color:var(--red);margin-top:3px;display:none}
+.err.on{display:block}
 
 /* TOGGLE */
-.tr{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--rs);background:var(--bg);border:1px solid var(--border)}
-.tog{position:relative;width:32px;height:18px;flex-shrink:0}
+.tog-row{display:flex;align-items:center;gap:10px;padding:8px 0}
+.tog{position:relative;width:34px;height:19px;flex-shrink:0}
 .tog input{opacity:0;width:0;height:0}
-.ts{position:absolute;inset:0;background:#d1d5db;border-radius:999px;cursor:pointer;transition:background .2s}
-.ts::before{content:'';position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
-.tog input:checked+.ts{background:var(--pri)}
-.tog input:checked+.ts::before{transform:translateX(14px)}
-.tl{font-size:.76rem;font-weight:500;flex:1}
-.tbadge{font-size:.58rem;font-weight:600;background:var(--yellow-bg);color:var(--yellow);border-radius:4px;padding:1px 5px;border:1px solid var(--yellow-bd);white-space:nowrap}
+.ts{position:absolute;inset:0;background:var(--gray-200);border-radius:999px;cursor:pointer;transition:background .2s}
+.ts::before{content:'';position:absolute;width:13px;height:13px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.tog input:checked+.ts{background:var(--blue)}
+.tog input:checked+.ts::before{transform:translateX(15px)}
+.tog-lbl{font-size:.82rem;color:var(--gray-700);flex:1}
+.tog-tag{font-size:.6rem;font-weight:600;background:#fef3c7;color:#92400e;border-radius:4px;padding:2px 6px;white-space:nowrap}
 
-/* KB */
-.kb-q{font-size:.78rem;font-weight:600;color:var(--text)}
-.kb-sub{font-size:.68rem;color:var(--muted);line-height:1.4}
-.pills{display:flex;gap:5px;flex-wrap:wrap}
-.pill{padding:5px 11px;border:1.5px solid var(--border);border-radius:999px;font-size:.74rem;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--text);transition:all .15s;line-height:1.3;text-align:center}
-.pill:hover{border-color:var(--pri);background:var(--pri-l);color:var(--pri)}
-.pill.on{border-color:var(--pri);background:var(--pri);color:#fff}
-.pill small{display:block;font-size:.55rem;font-weight:400;opacity:.8}
+/* KB PILLS */
+.kb-title{font-size:.75rem;font-weight:600;color:var(--gray-700);margin-bottom:4px}
+.kb-sub{font-size:.68rem;color:var(--gray-400);margin-bottom:10px;line-height:1.4}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{
+  padding:6px 14px;border:1.5px solid var(--gray-200);
+  border-radius:999px;font-size:.78rem;font-weight:600;
+  cursor:pointer;background:#fff;font-family:inherit;
+  color:var(--gray-700);transition:all .15s;
+}
+.pill:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
+.pill.on{border-color:var(--blue);background:var(--blue);color:#fff}
+.pill small{font-size:.58rem;font-weight:400;display:block;opacity:.75}
+.custom-kb{margin-top:8px}
 
-/* VALIDATE BANNER */
-.vban{display:none;align-items:flex-start;gap:7px;border-radius:var(--rs);padding:7px 10px;font-size:.72rem;font-weight:500;line-height:1.4}
+/* VALIDATION */
+.vban{
+  display:none;align-items:center;gap:8px;
+  border-radius:8px;padding:8px 12px;
+  font-size:.77rem;font-weight:500;
+}
 .vban.on{display:flex}
-.vban.ok{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green)}
-.vban.warn{background:var(--yellow-bg);border:1px solid var(--yellow-bd);color:var(--yellow)}
-.vban.bad{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red)}
+.vban.ok{background:var(--green-l);border:1px solid var(--green-b);color:var(--green)}
+.vban.warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.vban.bad{background:var(--red-l);border:1px solid var(--red-b);color:var(--red)}
 
 /* PROGRESS */
-.prog{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px}
+.prog{display:none;background:var(--gray-50);border-radius:8px;padding:10px 12px;border:1px solid var(--gray-200)}
 .prog.on{display:block}
-.pb{height:6px;background:var(--bg);border-radius:999px;overflow:hidden;margin-bottom:4px;border:1px solid var(--border)}
-.pf{height:100%;background:var(--pri);border-radius:999px;transition:width .25s}
-.pl{font-size:.67rem;color:var(--muted)}
+.pb{height:5px;background:var(--gray-200);border-radius:999px;overflow:hidden;margin-bottom:5px}
+.pf{height:100%;background:var(--blue);border-radius:999px;transition:width .2s}
+.pl{font-size:.67rem;color:var(--gray-400)}
 
 /* BUTTONS */
-.go{width:100%;padding:11px;background:var(--pri);color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:6px;flex-shrink:0}
-.go:hover{background:var(--pri-h)}
-.go:active{transform:scale(.98)}
-.go:disabled{background:#d1d5db;color:#9ca3af;cursor:not-allowed}
+.btn-go{
+  width:100%;padding:12px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:var(--r);
+  font-family:inherit;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:background .15s,transform .1s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-go:hover{background:var(--blue-d)}
+.btn-go:active{transform:scale(.98)}
+.btn-go:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed}
 
-.dl{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;background:#065f46;color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .15s;flex-shrink:0}
-.dl:hover{background:#047857}
+.btn-dl{
+  width:100%;padding:12px;
+  background:var(--green);color:#fff;
+  border:none;border-radius:var(--r);
+  font-family:inherit;font-size:.95rem;font-weight:700;
+  cursor:pointer;transition:background .15s;
+  display:none;align-items:center;justify-content:center;gap:8px;
+}
+.btn-dl:hover{background:#15803d}
+.btn-dl.on{display:flex}
 
 /* RATING */
-.rating{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:9px 12px;text-align:center;flex-shrink:0}
+.rating{display:none;text-align:center;padding:12px;background:var(--gray-50);border-radius:var(--r);border:1px solid var(--gray-200)}
 .rating.on{display:block}
-.rating p{font-size:.75rem;font-weight:600;margin-bottom:6px}
+.rating p{font-size:.8rem;font-weight:600;color:var(--gray-700);margin-bottom:8px}
 .stars{display:flex;justify-content:center;gap:4px}
-.star{font-size:1.3rem;cursor:pointer;border:none;background:none;padding:0;transition:transform .15s;line-height:1}
-.star:hover{transform:scale(1.25)}
-.rthanks{display:none;font-size:.72rem;color:var(--green);font-weight:600;margin-top:5px}
+.star{font-size:1.4rem;cursor:pointer;border:none;background:none;padding:0;transition:transform .12s;line-height:1}
+.star:hover{transform:scale(1.2)}
+.rthanks{display:none;font-size:.75rem;color:var(--green);font-weight:600;margin-top:6px}
 .rthanks.on{display:block}
 
-/* PRIVACY NOTE */
-.priv{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--rs);padding:7px 10px;font-size:.67rem;color:var(--green);display:flex;gap:5px;line-height:1.4;flex-shrink:0}
+/* PRIV */
+.priv{
+  font-size:.68rem;color:var(--gray-400);
+  display:flex;align-items:flex-start;gap:6px;line-height:1.5;
+}
+
+/* FOOTER */
+footer{
+  background:var(--gray-50);border-top:1px solid var(--gray-200);
+  padding:8px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;flex-wrap:wrap;
+}
+.foot-l{font-size:.68rem;color:var(--gray-500)}
+.foot-l a{color:var(--blue);text-decoration:none}
+.foot-l a:hover{text-decoration:underline}
+.foot-r{font-size:.6rem;color:var(--gray-400);text-align:right}
 
 /* MODAL */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99;align-items:center;justify-content:center;padding:16px}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:99;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
 .ov.on{display:flex}
-.modal{background:#fff;border-radius:var(--r);padding:22px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.modal h3{font-size:.95rem;font-weight:800;margin-bottom:3px}
-.msub{font-size:.77rem;color:var(--muted);margin-bottom:12px}
-.modal label{font-size:.75rem;font-weight:600;display:block;margin-bottom:4px}
-.modal input{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.92rem;color:var(--text);outline:none;margin-bottom:3px}
-.modal input:focus{border-color:var(--pri)}
-.mhint{font-size:.67rem;color:var(--muted-l);margin-bottom:12px}
+.modal{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:340px;box-shadow:0 24px 60px rgba(0,0,0,.15)}
+.modal h3{font-size:.95rem;font-weight:700;margin-bottom:3px}
+.modal .msub{font-size:.78rem;color:var(--gray-400);margin-bottom:14px}
+.modal label{font-size:.75rem;font-weight:600;display:block;margin-bottom:4px;color:var(--gray-700)}
+.modal input[type=text]{width:100%;padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:.92rem;color:var(--gray-900);outline:none;margin-bottom:3px}
+.modal input[type=text]:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.mhint{font-size:.67rem;color:var(--gray-400);margin-bottom:14px}
 .mbtns{display:flex;gap:8px}
-.mc{flex:1;padding:9px;border:1.5px solid var(--border);border-radius:var(--rs);background:none;font-family:inherit;font-size:.85rem;cursor:pointer}
-.ms{flex:2;padding:9px;background:var(--pri);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
-.ms:hover{background:var(--pri-h)}
+.mc{flex:1;padding:9px;border:1.5px solid var(--gray-200);border-radius:8px;background:none;font-family:inherit;font-size:.85rem;cursor:pointer;color:var(--gray-700)}
+.mc:hover{background:var(--gray-50)}
+.ms{flex:2;padding:9px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.ms:hover{background:var(--blue-d)}
 
-/* RESPONSIVE — stack on small screens */
-@media(max-width:680px){
-  .page{grid-template-columns:1fr;grid-template-rows:auto auto auto;height:auto;overflow:visible}
-  .left,.right{border-right:none;border-bottom:1px solid var(--border);overflow:visible;height:auto}
-  .foot{flex-direction:column;align-items:flex-start;gap:3px}
-  .foot-right{text-align:left;max-width:100%}
-}
+/* hidden SEO text */
+.seo{font-size:0;height:0;overflow:hidden;position:absolute}
+canvas{display:none}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <a class="logo" href="#"><span class="logo-dot"></span> PhotoSign</a>
-  <div class="htrust">
-    <span class="htag">✓ Free</span>
-    <span class="htag">✓ No login</span>
-    <span class="htag">✓ Files stay on device</span>
+  <a class="logo" href="#">
+    <span class="logo-sq">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+    </span>
+    PhotoSign
+  </a>
+  <div class="htags">
+    <span class="htag">Free forever</span>
+    <span class="htag">No login</span>
+    <span class="htag">Files stay on device</span>
   </div>
 </header>
 
-<div class="page">
+<!-- PHASE 1: UPLOAD SCREEN -->
+<div id="phase1">
+  <h1>Resize Photo &amp; Signature<br/>to <span>Exact Size</span></h1>
+  <p class="sub">Enter the width, height &amp; KB your form requires — done in seconds</p>
 
-  <!-- LEFT: UPLOAD + PREVIEW -->
-  <div class="left">
-
-    <div class="slabel"><span class="snum">1</span> Upload your image</div>
-
+  <div class="drop-wrap">
     <div class="drop" id="dz">
       <input type="file" id="fi" accept="image/*"/>
-      <div class="drop-icon">🖼️</div>
-      <h3>Drop here or <span>click to browse</span></h3>
+      <div class="drop-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <h2>Drop image here or <span>click to upload</span></h2>
       <p>JPG · PNG · WEBP · or paste with Ctrl+V</p>
+      <p class="drop-hint">Works for photos, signatures, scanned documents</p>
     </div>
-
-    <div class="fbar" id="fbar">
-      <img id="fthumb" class="fthumb" src="" alt=""/>
-      <div class="fdets">
-        <div class="fname" id="fname">—</div>
-        <div class="fdim" id="fdim">—</div>
-      </div>
-      <button class="rbtn" id="rmv" title="Remove">✕</button>
-    </div>
-
-    <!-- PREVIEW -->
-    <div class="preview-area" id="previewArea">
-      <img id="origPrev" src="" alt="Original"/>
-      <div class="preview-placeholder" id="prevPlaceholder">Your image preview will appear here</div>
-    </div>
-
-    <!-- COMPARE (after resize) -->
-    <div class="compare" id="compare">
-      <div class="rc">
-        <div class="rch"><span>Before</span><span id="osz">—</span></div>
-        <img id="oThumb" src="" alt=""/>
-      </div>
-      <div class="rc">
-        <div class="rch"><span>After</span><span id="nsz">—</span></div>
-        <img id="nThumb" src="" alt=""/>
-      </div>
-    </div>
-
   </div>
 
-  <!-- RIGHT: SETTINGS + ACTION -->
-  <div class="right">
+  <div class="trust-row">
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Nothing uploaded to any server
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      No storage, no database
+    </span>
+    <span class="trust-item">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      Completely free, no watermark
+    </span>
+  </div>
+</div>
 
-    <div class="slabel"><span class="snum">2</span> Enter the size your form needs</div>
+<!-- PHASE 2: EDITOR SCREEN -->
+<div id="phase2">
+  <div class="editor">
 
-    <div class="row2">
-      <div class="f">
-        <label>Width <span style="font-weight:400;color:var(--muted)">(px)</span></label>
-        <input type="number" id="wi" min="1" max="5000" placeholder="e.g. 200"/>
-        <div class="hint">Look for "W" or "width" in form</div>
-        <div class="err-msg" id="werr">Enter 1–5000</div>
+    <!-- LEFT -->
+    <div class="pane-left">
+      <div class="file-strip">
+        <img id="fthumb" class="fthumb" src="" alt=""/>
+        <div class="fdets">
+          <div class="fname" id="fname">—</div>
+          <div class="fdim" id="fdim">—</div>
+        </div>
+        <button class="rbtn" id="rmv" title="Change image">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
       </div>
-      <div class="f">
-        <label>Height <span style="font-weight:400;color:var(--muted)">(px)</span></label>
-        <input type="number" id="hi" min="1" max="5000" placeholder="e.g. 230"/>
-        <div class="hint">Look for "H" or "height" in form</div>
-        <div class="err-msg" id="herr">Enter 1–5000</div>
+
+      <div class="img-preview">
+        <img id="origImg" src="" alt="Preview"/>
+      </div>
+
+      <div class="compare" id="compare">
+        <div class="ccard">
+          <div class="ccard-hdr"><span>Before</span><span id="osz">—</span></div>
+          <img id="oThumb" src="" alt=""/>
+        </div>
+        <div class="ccard">
+          <div class="ccard-hdr"><span>After</span><span id="nsz">—</span></div>
+          <img id="nThumb" src="" alt=""/>
+        </div>
       </div>
     </div>
 
-    <div class="tr">
-      <label class="tog"><input type="checkbox" id="lock" checked/><span class="ts"></span></label>
-      <span class="tl">Keep proportions (avoids stretching)</span>
-    </div>
-    <div class="tr">
-      <label class="tog"><input type="checkbox" id="wbg" checked/><span class="ts"></span></label>
-      <span class="tl">White background</span>
-      <span class="tbadge">Most forms need this</span>
-    </div>
+    <!-- RIGHT -->
+    <div class="pane-right">
 
-    <div>
-      <div class="kb-q" style="margin-bottom:3px">Max file size allowed?</div>
-      <div class="kb-sub" style="margin-bottom:8px">Check your form — e.g. "photo must be under 50 KB"</div>
-      <div class="pills" id="pills">
-        <button class="pill" data-kb="20">20 KB<small>Strict</small></button>
-        <button class="pill on" data-kb="50">50 KB<small>Common</small></button>
-        <button class="pill" data-kb="100">100 KB</button>
-        <button class="pill" data-kb="200">200 KB</button>
-        <button class="pill" data-kb="0">No limit</button>
+      <div>
+        <span class="field-label">Size required by your form</span>
+        <div class="row2">
+          <div>
+            <input type="number" id="wi" min="1" max="5000" placeholder="Width (px)" title="Width in pixels"/>
+            <div class="field-hint">Width · e.g. 200</div>
+            <div class="err" id="werr">Enter 1–5000</div>
+          </div>
+          <div>
+            <input type="number" id="hi" min="1" max="5000" placeholder="Height (px)" title="Height in pixels"/>
+            <div class="field-hint">Height · e.g. 230</div>
+            <div class="err" id="herr">Enter 1–5000</div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="f" style="max-width:160px">
-      <label>Custom KB limit</label>
-      <input type="number" id="ckb" min="1" max="10000" placeholder="e.g. 40"/>
-    </div>
-
-    <!-- VALIDATION -->
-    <div class="vban" id="vban">
-      <span id="vicon"></span>
-      <span id="vmsg"></span>
-    </div>
-
-    <div class="slabel" style="margin-top:2px"><span class="snum">3</span> Generate &amp; Download</div>
-
-    <button class="go" id="go" disabled>
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-      Resize &amp; Compress
-    </button>
-
-    <div class="prog" id="prog">
-      <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
-      <div class="pl" id="pl">Processing…</div>
-    </div>
-
-    <button class="dl" id="dlBtn" style="display:none">
-      ⬇️ &nbsp;Download — Ready to Upload
-    </button>
-
-    <div class="rating" id="rating">
-      <p>Did this help? Rate it 😊</p>
-      <div class="stars">
-        <button class="star" data-v="1">⭐</button>
-        <button class="star" data-v="2">⭐</button>
-        <button class="star" data-v="3">⭐</button>
-        <button class="star" data-v="4">⭐</button>
-        <button class="star" data-v="5">⭐</button>
+      <div>
+        <div class="tog-row">
+          <label class="tog"><input type="checkbox" id="lock" checked/><span class="ts"></span></label>
+          <span class="tog-lbl">Keep proportions</span>
+        </div>
+        <div class="tog-row">
+          <label class="tog"><input type="checkbox" id="wbg" checked/><span class="ts"></span></label>
+          <span class="tog-lbl">White background</span>
+          <span class="tog-tag">Most forms need this</span>
+        </div>
       </div>
-      <div class="rthanks" id="rthanks">Thank you! Glad it helped 🙌</div>
-    </div>
 
-    <div class="priv">
-      🔒 <span>Processed entirely on your device. Nothing uploaded or stored. Safe for Aadhaar and passport photos.</span>
-    </div>
+      <div>
+        <div class="kb-title">Max file size allowed</div>
+        <div class="kb-sub">Check your form instructions — e.g. "photo must be under 50 KB"</div>
+        <div class="pills" id="pills">
+          <button class="pill" data-kb="20">20 KB<small>Strict</small></button>
+          <button class="pill on" data-kb="50">50 KB<small>Common</small></button>
+          <button class="pill" data-kb="100">100 KB</button>
+          <button class="pill" data-kb="200">200 KB</button>
+          <button class="pill" data-kb="0">No limit</button>
+        </div>
+        <div class="custom-kb">
+          <input type="number" id="ckb" min="1" max="10000" placeholder="Custom KB limit (e.g. 40)" style="max-width:200px"/>
+        </div>
+      </div>
 
+      <div class="vban" id="vban">
+        <span id="vicon"></span>&nbsp;<span id="vmsg"></span>
+      </div>
+
+      <div class="prog" id="prog">
+        <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+        <div class="pl" id="pl">Processing…</div>
+      </div>
+
+      <button class="btn-go" id="go" disabled>
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        Resize &amp; Compress
+      </button>
+
+      <button class="btn-dl" id="dlBtn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download — Ready to Upload
+      </button>
+
+      <div class="rating" id="rating">
+        <p>Did this help? Rate us 😊</p>
+        <div class="stars">
+          <button class="star" data-v="1">⭐</button>
+          <button class="star" data-v="2">⭐</button>
+          <button class="star" data-v="3">⭐</button>
+          <button class="star" data-v="4">⭐</button>
+          <button class="star" data-v="5">⭐</button>
+        </div>
+        <div class="rthanks" id="rthanks">Thank you! Glad it helped 🙌</div>
+      </div>
+
+      <div class="priv">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Processed entirely on your device. Nothing is uploaded or stored anywhere. Safe for Aadhaar, passport photos &amp; signatures.
+      </div>
+
+    </div>
   </div>
 
-  <!-- FOOTER STRIP -->
-  <div class="foot">
-    <div class="foot-left">
-      PhotoSign · Free forever · No ads · No watermarks &nbsp;·&nbsp;
+  <footer>
+    <div class="foot-l">
+      PhotoSign &nbsp;·&nbsp; Free forever, no ads, no watermarks &nbsp;·&nbsp;
       Built by <strong>Bajrang Kailasa</strong> &nbsp;·&nbsp;
       <a href="mailto:kailasabajrang6@gmail.com">kailasabajrang6@gmail.com</a>
     </div>
-    <div class="foot-right">
-      Free online photo &amp; signature resizer — resize to exact pixels, compress to any KB, works for any application form. No upload, no login.
-    </div>
-  </div>
-
+    <div class="foot-r">Free online photo &amp; signature resizer — resize to exact pixels, compress to any KB, works for any application form.</div>
+  </footer>
 </div>
 
 <!-- FILENAME MODAL -->
 <div class="ov" id="ov">
   <div class="modal">
     <h3>Save as…</h3>
-    <p class="msub">Give it a name you'll recognise — e.g. <em>photo_form</em> or <em>signature</em></p>
+    <p class="msub">Give the file a name — e.g. <em>photo_form</em> or <em>signature</em></p>
     <label>File name</label>
     <input type="text" id="dname" placeholder="e.g. photo_ssc"/>
     <p class="mhint">Will save as .jpg</p>
     <div class="mbtns">
       <button class="mc" id="mc">Cancel</button>
-      <button class="ms" id="ms">⬇️ Save</button>
+      <button class="ms" id="ms">Save File</button>
     </div>
   </div>
 </div>
+
+<!-- hidden SEO -->
+<div class="seo" aria-hidden="true">Free online photo and signature resizer. Resize image to exact pixels and compress to KB for any application form — government exams, job applications, visa forms, college admissions. Works on mobile and desktop. No upload, no login, completely free.</div>
 
 <canvas id="cv"></canvas>
 <a id="dlLink" style="display:none"></a>
@@ -390,49 +488,49 @@ header{
 let img=null,file=null,ow=0,oh=0,url=null,kb=50,aw=false,ah=false,rated=false;
 const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 
-// UPLOAD
+// ── UPLOAD ────────────────────────────────────
 const dz=document.getElementById('dz');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag')});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');const f=e.dataTransfer.files[0];if(f?.type.startsWith('image/'))load(f)});
 document.getElementById('fi').addEventListener('change',e=>{if(e.target.files[0])load(e.target.files[0])});
-document.addEventListener('paste',e=>{for(const it of(e.clipboardData||e.originalEvent.clipboardData).items){if(it.type.startsWith('image/')){load(it.getAsFile());break}}});
-document.getElementById('rmv').addEventListener('click',reset);
+document.addEventListener('paste',e=>{if(document.getElementById('phase1').style.display!=='none'||!document.getElementById('phase2').classList.contains('on')){for(const it of(e.clipboardData||e.originalEvent.clipboardData).items){if(it.type.startsWith('image/')){load(it.getAsFile());break}}}else{for(const it of(e.clipboardData||e.originalEvent.clipboardData).items){if(it.type.startsWith('image/')){load(it.getAsFile());break}}}});
+document.getElementById('rmv').addEventListener('click',()=>{
+  document.getElementById('phase1').style.display='';
+  document.getElementById('phase2').classList.remove('on');
+  document.getElementById('fi').value='';
+  img=file=url=null;
+  document.getElementById('compare').classList.remove('on');
+  document.getElementById('dlBtn').classList.remove('on');
+  document.getElementById('rating').classList.remove('on');
+  showBan('','','');
+});
 
 function load(f){
   file=f;const u=URL.createObjectURL(f);const i=new Image();
   i.onload=()=>{
     img=i;ow=i.naturalWidth;oh=i.naturalHeight;
+    // Switch to editor
+    document.getElementById('phase1').style.display='none';
+    document.getElementById('phase2').classList.add('on');
+    // Fill UI
     document.getElementById('fthumb').src=u;
     document.getElementById('fname').textContent=f.name;
     document.getElementById('fdim').textContent=`${ow}×${oh}px · ${fmt(f.size)}`;
-    document.getElementById('fbar').classList.add('on');
-    document.getElementById('origPrev').src=u;
-    document.getElementById('origPrev').classList.add('on');
-    document.getElementById('prevPlaceholder').style.display='none';
+    document.getElementById('origImg').src=u;
     document.getElementById('oThumb').src=u;
     document.getElementById('osz').textContent=fmt(f.size);
-    document.getElementById('dlBtn').style.display='none';
-    document.getElementById('rating').classList.remove('on');
     document.getElementById('compare').classList.remove('on');
+    document.getElementById('dlBtn').classList.remove('on');
+    document.getElementById('rating').classList.remove('on');
     url=null;
-    if(!document.getElementById('wi').value)document.getElementById('wi').value=ow;
-    if(!document.getElementById('hi').value)document.getElementById('hi').value=oh;
+    document.getElementById('wi').value=ow;
+    document.getElementById('hi').value=oh;
     validate();
   };i.src=u;
 }
-function reset(){
-  img=file=null;document.getElementById('fi').value='';
-  document.getElementById('fbar').classList.remove('on');
-  document.getElementById('origPrev').classList.remove('on');
-  document.getElementById('prevPlaceholder').style.display='';
-  document.getElementById('compare').classList.remove('on');
-  document.getElementById('dlBtn').style.display='none';
-  document.getElementById('go').disabled=true;
-  showBan('','','');
-}
 
-// ASPECT LOCK
+// ── ASPECT LOCK ───────────────────────────────
 document.getElementById('wi').addEventListener('input',()=>{
   if(document.getElementById('lock').checked&&ow&&!ah){aw=true;document.getElementById('hi').value=Math.round(+document.getElementById('wi').value*oh/ow);aw=false}
   validate();
@@ -442,7 +540,7 @@ document.getElementById('hi').addEventListener('input',()=>{
   validate();
 });
 
-// KB PILLS
+// ── KB PILLS ──────────────────────────────────
 document.getElementById('pills').addEventListener('click',e=>{
   const p=e.target.closest('.pill');if(!p)return;
   kb=+p.dataset.kb;
@@ -454,22 +552,20 @@ document.getElementById('ckb').addEventListener('input',function(){
   validate();
 });
 
-// VALIDATE
+// ── VALIDATE ──────────────────────────────────
 function validate(){
+  if(!img){document.getElementById('go').disabled=true;showBan('','','');return}
   const w=parseInt(document.getElementById('wi').value),h=parseInt(document.getElementById('hi').value);
-  const we=document.getElementById('werr'),he=document.getElementById('herr');
   const wi=document.getElementById('wi'),hi=document.getElementById('hi');
   let ok=true;
-  if(w&&(w<1||w>5000)){wi.classList.add('err');we.classList.add('on');ok=false}
-  else{wi.classList.remove('err');wi.classList.toggle('ok',!!w);we.classList.remove('on')}
-  if(h&&(h<1||h>5000)){hi.classList.add('err');he.classList.add('on');ok=false}
-  else{hi.classList.remove('err');hi.classList.toggle('ok',!!h);he.classList.remove('on')}
-  if(!img){showBan('','','');document.getElementById('go').disabled=true;return}
+  if(w&&(w<1||w>5000)){wi.classList.add('e');document.getElementById('werr').classList.add('on');ok=false}
+  else{wi.classList.remove('e');wi.classList.toggle('ok',!!w);document.getElementById('werr').classList.remove('on')}
+  if(h&&(h<1||h>5000)){hi.classList.add('e');document.getElementById('herr').classList.add('on');ok=false}
+  else{hi.classList.remove('e');hi.classList.toggle('ok',!!h);document.getElementById('herr').classList.remove('on')}
   if(!ok){showBan('bad','⚠️','Fix the values above.');document.getElementById('go').disabled=true;return}
-  if(!w||!h){showBan('warn','💡','Enter width and height to continue.');document.getElementById('go').disabled=true;return}
+  if(!w||!h){showBan('warn','','Enter width and height to continue.');document.getElementById('go').disabled=true;return}
   if(w<30||h<30){showBan('warn','⚠️',`Very small (${w}×${h}px). Most forms need at least 100×100.`);document.getElementById('go').disabled=false;return}
-  if(w>3000||h>3000){showBan('warn','⚠️',`Large size (${w}×${h}px). Double-check your form.`);document.getElementById('go').disabled=false;return}
-  showBan('ok','✅',`Ready — ${w}×${h}px, ${kb>0?'max '+kb+' KB':'no size limit'}`);
+  showBan('ok','✓',`${w}×${h}px · ${kb>0?'max '+kb+' KB':'no size limit'}`);
   document.getElementById('go').disabled=false;
 }
 function showBan(type,icon,msg){
@@ -480,7 +576,7 @@ function showBan(type,icon,msg){
   document.getElementById('vmsg').textContent=msg;
 }
 
-// GENERATE
+// ── GENERATE ──────────────────────────────────
 document.getElementById('go').addEventListener('click',async()=>{
   if(!img)return;
   const w=parseInt(document.getElementById('wi').value)||ow;
@@ -493,18 +589,17 @@ document.getElementById('go').addEventListener('click',async()=>{
   cx.drawImage(img,0,0,w,h);
   pf.style.width='40%';await t();
   url=kb>0?await compress(kb*1024,pf,pl):cv.toDataURL('image/jpeg',.92);
-  pf.style.width='100%';pl.textContent='Done!';await t();
-  prog.classList.remove('on');
+  pf.style.width='100%';pl.textContent='Done!';await t();prog.classList.remove('on');
   const bytes=Math.round(url.split(',')[1].length*3/4);
   const under=kb===0||bytes<=kb*1024;
   document.getElementById('nThumb').src=url;
   const nszEl=document.getElementById('nsz');
-  const nszSpan=document.createElement('span');
-  nszSpan.className=under?'ok-b':'warn-b';
-  nszSpan.textContent=fmt(bytes)+(under?' ✓':'');
-  nszEl.textContent='';nszEl.appendChild(nszSpan);
+  const sp=document.createElement('span');
+  sp.className=under?'sz-ok':'sz-warn';
+  sp.textContent=fmt(bytes)+(under?' ✓':'');
+  nszEl.textContent='';nszEl.appendChild(sp);
   document.getElementById('compare').classList.add('on');
-  document.getElementById('dlBtn').style.display='flex';
+  document.getElementById('dlBtn').classList.add('on');
   if(!rated)document.getElementById('rating').classList.add('on');
 });
 
@@ -514,7 +609,7 @@ async function compress(max,pf,pl){
 }
 function t(){return new Promise(r=>setTimeout(r,8))}
 
-// DOWNLOAD
+// ── DOWNLOAD ──────────────────────────────────
 document.getElementById('dlBtn').addEventListener('click',()=>{
   if(!url)return;
   document.getElementById('dname').value=(file?.name||'image').replace(/\.[^.]+$/,'');
@@ -531,7 +626,7 @@ function save(){
   document.getElementById('ov').classList.remove('on');
 }
 
-// RATING
+// ── RATING ────────────────────────────────────
 document.querySelectorAll('.star').forEach(s=>{
   s.addEventListener('click',()=>{
     if(rated)return;rated=true;
