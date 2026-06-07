@@ -3,121 +3,110 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PhotoSign — Resize Photo & Signature for Govt Job Forms</title>
-<meta name="description" content="Resize your photo or signature to exact pixel size and KB limit for SSC, UPSC, AFCAT, NDA, RRB, IBPS forms. Free, no login."/>
+<title>PhotoSign — Resize & Compress Image</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f4f6fb;--card:#fff;--border:#e2e8f0;
-  --primary:#1a56db;--primary-h:#1e429f;--primary-l:#ebf5ff;
-  --text:#111928;--muted:#6b7280;
-  --green:#057a55;--green-l:#def7ec;
-  --radius:12px;--rs:8px;
-}
+:root{--primary:#1a56db;--primary-h:#1e429f;--primary-l:#ebf5ff;--border:#e2e8f0;--bg:#f4f6fb;--card:#fff;--text:#111928;--muted:#6b7280;--green:#057a55;--green-l:#def7ec;--r:12px;--rs:8px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-
 header{background:var(--primary);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.1rem;font-weight:700;color:#fff;text-decoration:none}
-.hbadge{font-size:.72rem;color:rgba(255,255,255,.75)}
+.logo{font-size:1.05rem;font-weight:700;color:#fff;text-decoration:none}
+.htag{font-size:.72rem;color:rgba(255,255,255,.7)}
 
-.hero{background:var(--primary);color:#fff;text-align:center;padding:28px 16px 32px}
-.hero h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:700;margin-bottom:7px;line-height:1.25}
-.hero p{font-size:.9rem;opacity:.85;max-width:440px;margin:0 auto}
-
-main{max-width:540px;margin:0 auto;padding:24px 14px 80px}
+main{max-width:500px;margin:0 auto;padding:28px 14px 60px}
 
 /* UPLOAD */
-.drop-zone{border:2px dashed var(--border);border-radius:var(--radius);background:var(--card);padding:36px 16px;text-align:center;cursor:pointer;position:relative;transition:all .2s;margin-bottom:14px}
-.drop-zone:hover,.drop-zone.drag{border-color:var(--primary);background:var(--primary-l)}
-.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.drop-zone h3{font-size:1rem;font-weight:600;margin-bottom:4px}
-.drop-zone p{font-size:.82rem;color:var(--muted)}
+.drop{border:2px dashed var(--border);border-radius:var(--r);background:var(--card);padding:38px 16px;text-align:center;cursor:pointer;position:relative;transition:all .2s;margin-bottom:12px}
+.drop:hover,.drop.drag{border-color:var(--primary);background:var(--primary-l)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop h3{font-size:.98rem;font-weight:600;margin-bottom:4px}
+.drop p{font-size:.8rem;color:var(--muted)}
 .browse{color:var(--primary);font-weight:600}
 
 /* FILE CONFIRMED */
-.file-bar{display:none;align-items:center;gap:10px;background:var(--green-l);border:1px solid #84e1bc;border-radius:var(--rs);padding:10px 12px;margin-bottom:14px}
-.file-bar.on{display:flex}
-.fthumb{width:44px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0}
+.fbar{display:none;align-items:center;gap:10px;background:var(--green-l);border:1px solid #84e1bc;border-radius:var(--rs);padding:10px 12px;margin-bottom:12px}
+.fbar.on{display:flex}
+.fthumb{width:42px;height:42px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0}
 .fdets{flex:1;min-width:0}
-.fname{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--green)}
-.fdim{font-size:.72rem;color:var(--muted)}
-.rbtn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0}
+.fname{font-size:.83rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--green)}
+.fdim{font-size:.7rem;color:var(--muted)}
+.rbtn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0;font-size:.9rem}
 .rbtn:hover{color:#e02424}
 
-/* FORM CARD */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px}
-.card-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px}
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px}
+.clabel{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
 
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.field label{display:block;font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:5px}
-.field input,select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.95rem;color:var(--text);background:#fff;outline:none;transition:border-color .15s}
-.field input:focus{border-color:var(--primary)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.f label{display:block;font-size:.73rem;font-weight:600;color:var(--muted);margin-bottom:4px}
+.f input{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.93rem;color:var(--text);background:#fff;outline:none;transition:border-color .15s}
+.f input:focus{border-color:var(--primary)}
 
-.sep{height:1px;background:var(--border);margin:16px 0}
-
-/* KB PILLS */
-.kb-label{font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:8px}
-.pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
-.pill{padding:6px 14px;border:1.5px solid var(--border);border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--text);transition:all .15s}
-.pill:hover,.pill.on{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
+.sep{height:1px;background:var(--border);margin:14px 0}
 
 /* TOGGLE */
-.trow{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.tog{position:relative;width:36px;height:20px;flex-shrink:0}
+.tr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.tog{position:relative;width:34px;height:19px;flex-shrink:0}
 .tog input{opacity:0;width:0;height:0}
 .ts{position:absolute;inset:0;background:#d1d5db;border-radius:999px;cursor:pointer;transition:background .2s}
-.ts::before{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s}
+.ts::before{content:'';position:absolute;width:13px;height:13px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s}
 .tog input:checked+.ts{background:var(--primary)}
-.tog input:checked+.ts::before{transform:translateX(16px)}
-.tog-lbl{font-size:.85rem;color:var(--text)}
+.tog input:checked+.ts::before{transform:translateX(15px)}
+.tl{font-size:.83rem;color:var(--text)}
+
+/* KB */
+.kb-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.pill{padding:5px 13px;border:1.5px solid var(--border);border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--text);transition:all .15s}
+.pill:hover,.pill.on{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
+.f-half{width:50%}
+
+/* GO */
+.go{width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-size:.97rem;font-weight:700;cursor:pointer;transition:background .15s;margin-bottom:10px}
+.go:hover{background:var(--primary-h)}
+.go:disabled{background:#d1d5db;color:#9ca3af;cursor:not-allowed}
 
 /* PROGRESS */
-.prog{display:none;margin-bottom:12px}
+.prog{display:none;margin-bottom:10px}
 .prog.on{display:block}
-.prog-bar{height:7px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:5px}
-.prog-fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s}
-.prog-lbl{font-size:.75rem;color:var(--muted)}
-
-/* MAIN BTN */
-.go-btn{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s}
-.go-btn:hover{background:var(--primary-h)}
-.go-btn:disabled{background:#d1d5db;color:#9ca3af;cursor:not-allowed}
+.pb{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:4px}
+.pf{height:100%;background:var(--primary);border-radius:999px;transition:width .2s}
+.pl{font-size:.73rem;color:var(--muted)}
 
 /* RESULT */
-.result{display:none;margin-top:4px}
-.result.on{display:block}
-.rrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-@media(max-width:440px){.rrow{grid-template-columns:1fr}}
-.rcard{border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--card)}
-.rcard-hdr{padding:7px 12px;border-bottom:1px solid var(--border);font-size:.72rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
-.rcard img{width:100%;height:170px;object-fit:contain;background:#f9fafb;display:block}
-.rcard-meta{padding:5px 12px;font-size:.72rem;color:var(--muted)}
+.res{display:none}
+.res.on{display:block}
+.rrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+@media(max-width:400px){.rrow{grid-template-columns:1fr}}
+.rc{border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--card)}
+.rch{padding:6px 10px;border-bottom:1px solid var(--border);font-size:.7rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
+.rc img{width:100%;height:160px;object-fit:contain;background:#f9fafb;display:block}
+.rcm{padding:5px 10px;font-size:.7rem;color:var(--muted)}
 .ok{color:var(--green);font-weight:600}
 .warn{color:#e3a008;font-weight:600}
 
-.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s;margin-bottom:12px}
-.dl-btn:hover{background:#046c4e}
+.dl{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-size:.97rem;font-weight:700;cursor:pointer;transition:background .15s;margin-bottom:10px}
+.dl:hover{background:#046c4e}
 
-.privacy{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:var(--rs);padding:10px 14px;font-size:.77rem;color:#065f46;display:flex;gap:7px;align-items:flex-start}
+.priv{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:var(--rs);padding:9px 13px;font-size:.74rem;color:#065f46;display:flex;gap:7px}
 
 /* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;align-items:center;justify-content:center;padding:16px}
-.overlay.on{display:flex}
-.modal{background:#fff;border-radius:var(--radius);padding:24px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.modal h3{font-size:1rem;font-weight:700;margin-bottom:4px}
-.modal p{font-size:.82rem;color:var(--muted);margin-bottom:14px}
-.modal label{font-size:.8rem;font-weight:600;display:block;margin-bottom:6px}
-.modal input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.95rem;color:var(--text);outline:none;margin-bottom:6px}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;align-items:center;justify-content:center;padding:16px}
+.ov.on{display:flex}
+.modal{background:#fff;border-radius:var(--r);padding:22px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-size:.97rem;font-weight:700;margin-bottom:4px}
+.modal p{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+.modal label{font-size:.78rem;font-weight:600;display:block;margin-bottom:5px}
+.modal input{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.93rem;color:var(--text);outline:none;margin-bottom:4px}
 .modal input:focus{border-color:var(--primary)}
-.modal-hint{font-size:.72rem;color:var(--muted);margin-bottom:16px}
-.mbtns{display:flex;gap:10px}
-.mcancel{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--rs);background:none;font-family:inherit;font-size:.9rem;cursor:pointer}
-.msave{flex:2;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
-.msave:hover{background:var(--primary-h)}
+.mhint{font-size:.7rem;color:var(--muted);margin-bottom:14px}
+.mbtns{display:flex;gap:8px}
+.mc{flex:1;padding:9px;border:1.5px solid var(--border);border-radius:var(--rs);background:none;font-family:inherit;font-size:.88rem;cursor:pointer}
+.ms{flex:2;padding:9px;background:var(--primary);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer}
+.ms:hover{background:var(--primary-h)}
 
-footer{text-align:center;padding:18px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border)}
+footer{text-align:center;padding:16px;font-size:.72rem;color:var(--muted);border-top:1px solid var(--border)}
 canvas{display:none}
 </style>
 </head>
@@ -125,25 +114,20 @@ canvas{display:none}
 
 <header>
   <a class="logo" href="#">📋 PhotoSign</a>
-  <span class="hbadge">Free · No login · Files stay on your device</span>
+  <span class="htag">Free · No login · Files stay on your device</span>
 </header>
-
-<div class="hero">
-  <h1>Resize Photo &amp; Signature<br/>for Govt Job Forms</h1>
-  <p>Enter the size your form requires — we resize and compress instantly.</p>
-</div>
 
 <main>
 
   <!-- UPLOAD -->
-  <div class="drop-zone" id="dz">
+  <div class="drop" id="dz">
     <input type="file" id="fi" accept="image/*"/>
     <div style="font-size:2rem;margin-bottom:10px">🖼️</div>
     <h3>Drop image here or <span class="browse">click to browse</span></h3>
-    <p>Photo or signature · JPG, PNG, WEBP · Ctrl+V to paste</p>
+    <p>JPG, PNG, WEBP · Ctrl+V to paste</p>
   </div>
 
-  <div class="file-bar" id="fbar">
+  <div class="fbar" id="fbar">
     <img id="fthumb" class="fthumb" src="" alt=""/>
     <div class="fdets">
       <div class="fname" id="fname">—</div>
@@ -154,31 +138,23 @@ canvas{display:none}
 
   <!-- SIZE + KB -->
   <div class="card">
-    <div class="card-title">What size does your form need?</div>
-
+    <div class="clabel">Required size</div>
     <div class="row2">
-      <div class="field">
-        <label>Width (px)</label>
-        <input type="number" id="wi" min="1" max="5000" placeholder="e.g. 200"/>
-      </div>
-      <div class="field">
-        <label>Height (px)</label>
-        <input type="number" id="hi" min="1" max="5000" placeholder="e.g. 230"/>
-      </div>
+      <div class="f"><label>Width (px)</label><input type="number" id="wi" min="1" max="5000" placeholder="e.g. 200"/></div>
+      <div class="f"><label>Height (px)</label><input type="number" id="hi" min="1" max="5000" placeholder="e.g. 230"/></div>
     </div>
-
-    <div class="trow">
+    <div class="tr">
       <label class="tog"><input type="checkbox" id="lock" checked/><span class="ts"></span></label>
-      <span class="tog-lbl">Keep original proportions</span>
+      <span class="tl">Keep aspect ratio</span>
     </div>
-    <div class="trow">
+    <div class="tr">
       <label class="tog"><input type="checkbox" id="wbg" checked/><span class="ts"></span></label>
-      <span class="tog-lbl">White background (required for most govt photos)</span>
+      <span class="tl">White background</span>
     </div>
 
     <div class="sep"></div>
 
-    <div class="kb-label">Max file size allowed by the form</div>
+    <div class="kb-lbl">Max file size (KB)</div>
     <div class="pills" id="pills">
       <button class="pill" data-kb="20">20 KB</button>
       <button class="pill on" data-kb="50">50 KB</button>
@@ -187,235 +163,146 @@ canvas{display:none}
       <button class="pill" data-kb="300">300 KB</button>
       <button class="pill" data-kb="0">No limit</button>
     </div>
-    <div class="row2" style="margin-bottom:0">
-      <div class="field">
-        <label>Or type exact KB limit</label>
-        <input type="number" id="customkb" min="1" max="10000" placeholder="e.g. 40"/>
-      </div>
+    <div class="f f-half">
+      <label>Custom (KB)</label>
+      <input type="number" id="ckb" min="1" max="10000" placeholder="e.g. 40"/>
     </div>
   </div>
 
-  <!-- GO -->
-  <button class="go-btn" id="goBtn" disabled>Resize &amp; Compress →</button>
+  <button class="go" id="go" disabled>Resize &amp; Compress →</button>
 
-  <!-- PROGRESS -->
   <div class="prog" id="prog">
-    <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
-    <div class="prog-lbl" id="pl">Processing…</div>
+    <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="pl" id="pl">Processing…</div>
   </div>
 
-  <!-- RESULT -->
-  <div class="result" id="res">
+  <div class="res" id="res">
     <div class="rrow">
-      <div class="rcard">
-        <div class="rcard-hdr"><span>Original</span><span id="osz">—</span></div>
-        <img id="oprev" src="" alt="Original"/>
-        <div class="rcard-meta" id="ometa">—</div>
+      <div class="rc">
+        <div class="rch"><span>Original</span><span id="osz">—</span></div>
+        <img id="oprev" src="" alt=""/>
+        <div class="rcm" id="ometa">—</div>
       </div>
-      <div class="rcard">
-        <div class="rcard-hdr"><span>Result</span><span id="nsz">—</span></div>
-        <img id="nprev" src="" alt="Result"/>
-        <div class="rcard-meta" id="nmeta">—</div>
+      <div class="rc">
+        <div class="rch"><span>Result</span><span id="nsz">—</span></div>
+        <img id="nprev" src="" alt=""/>
+        <div class="rcm" id="nmeta">—</div>
       </div>
     </div>
-
-    <button class="dl-btn" id="dlBtn">
-      ⬇️ &nbsp;Download — Ready to Upload
-    </button>
-
-    <div class="privacy">
-      🔒 <span>Your image never leaves your device. Processed entirely in your browser — nothing uploaded, nothing stored.</span>
-    </div>
+    <button class="dl" id="dlBtn">⬇️ &nbsp;Download</button>
+    <div class="priv">🔒 <span>Processed on your device only — nothing uploaded or stored.</span></div>
   </div>
 
 </main>
 
-<!-- MODAL -->
-<div class="overlay" id="modal">
+<!-- FILENAME MODAL -->
+<div class="ov" id="ov">
   <div class="modal">
-    <h3>Name your file</h3>
-    <p>Use something you'll recognise later.</p>
+    <h3>Save as…</h3>
+    <p>Give the file a name before saving.</p>
     <label>File name</label>
-    <input type="text" id="dname" placeholder="e.g. photo_ssc_cgl"/>
-    <p class="modal-hint" id="dext">Will save as .jpg</p>
+    <input type="text" id="dname" placeholder="e.g. photo_ssc"/>
+    <p class="mhint" id="dext">Will save as .jpg</p>
     <div class="mbtns">
-      <button class="mcancel" id="mcancel">Cancel</button>
-      <button class="msave" id="msave">⬇️ Save File</button>
+      <button class="mc" id="mc">Cancel</button>
+      <button class="ms" id="ms">⬇️ Save</button>
     </div>
   </div>
 </div>
 
-<footer>PhotoSign · Free forever · No ads · No watermarks · 🇮🇳 Built for Indian govt job aspirants</footer>
+<footer>PhotoSign · Free forever · No ads · No watermarks</footer>
 
-<canvas id="cv"></canvas>
-<a id="dl" style="display:none"></a>
+<canvas id="cv"></canvas><a id="dl" style="display:none"></a>
 
 <script>
-let origImg = null, origFile = null, origW = 0, origH = 0;
-let resultUrl = null, targetKb = 50;
-let aw = false, ah = false;
+let img=null,file=null,ow=0,oh=0,url=null,kb=50,aw=false,ah=false;
+const cv=document.getElementById('cv'),cx=cv.getContext('2d');
 
-const cv = document.getElementById('cv');
-const cx = cv.getContext('2d');
+// upload
+const dz=document.getElementById('dz');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');const f=e.dataTransfer.files[0];if(f?.type.startsWith('image/'))load(f)});
+document.getElementById('fi').addEventListener('change',e=>{if(e.target.files[0])load(e.target.files[0])});
+document.addEventListener('paste',e=>{for(const it of(e.clipboardData||e.originalEvent.clipboardData).items){if(it.type.startsWith('image/')){load(it.getAsFile());break}}});
+document.getElementById('rmv').addEventListener('click',reset);
 
-// ── UPLOAD ────────────────────────────────────────────
-const dz = document.getElementById('dz');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
-dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); const f = e.dataTransfer.files[0]; if (f?.type.startsWith('image/')) load(f); });
-document.getElementById('fi').addEventListener('change', e => { if (e.target.files[0]) load(e.target.files[0]); });
-document.addEventListener('paste', e => { for (const it of (e.clipboardData||e.originalEvent.clipboardData).items) { if (it.type.startsWith('image/')) { load(it.getAsFile()); break; } } });
-document.getElementById('rmv').addEventListener('click', reset);
-
-function load(file) {
-  origFile = file;
-  const url = URL.createObjectURL(file);
-  const img = new Image();
-  img.onload = () => {
-    origImg = img; origW = img.naturalWidth; origH = img.naturalHeight;
-    document.getElementById('fthumb').src = url;
-    document.getElementById('fname').textContent = file.name;
-    document.getElementById('fdim').textContent = `${origW}×${origH}px · ${fmt(file.size)}`;
+function load(f){
+  file=f;const u=URL.createObjectURL(f);const i=new Image();
+  i.onload=()=>{
+    img=i;ow=i.naturalWidth;oh=i.naturalHeight;
+    document.getElementById('fthumb').src=u;
+    document.getElementById('fname').textContent=f.name;
+    document.getElementById('fdim').textContent=`${ow}×${oh}px · ${fmt(f.size)}`;
     document.getElementById('fbar').classList.add('on');
-    document.getElementById('oprev').src = url;
-    document.getElementById('osz').textContent = fmt(file.size);
-    document.getElementById('ometa').textContent = `${origW} × ${origH} px`;
-    document.getElementById('goBtn').disabled = false;
-    document.getElementById('res').classList.remove('on');
-    resultUrl = null;
-    // Prefill dims
-    if (!document.getElementById('wi').value) document.getElementById('wi').value = origW;
-    if (!document.getElementById('hi').value) document.getElementById('hi').value = origH;
-  };
-  img.src = url;
+    document.getElementById('oprev').src=u;
+    document.getElementById('osz').textContent=fmt(f.size);
+    document.getElementById('ometa').textContent=`${ow} × ${oh} px`;
+    document.getElementById('go').disabled=false;
+    document.getElementById('res').classList.remove('on');url=null;
+    if(!document.getElementById('wi').value)document.getElementById('wi').value=ow;
+    if(!document.getElementById('hi').value)document.getElementById('hi').value=oh;
+  };i.src=u;
 }
+function reset(){img=file=null;document.getElementById('fi').value='';document.getElementById('fbar').classList.remove('on');document.getElementById('go').disabled=true;document.getElementById('res').classList.remove('on')}
 
-function reset() {
-  origFile = origImg = null;
-  document.getElementById('fi').value = '';
-  document.getElementById('fbar').classList.remove('on');
-  document.getElementById('goBtn').disabled = true;
-  document.getElementById('res').classList.remove('on');
-}
+// aspect lock
+document.getElementById('wi').addEventListener('input',()=>{if(document.getElementById('lock').checked&&ow&&!ah){aw=true;document.getElementById('hi').value=Math.round(+document.getElementById('wi').value*oh/ow);aw=false}});
+document.getElementById('hi').addEventListener('input',()=>{if(document.getElementById('lock').checked&&oh&&!aw){ah=true;document.getElementById('wi').value=Math.round(+document.getElementById('hi').value*ow/oh);ah=false}});
 
-// ── ASPECT LOCK ───────────────────────────────────────
-document.getElementById('wi').addEventListener('input', () => {
-  if (document.getElementById('lock').checked && origW && !ah) {
-    aw = true; document.getElementById('hi').value = Math.round(+document.getElementById('wi').value * origH / origW); aw = false;
-  }
-});
-document.getElementById('hi').addEventListener('input', () => {
-  if (document.getElementById('lock').checked && origH && !aw) {
-    ah = true; document.getElementById('wi').value = Math.round(+document.getElementById('hi').value * origW / origH); ah = false;
-  }
-});
+// kb pills
+document.getElementById('pills').addEventListener('click',e=>{const p=e.target.closest('.pill');if(!p)return;kb=+p.dataset.kb;document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');document.getElementById('ckb').value=''});
+document.getElementById('ckb').addEventListener('input',function(){if(+this.value>0){kb=+this.value;document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'))}});
 
-// ── KB PILLS ──────────────────────────────────────────
-document.getElementById('pills').addEventListener('click', e => {
-  const p = e.target.closest('.pill');
-  if (!p) return;
-  targetKb = +p.dataset.kb;
-  document.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
-  p.classList.add('on');
-  document.getElementById('customkb').value = '';
-});
-document.getElementById('customkb').addEventListener('input', function() {
-  if (+this.value > 0) {
-    targetKb = +this.value;
-    document.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
-  }
-});
-
-// ── GENERATE ──────────────────────────────────────────
-document.getElementById('goBtn').addEventListener('click', go);
-
-async function go() {
-  if (!origImg) return;
-  const w = parseInt(document.getElementById('wi').value) || origW;
-  const h = parseInt(document.getElementById('hi').value) || origH;
-  const wb = document.getElementById('wbg').checked;
-
-  const prog = document.getElementById('prog');
-  const pf = document.getElementById('pf');
-  const pl = document.getElementById('pl');
-  prog.classList.add('on'); pf.style.width = '15%'; pl.textContent = 'Resizing…';
-  await tick();
-
-  cv.width = w; cv.height = h;
-  cx.clearRect(0, 0, w, h);
-  if (wb) { cx.fillStyle = '#fff'; cx.fillRect(0, 0, w, h); }
-  cx.drawImage(origImg, 0, 0, w, h);
-
-  pf.style.width = '40%'; pl.textContent = 'Compressing to target size…';
-  await tick();
-
-  let url;
-  if (targetKb > 0) {
-    url = await compress(targetKb * 1024, pf, pl);
-  } else {
-    url = cv.toDataURL('image/jpeg', 0.92);
-  }
-
-  pf.style.width = '100%'; pl.textContent = 'Done!';
-  await tick();
-  prog.classList.remove('on');
-
-  resultUrl = url;
-  const bytes = Math.round((url.split(',')[1].length * 3) / 4);
-  const under = targetKb === 0 || bytes <= targetKb * 1024;
-
-  document.getElementById('nprev').src = url;
-  document.getElementById('nsz').innerHTML = under
-    ? `<span class="ok">${fmt(bytes)} ✓</span>`
-    : `<span class="warn">${fmt(bytes)} — over limit</span>`;
-  document.getElementById('nmeta').textContent = `${w} × ${h} px`;
+// go
+document.getElementById('go').addEventListener('click',async()=>{
+  if(!img)return;
+  const w=parseInt(document.getElementById('wi').value)||ow;
+  const h=parseInt(document.getElementById('hi').value)||oh;
+  const wb=document.getElementById('wbg').checked;
+  const prog=document.getElementById('prog'),pf=document.getElementById('pf'),pl=document.getElementById('pl');
+  prog.classList.add('on');pf.style.width='15%';pl.textContent='Resizing…';await t();
+  cv.width=w;cv.height=h;cx.clearRect(0,0,w,h);
+  if(wb){cx.fillStyle='#fff';cx.fillRect(0,0,w,h)}
+  cx.drawImage(img,0,0,w,h);
+  pf.style.width='40%';pl.textContent='Compressing…';await t();
+  url=kb>0?await compress(kb*1024,pf,pl):cv.toDataURL('image/jpeg',.92);
+  pf.style.width='100%';pl.textContent='Done!';await t();prog.classList.remove('on');
+  const bytes=Math.round(url.split(',')[1].length*3/4);
+  const under=kb===0||bytes<=kb*1024;
+  document.getElementById('nprev').src=url;
+  document.getElementById('nsz').innerHTML=under?`<span class="ok">${fmt(bytes)} ✓</span>`:`<span class="warn">${fmt(bytes)}</span>`;
+  document.getElementById('nmeta').textContent=`${w} × ${h} px`;
   document.getElementById('res').classList.add('on');
-  document.getElementById('res').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-async function compress(maxBytes, pf, pl) {
-  let lo = 0.01, hi = 1.0, best = cv.toDataURL('image/jpeg', 0.5);
-  for (let i = 0; i < 15; i++) {
-    const mid = (lo + hi) / 2;
-    const url = cv.toDataURL('image/jpeg', mid);
-    const b = Math.round(url.split(',')[1].length * 3 / 4);
-    pf.style.width = (40 + i * 3.5) + '%';
-    pl.textContent = `Quality ${Math.round(mid*100)}% → ${fmt(b)}`;
-    if (b <= maxBytes) { best = url; lo = mid; } else hi = mid;
-    await tick();
-  }
-  return best;
-}
-
-function tick() { return new Promise(r => setTimeout(r, 8)); }
-
-// ── DOWNLOAD ──────────────────────────────────────────
-document.getElementById('dlBtn').addEventListener('click', () => {
-  if (!resultUrl) return;
-  const base = (origFile?.name || 'image').replace(/\.[^.]+$/, '');
-  document.getElementById('dname').value = base;
-  document.getElementById('dext').textContent = 'Will save as .jpg';
-  document.getElementById('modal').classList.add('on');
-  setTimeout(() => { const i = document.getElementById('dname'); i.focus(); i.select(); }, 40);
+  document.getElementById('res').scrollIntoView({behavior:'smooth',block:'nearest'});
 });
 
-document.getElementById('mcancel').addEventListener('click', () => document.getElementById('modal').classList.remove('on'));
-document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('on'); });
-document.getElementById('dname').addEventListener('keydown', e => { if (e.key === 'Enter') save(); });
-document.getElementById('msave').addEventListener('click', save);
-
-function save() {
-  const name = (document.getElementById('dname').value.trim() || 'image').replace(/[<>:"/\\|?*]/g, '_');
-  const a = document.getElementById('dl');
-  a.href = resultUrl; a.download = name + '.jpg'; a.click();
-  document.getElementById('modal').classList.remove('on');
+async function compress(max,pf,pl){
+  let lo=.01,hi=1,best=cv.toDataURL('image/jpeg',.5);
+  for(let i=0;i<15;i++){const m=(lo+hi)/2;const u=cv.toDataURL('image/jpeg',m);const b=Math.round(u.split(',')[1].length*3/4);
+  pf.style.width=(40+i*3.5)+'%';pl.textContent=`${Math.round(m*100)}% quality → ${fmt(b)}`;
+  if(b<=max){best=u;lo=m}else hi=m;await t()}return best;
 }
+function t(){return new Promise(r=>setTimeout(r,8))}
 
-function fmt(b) {
-  if (b < 1024) return b + ' B';
-  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
-  return (b/1048576).toFixed(2) + ' MB';
+// download
+document.getElementById('dlBtn').addEventListener('click',()=>{
+  if(!url)return;
+  document.getElementById('dname').value=(file?.name||'image').replace(/\.[^.]+$/,'');
+  document.getElementById('ov').classList.add('on');
+  setTimeout(()=>{const i=document.getElementById('dname');i.focus();i.select()},40);
+});
+document.getElementById('mc').addEventListener('click',()=>document.getElementById('ov').classList.remove('on'));
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===document.getElementById('ov'))document.getElementById('ov').classList.remove('on')});
+document.getElementById('dname').addEventListener('keydown',e=>{if(e.key==='Enter')save()});
+document.getElementById('ms').addEventListener('click',save);
+
+function save(){
+  const n=(document.getElementById('dname').value.trim()||'image').replace(/[<>:"/\\|?*]/g,'_');
+  const a=document.getElementById('dl');a.href=url;a.download=n+'.jpg';a.click();
+  document.getElementById('ov').classList.remove('on');
 }
+function fmt(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB'}
 </script>
 </body>
 </html>
