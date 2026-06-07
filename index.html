@@ -3,683 +3,418 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PhotoSign — Photo & Signature Resizer for Indian Govt Exams</title>
-<meta name="description" content="Resize photo and signature for SSC CGL, AFCAT, UPSC, NDA, RRB, IBPS, SBI PO and all Indian govt job exams. Free, no login, files never leave your device."/>
+<title>PhotoSign — Resize Photo & Signature for Govt Job Forms</title>
+<meta name="description" content="Resize your photo or signature to exact pixel size and KB limit for SSC, UPSC, AFCAT, NDA, RRB, IBPS forms. Free, no login."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f6f7fb;--card:#fff;--border:#e2e8f0;
+  --bg:#f4f6fb;--card:#fff;--border:#e2e8f0;
   --primary:#1a56db;--primary-h:#1e429f;--primary-l:#ebf5ff;
-  --orange:#e3a008;--orange-l:#fdf6b2;
-  --text:#111928;--muted:#6b7280;--muted-l:#9ca3af;
-  --success:#057a55;--success-l:#def7ec;
-  --danger:#e02424;--danger-l:#fde8e8;
-  --radius:12px;--radius-s:8px;
+  --text:#111928;--muted:#6b7280;
+  --green:#057a55;--green-l:#def7ec;
+  --radius:12px;--rs:8px;
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
-/* HEADER */
 header{background:var(--primary);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.15rem;font-weight:700;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
-.logo-icon{background:rgba(255,255,255,.2);border-radius:8px;padding:5px 8px;font-size:1rem}
-.header-right{font-size:.75rem;color:rgba(255,255,255,.8);text-align:right}
-.header-right strong{color:#fff}
+.logo{font-size:1.1rem;font-weight:700;color:#fff;text-decoration:none}
+.hbadge{font-size:.72rem;color:rgba(255,255,255,.75)}
 
-/* HERO BANNER */
-.hero{background:linear-gradient(135deg,#1a56db 0%,#1e429f 100%);color:#fff;text-align:center;padding:36px 20px 40px}
-.hero h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;margin-bottom:8px;line-height:1.25}
-.hero h1 span{color:#fcd34d}
-.hero p{font-size:.95rem;opacity:.9;max-width:520px;margin:0 auto 18px}
-.trust-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.trust-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:500}
+.hero{background:var(--primary);color:#fff;text-align:center;padding:28px 16px 32px}
+.hero h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:700;margin-bottom:7px;line-height:1.25}
+.hero p{font-size:.9rem;opacity:.85;max-width:440px;margin:0 auto}
 
-/* EXAM CHIPS */
-.exams-bar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
-.exams-bar::-webkit-scrollbar{display:none}
-.exam-chip{flex-shrink:0;padding:5px 13px;border:1.5px solid var(--border);border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);transition:all .15s;font-family:inherit}
-.exam-chip:hover,.exam-chip.active{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
+main{max-width:540px;margin:0 auto;padding:24px 14px 80px}
 
-/* MAIN */
-main{max-width:860px;margin:0 auto;padding:24px 14px 80px}
-
-/* MODE TOGGLE */
-.mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;border:1px solid var(--border)}
-.mode-btn{padding:14px;text-align:center;cursor:pointer;background:var(--bg);border:none;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--muted);transition:all .15s}
-.mode-btn.active{background:var(--primary);color:#fff}
-.mode-btn .mode-icon{font-size:1.3rem;display:block;margin-bottom:3px}
-.mode-btn .mode-sub{font-size:.72rem;font-weight:400;opacity:.8;display:block}
-
-/* STEP CARD */
-.step-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
-.step-header{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.step-num{width:26px;height:26px;background:var(--primary);color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-header h3{font-size:.95rem;font-weight:600}
-.step-header p{font-size:.78rem;color:var(--muted);margin-top:1px}
-.step-body{padding:16px}
-
-/* DROP ZONE */
-.drop-zone{border:2px dashed var(--border);border-radius:var(--radius-s);padding:32px 16px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:var(--bg)}
-.drop-zone:hover,.drop-zone.dragging{border-color:var(--primary);background:var(--primary-l)}
-.drop-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.drop-icon{width:48px;height:48px;background:var(--primary-l);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
-.drop-zone h4{font-size:.95rem;font-weight:600;margin-bottom:4px}
+/* UPLOAD */
+.drop-zone{border:2px dashed var(--border);border-radius:var(--radius);background:var(--card);padding:36px 16px;text-align:center;cursor:pointer;position:relative;transition:all .2s;margin-bottom:14px}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--primary);background:var(--primary-l)}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-zone h3{font-size:1rem;font-weight:600;margin-bottom:4px}
 .drop-zone p{font-size:.82rem;color:var(--muted)}
 .browse{color:var(--primary);font-weight:600}
 
-/* FILE PREVIEW ROW */
-.file-bar{display:none;align-items:center;gap:10px;padding:10px 12px;background:var(--success-l);border:1px solid #84e1bc;border-radius:var(--radius-s);margin-bottom:12px}
-.file-bar.visible{display:flex}
-.file-thumb{width:42px;height:42px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0}
-.file-details{flex:1;min-width:0}
-.file-name{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--success)}
-.file-dim{font-size:.72rem;color:var(--muted)}
-.remove-btn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:4px;flex-shrink:0}
-.remove-btn:hover{color:var(--danger);background:var(--danger-l)}
+/* FILE CONFIRMED */
+.file-bar{display:none;align-items:center;gap:10px;background:var(--green-l);border:1px solid #84e1bc;border-radius:var(--rs);padding:10px 12px;margin-bottom:14px}
+.file-bar.on{display:flex}
+.fthumb{width:44px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0}
+.fdets{flex:1;min-width:0}
+.fname{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--green)}
+.fdim{font-size:.72rem;color:var(--muted)}
+.rbtn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0}
+.rbtn:hover{color:#e02424}
 
-/* EXAM PRESETS GRID */
-.exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px}
-.exam-preset{border:1.5px solid var(--border);border-radius:var(--radius-s);padding:10px 12px;cursor:pointer;background:var(--bg);text-align:left;font-family:inherit;transition:all .15s}
-.exam-preset:hover,.exam-preset.active{border-color:var(--primary);background:var(--primary-l)}
-.exam-preset .ep-name{font-size:.83rem;font-weight:700;display:block;color:var(--text)}
-.exam-preset .ep-dim{font-size:.72rem;color:var(--primary);font-weight:600;margin:2px 0}
-.exam-preset .ep-kb{font-size:.7rem;color:var(--muted)}
+/* FORM CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px}
+.card-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px}
 
-/* CUSTOM INPUTS */
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-@media(max-width:420px){.row2{grid-template-columns:1fr}}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
-@media(max-width:480px){.row3{grid-template-columns:1fr 1fr}}
-label{display:block;font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-input[type="number"],select{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--radius-s);font-family:inherit;font-size:.92rem;color:var(--text);background:#fff;outline:none;transition:border-color .15s}
-input[type="number"]:focus,select:focus{border-color:var(--primary)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.field label{display:block;font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:5px}
+.field input,select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.95rem;color:var(--text);background:#fff;outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--primary)}
+
+.sep{height:1px;background:var(--border);margin:16px 0}
+
+/* KB PILLS */
+.kb-label{font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:8px}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.pill{padding:6px 14px;border:1.5px solid var(--border);border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--text);transition:all .15s}
+.pill:hover,.pill.on{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
 
 /* TOGGLE */
-.toggle-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.toggle{position:relative;width:36px;height:20px;flex-shrink:0}
-.toggle input{opacity:0;width:0;height:0}
+.trow{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.tog{position:relative;width:36px;height:20px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0}
 .ts{position:absolute;inset:0;background:#d1d5db;border-radius:999px;cursor:pointer;transition:background .2s}
 .ts::before{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s}
-.toggle input:checked+.ts{background:var(--primary)}
-.toggle input:checked+.ts::before{transform:translateX(16px)}
-.toggle-label{font-size:.83rem;color:var(--text)}
-
-/* KB PRESETS */
-.kb-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
-.kb-pill{padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;transition:all .15s}
-.kb-pill:hover,.kb-pill.active{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
-.kb-custom-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
-.kb-go-btn{padding:9px 18px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-s);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
-.kb-go-btn:hover{background:var(--primary-h)}
+.tog input:checked+.ts{background:var(--primary)}
+.tog input:checked+.ts::before{transform:translateX(16px)}
+.tog-lbl{font-size:.85rem;color:var(--text)}
 
 /* PROGRESS */
-.prog-wrap{display:none;margin-top:10px}
-.prog-wrap.visible{display:block}
-.prog-bar{height:7px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:4px}
+.prog{display:none;margin-bottom:12px}
+.prog.on{display:block}
+.prog-bar{height:7px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:5px}
 .prog-fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s}
-.prog-label{font-size:.75rem;color:var(--muted)}
+.prog-lbl{font-size:.75rem;color:var(--muted)}
 
-/* ACTION BTN */
-.action-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s,transform .1s;letter-spacing:.01em}
-.action-btn:hover{background:var(--primary-h)}
-.action-btn:active{transform:scale(.98)}
-.action-btn:disabled{background:#d1d5db;color:#9ca3af;cursor:not-allowed}
+/* MAIN BTN */
+.go-btn{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s}
+.go-btn:hover{background:var(--primary-h)}
+.go-btn:disabled{background:#d1d5db;color:#9ca3af;cursor:not-allowed}
 
 /* RESULT */
-.result-section{display:none}
-.result-section.visible{display:block}
-.result-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:540px){.result-row{grid-template-columns:1fr}}
-.result-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card)}
-.result-card-hdr{padding:8px 13px;border-bottom:1px solid var(--border);font-size:.75rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
-.result-card img{width:100%;height:180px;object-fit:contain;background:#f9fafb;display:block}
-.result-card-meta{padding:6px 13px;font-size:.73rem;color:var(--muted)}
-.size-ok{color:var(--success);font-weight:600}
-.size-warn{color:var(--orange);font-weight:600}
+.result{display:none;margin-top:4px}
+.result.on{display:block}
+.rrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:440px){.rrow{grid-template-columns:1fr}}
+.rcard{border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--card)}
+.rcard-hdr{padding:7px 12px;border-bottom:1px solid var(--border);font-size:.72rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
+.rcard img{width:100%;height:170px;object-fit:contain;background:#f9fafb;display:block}
+.rcard-meta{padding:5px 12px;font-size:.72rem;color:var(--muted)}
+.ok{color:var(--green);font-weight:600}
+.warn{color:#e3a008;font-weight:600}
 
-/* DOWNLOAD BTN */
-.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:#057a55;color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s;text-decoration:none;margin-bottom:12px}
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s;margin-bottom:12px}
 .dl-btn:hover{background:#046c4e}
 
+.privacy{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:var(--rs);padding:10px 14px;font-size:.77rem;color:#065f46;display:flex;gap:7px;align-items:flex-start}
+
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:16px}
-.modal-overlay.visible{display:flex}
-.modal{background:#fff;border-radius:var(--radius);padding:26px;width:100%;max-width:400px;box-shadow:0 24px 64px rgba(0,0,0,.18)}
-.modal h3{font-size:1rem;font-weight:700;margin-bottom:5px}
-.modal p{font-size:.82rem;color:var(--muted);margin-bottom:16px}
-.modal label{text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--text);margin-bottom:6px}
-.modal input{margin-bottom:6px}
-.modal-hint{font-size:.73rem;color:var(--muted-l);margin-bottom:16px}
-.modal-actions{display:flex;gap:10px}
-.modal-cancel{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-s);background:none;font-family:inherit;font-size:.9rem;cursor:pointer;color:var(--text)}
-.modal-cancel:hover{background:var(--bg)}
-.modal-save{flex:2;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-s);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
-.modal-save:hover{background:var(--primary-h)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;align-items:center;justify-content:center;padding:16px}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:var(--radius);padding:24px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.modal p{font-size:.82rem;color:var(--muted);margin-bottom:14px}
+.modal label{font-size:.8rem;font-weight:600;display:block;margin-bottom:6px}
+.modal input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rs);font-family:inherit;font-size:.95rem;color:var(--text);outline:none;margin-bottom:6px}
+.modal input:focus{border-color:var(--primary)}
+.modal-hint{font-size:.72rem;color:var(--muted);margin-bottom:16px}
+.mbtns{display:flex;gap:10px}
+.mcancel{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--rs);background:none;font-family:inherit;font-size:.9rem;cursor:pointer}
+.msave{flex:2;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:var(--rs);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.msave:hover{background:var(--primary-h)}
 
-/* INFO BOX */
-.info-box{background:var(--primary-l);border:1px solid #c3ddfd;border-radius:var(--radius-s);padding:11px 14px;font-size:.8rem;color:#1e429f;display:flex;gap:8px;align-items:flex-start;margin-top:12px}
-
-/* PRIVACY */
-.privacy{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:var(--radius-s);padding:10px 14px;font-size:.78rem;color:#065f46;display:flex;gap:7px;align-items:flex-start;margin-top:14px}
-
-/* DIVIDER */
-.divider{height:1px;background:var(--border);margin:16px 0}
-
-/* FOOTER */
-footer{text-align:center;padding:20px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
-
+footer{text-align:center;padding:18px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border)}
 canvas{display:none}
 </style>
 </head>
 <body>
 
 <header>
-  <a class="logo" href="#">
-    <span class="logo-icon">📋</span>
-    PhotoSign
-  </a>
-  <div class="header-right">
-    <strong>For Indian Govt Job Aspirants</strong><br/>
-    SSC · UPSC · AFCAT · NDA · RRB · IBPS
-  </div>
+  <a class="logo" href="#">📋 PhotoSign</a>
+  <span class="hbadge">Free · No login · Files stay on your device</span>
 </header>
 
 <div class="hero">
-  <h1>Photo & Signature Resizer<br/>for <span>Govt Job Forms</span></h1>
-  <p>Get the exact photo and signature size required for SSC CGL, AFCAT, UPSC, NDA, RRB, IBPS and all Indian exam forms — in seconds.</p>
-  <div class="trust-row">
-    <span class="trust-pill">✓ No upload to server</span>
-    <span class="trust-pill">✓ No login needed</span>
-    <span class="trust-pill">✓ 100% free</span>
-    <span class="trust-pill">✓ Works offline</span>
-  </div>
-</div>
-
-<!-- EXAM QUICK SELECT -->
-<div class="exams-bar" id="examBar">
-  <button class="exam-chip active" data-exam="all">All Exams</button>
-  <button class="exam-chip" data-exam="ssc">SSC CGL / CHSL / MTS</button>
-  <button class="exam-chip" data-exam="upsc">UPSC CSE / NDA</button>
-  <button class="exam-chip" data-exam="afcat">AFCAT / CDS</button>
-  <button class="exam-chip" data-exam="rrb">RRB / Railway</button>
-  <button class="exam-chip" data-exam="bank">IBPS / SBI / Bank</button>
-  <button class="exam-chip" data-exam="state">State PSC / Govt</button>
-  <button class="exam-chip" data-exam="entrance">NEET / JEE / CUET</button>
+  <h1>Resize Photo &amp; Signature<br/>for Govt Job Forms</h1>
+  <p>Enter the size your form requires — we resize and compress instantly.</p>
 </div>
 
 <main>
 
-  <!-- MODE TOGGLE -->
-  <div class="mode-toggle">
-    <button class="mode-btn active" id="modePhoto">
-      <span class="mode-icon">🤳</span>
-      Passport Photo
-      <span class="mode-sub">For form upload</span>
-    </button>
-    <button class="mode-btn" id="modeSign">
-      <span class="mode-icon">✍️</span>
-      Signature
-      <span class="mode-sub">For form upload</span>
-    </button>
+  <!-- UPLOAD -->
+  <div class="drop-zone" id="dz">
+    <input type="file" id="fi" accept="image/*"/>
+    <div style="font-size:2rem;margin-bottom:10px">🖼️</div>
+    <h3>Drop image here or <span class="browse">click to browse</span></h3>
+    <p>Photo or signature · JPG, PNG, WEBP · Ctrl+V to paste</p>
   </div>
 
-  <!-- STEP 1: UPLOAD -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">1</div>
-      <div>
-        <h3 id="uploadTitle">Upload Your Photo</h3>
-        <p id="uploadHint">JPG, PNG or JPEG — white background preferred for govt photos</p>
-      </div>
+  <div class="file-bar" id="fbar">
+    <img id="fthumb" class="fthumb" src="" alt=""/>
+    <div class="fdets">
+      <div class="fname" id="fname">—</div>
+      <div class="fdim" id="fdim">—</div>
     </div>
-    <div class="step-body">
-      <div class="file-bar" id="fileBar">
-        <img id="fileThumbnail" class="file-thumb" src="" alt=""/>
-        <div class="file-details">
-          <div class="file-name" id="fileName">—</div>
-          <div class="file-dim" id="fileDim">—</div>
-        </div>
-        <button class="remove-btn" id="removeBtn">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="drop-zone" id="dropZone">
-        <input type="file" id="fileInput" accept="image/*"/>
-        <div class="drop-icon">
-          <svg width="22" height="22" fill="none" stroke="#1a56db" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <h4>Drop image here or <span class="browse">click to browse</span></h4>
-        <p>Supports JPG, PNG, WEBP · Ctrl+V to paste</p>
-      </div>
-    </div>
+    <button class="rbtn" id="rmv">✕</button>
   </div>
 
-  <!-- STEP 2: PICK EXAM PRESET -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">2</div>
-      <div>
-        <h3>Pick Your Exam</h3>
-        <p>Select from below — dimensions and size limit auto-fill</p>
+  <!-- SIZE + KB -->
+  <div class="card">
+    <div class="card-title">What size does your form need?</div>
+
+    <div class="row2">
+      <div class="field">
+        <label>Width (px)</label>
+        <input type="number" id="wi" min="1" max="5000" placeholder="e.g. 200"/>
+      </div>
+      <div class="field">
+        <label>Height (px)</label>
+        <input type="number" id="hi" min="1" max="5000" placeholder="e.g. 230"/>
       </div>
     </div>
-    <div class="step-body">
-      <div class="exam-grid" id="examPresetGrid"></div>
+
+    <div class="trow">
+      <label class="tog"><input type="checkbox" id="lock" checked/><span class="ts"></span></label>
+      <span class="tog-lbl">Keep original proportions</span>
     </div>
-  </div>
-
-  <!-- STEP 3: SETTINGS -->
-  <div class="step-card">
-    <div class="step-header">
-      <div class="step-num">3</div>
-      <div>
-        <h3>Size &amp; File Settings</h3>
-        <p>Auto-filled from exam preset — adjust if needed</p>
-      </div>
+    <div class="trow">
+      <label class="tog"><input type="checkbox" id="wbg" checked/><span class="ts"></span></label>
+      <span class="tog-lbl">White background (required for most govt photos)</span>
     </div>
-    <div class="step-body">
-      <div class="row2">
-        <div>
-          <label>Width (px)</label>
-          <input type="number" id="wInput" min="1" max="5000" placeholder="e.g. 200"/>
-        </div>
-        <div>
-          <label>Height (px)</label>
-          <input type="number" id="hInput" min="1" max="5000" placeholder="e.g. 230"/>
-        </div>
-      </div>
 
-      <div class="toggle-row">
-        <label class="toggle"><input type="checkbox" id="lockRatio" checked/><span class="ts"></span></label>
-        <span class="toggle-label">Lock aspect ratio</span>
-      </div>
-      <div class="toggle-row" id="whiteBgRow">
-        <label class="toggle"><input type="checkbox" id="whiteBg" checked/><span class="ts"></span></label>
-        <span class="toggle-label">White background (required for most govt photo forms)</span>
-      </div>
+    <div class="sep"></div>
 
-      <div class="divider"></div>
-
-      <label style="text-transform:none;letter-spacing:0;font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:8px;display:block">Target file size</label>
-      <p style="font-size:.8rem;color:var(--muted);margin-bottom:10px">Govt portals usually reject files above 20–50 KB. Pick a limit to compress automatically.</p>
-      <div class="kb-pills" id="kbPills">
-        <button class="kb-pill active" data-kb="20">20 KB</button>
-        <button class="kb-pill" data-kb="30">30 KB</button>
-        <button class="kb-pill" data-kb="50">50 KB</button>
-        <button class="kb-pill" data-kb="100">100 KB</button>
-        <button class="kb-pill" data-kb="200">200 KB</button>
-        <button class="kb-pill" data-kb="0">No limit</button>
-      </div>
-      <div class="kb-custom-row">
-        <div>
-          <label>Or type custom limit (KB)</label>
-          <input type="number" id="customKb" min="1" max="10000" placeholder="e.g. 40"/>
-        </div>
-        <button class="kb-go-btn" id="customKbApply">Set</button>
-      </div>
-
-      <div class="info-box" id="examInfoBox" style="display:none">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span id="examInfoText"></span>
+    <div class="kb-label">Max file size allowed by the form</div>
+    <div class="pills" id="pills">
+      <button class="pill" data-kb="20">20 KB</button>
+      <button class="pill on" data-kb="50">50 KB</button>
+      <button class="pill" data-kb="100">100 KB</button>
+      <button class="pill" data-kb="200">200 KB</button>
+      <button class="pill" data-kb="300">300 KB</button>
+      <button class="pill" data-kb="0">No limit</button>
+    </div>
+    <div class="row2" style="margin-bottom:0">
+      <div class="field">
+        <label>Or type exact KB limit</label>
+        <input type="number" id="customkb" min="1" max="10000" placeholder="e.g. 40"/>
       </div>
     </div>
   </div>
 
-  <!-- STEP 4: GENERATE -->
-  <button class="action-btn" id="goBtn" disabled>
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-    Generate &amp; Download
-  </button>
+  <!-- GO -->
+  <button class="go-btn" id="goBtn" disabled>Resize &amp; Compress →</button>
 
   <!-- PROGRESS -->
-  <div class="prog-wrap" id="progWrap">
-    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-    <p class="prog-label" id="progLabel">Processing…</p>
+  <div class="prog" id="prog">
+    <div class="prog-bar"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+    <div class="prog-lbl" id="pl">Processing…</div>
   </div>
 
   <!-- RESULT -->
-  <div class="result-section" id="resultSection">
-    <div class="divider"></div>
-    <div class="result-row">
-      <div class="result-card">
-        <div class="result-card-hdr"><span>Original</span><span id="origSz">—</span></div>
-        <img id="origPrev" src="" alt="Original"/>
-        <div class="result-card-meta" id="origMeta">—</div>
+  <div class="result" id="res">
+    <div class="rrow">
+      <div class="rcard">
+        <div class="rcard-hdr"><span>Original</span><span id="osz">—</span></div>
+        <img id="oprev" src="" alt="Original"/>
+        <div class="rcard-meta" id="ometa">—</div>
       </div>
-      <div class="result-card">
-        <div class="result-card-hdr"><span>Result</span><span id="newSz">—</span></div>
-        <img id="newPrev" src="" alt="Result"/>
-        <div class="result-card-meta" id="newMeta">—</div>
+      <div class="rcard">
+        <div class="rcard-hdr"><span>Result</span><span id="nsz">—</span></div>
+        <img id="nprev" src="" alt="Result"/>
+        <div class="rcard-meta" id="nmeta">—</div>
       </div>
     </div>
-    <button class="dl-btn" id="dlTrigger">
-      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download — Ready to Upload on Form
+
+    <button class="dl-btn" id="dlBtn">
+      ⬇️ &nbsp;Download — Ready to Upload
     </button>
 
     <div class="privacy">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span>Your image is processed entirely on your device. Nothing is uploaded, stored or shared. Safe to use for govt documents.</span>
+      🔒 <span>Your image never leaves your device. Processed entirely in your browser — nothing uploaded, nothing stored.</span>
     </div>
   </div>
 
 </main>
 
-<!-- DOWNLOAD MODAL -->
-<div class="modal-overlay" id="dlModal">
+<!-- MODAL -->
+<div class="overlay" id="modal">
   <div class="modal">
-    <h3>Save as…</h3>
-    <p>Name your file before saving. Use something meaningful like <em>photo_john_ssc</em> or <em>signature_upsc</em>.</p>
+    <h3>Name your file</h3>
+    <p>Use something you'll recognise later.</p>
     <label>File name</label>
-    <input type="text" id="dlName" placeholder="e.g. photo_ssc_cgl"/>
-    <p class="modal-hint" id="dlExt">Will save as .jpg</p>
-    <div class="modal-actions">
-      <button class="modal-cancel" id="modalCancel">Cancel</button>
-      <button class="modal-save" id="modalSave">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Save File
-      </button>
+    <input type="text" id="dname" placeholder="e.g. photo_ssc_cgl"/>
+    <p class="modal-hint" id="dext">Will save as .jpg</p>
+    <div class="mbtns">
+      <button class="mcancel" id="mcancel">Cancel</button>
+      <button class="msave" id="msave">⬇️ Save File</button>
     </div>
   </div>
 </div>
 
-<footer>
-  <p>PhotoSign — Free forever · No ads · No watermarks · Built for Indian govt job aspirants 🇮🇳</p>
-</footer>
+<footer>PhotoSign · Free forever · No ads · No watermarks · 🇮🇳 Built for Indian govt job aspirants</footer>
 
-<canvas id="canvas"></canvas>
-<a id="hiddenLink" style="display:none"></a>
+<canvas id="cv"></canvas>
+<a id="dl" style="display:none"></a>
 
 <script>
-// ─── EXAM DATA ───────────────────────────────────────────────────────────────
-// Each entry: { name, exam, photo: {w,h,maxKb}, sign: {w,h,maxKb}, note }
-const EXAMS = [
-  // SSC
-  { name:'SSC CGL',      exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB JPG, white background. Signature: 10–20 KB JPG.' },
-  { name:'SSC CHSL',     exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Same as SSC CGL requirements.' },
-  { name:'SSC MTS',      exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo max 50 KB, signature max 20 KB.' },
-  { name:'SSC CPO',      exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
-  // UPSC
-  { name:'UPSC CSE',     exam:'upsc', photo:{w:300,h:400,maxKb:300}, sign:{w:300,h:80,maxKb:300}, note:'Photo max 300 KB, signature max 300 KB. JPEG only.' },
-  { name:'NDA / NA',     exam:'upsc', photo:{w:200,h:230,maxKb:40},  sign:{w:140,h:60,maxKb:20},  note:'Photo 3.5×4.5 cm, max 40 KB. Signature max 20 KB.' },
-  { name:'CDS',          exam:'upsc', photo:{w:200,h:230,maxKb:40},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–40 KB. Signature: 10–20 KB.' },
-  // AFCAT
-  { name:'AFCAT',        exam:'afcat',photo:{w:200,h:240,maxKb:40},  sign:{w:140,h:60,maxKb:30},  note:'Photo 3.5×4.5 cm, 10–40 KB. Signature 3.5×1.5 cm, 10–30 KB.' },
-  { name:'INET (Navy)',  exam:'afcat',photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo max 50 KB. Signature max 20 KB.' },
-  // RRB
-  { name:'RRB NTPC',     exam:'rrb',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB JPG. Signature: 10–20 KB JPG.' },
-  { name:'RRB Group D',  exam:'rrb',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo max 50 KB. Signature max 20 KB.' },
-  { name:'RRB JE / ALP', exam:'rrb',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Same as RRB NTPC.' },
-  // Banking
-  { name:'IBPS PO / Clerk', exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo: 20–50 KB. Signature: 10–20 KB. JPEG only.' },
-  { name:'SBI PO / Clerk',  exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
-  { name:'RBI Grade B',     exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo max 50 KB. Signature max 20 KB.' },
-  { name:'NABARD',          exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
-  // State
-  { name:'State PSC',    exam:'state',photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Varies by state. Common: photo 50 KB, signature 20 KB.' },
-  { name:'DSSSB',        exam:'state',photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
-  // Entrance
-  { name:'NEET UG',      exam:'entrance', photo:{w:200,h:230,maxKb:200}, sign:{w:140,h:60,maxKb:30}, note:'Photo: 10–200 KB JPEG. Signature: 4–30 KB JPEG.' },
-  { name:'JEE Main',     exam:'entrance', photo:{w:200,h:230,maxKb:500}, sign:{w:140,h:60,maxKb:500},note:'Photo max 500 KB. Signature max 500 KB.' },
-  { name:'CUET',         exam:'entrance', photo:{w:200,h:230,maxKb:300}, sign:{w:140,h:60,maxKb:100},note:'Photo max 300 KB. Signature max 100 KB.' },
-  { name:'GATE',         exam:'entrance', photo:{w:200,h:230,maxKb:500}, sign:{w:140,h:60,maxKb:500},note:'Photo max 500 KB. Signature max 500 KB.' },
-];
+let origImg = null, origFile = null, origW = 0, origH = 0;
+let resultUrl = null, targetKb = 50;
+let aw = false, ah = false;
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let mode = 'photo'; // 'photo' | 'sign'
-let origFile = null, origImg = null, origW = 0, origH = 0;
-let resultDataUrl = null;
-let selectedExam = null;
-let targetKb = 20; // default
-let adjW = false, adjH = false;
+const cv = document.getElementById('cv');
+const cx = cv.getContext('2d');
 
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+// ── UPLOAD ────────────────────────────────────────────
+const dz = document.getElementById('dz');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); const f = e.dataTransfer.files[0]; if (f?.type.startsWith('image/')) load(f); });
+document.getElementById('fi').addEventListener('change', e => { if (e.target.files[0]) load(e.target.files[0]); });
+document.addEventListener('paste', e => { for (const it of (e.clipboardData||e.originalEvent.clipboardData).items) { if (it.type.startsWith('image/')) { load(it.getAsFile()); break; } } });
+document.getElementById('rmv').addEventListener('click', reset);
 
-// ─── MODE SWITCH ─────────────────────────────────────────────────────────────
-document.getElementById('modePhoto').addEventListener('click', () => setMode('photo'));
-document.getElementById('modeSign').addEventListener('click', () => setMode('sign'));
-
-function setMode(m) {
-  mode = m;
-  document.getElementById('modePhoto').classList.toggle('active', m === 'photo');
-  document.getElementById('modeSign').classList.toggle('active', m === 'sign');
-  document.getElementById('uploadTitle').textContent = m === 'photo' ? 'Upload Your Photo' : 'Upload Your Signature';
-  document.getElementById('uploadHint').textContent = m === 'photo'
-    ? 'JPG, PNG or JPEG — white background preferred for govt photos'
-    : 'Sign on white paper, take a clear photo or scan it';
-  document.getElementById('whiteBgRow').style.display = m === 'photo' ? '' : 'none';
-  // If exam already selected, re-fill dims
-  if (selectedExam) fillFromExam(selectedExam);
-  renderExamGrid();
-}
-
-// ─── EXAM BAR FILTER ─────────────────────────────────────────────────────────
-let activeExamFilter = 'all';
-document.getElementById('examBar').addEventListener('click', e => {
-  const chip = e.target.closest('.exam-chip');
-  if (!chip) return;
-  activeExamFilter = chip.dataset.exam;
-  document.querySelectorAll('.exam-chip').forEach(c => c.classList.toggle('active', c.dataset.exam === activeExamFilter));
-  renderExamGrid();
-});
-
-function renderExamGrid() {
-  const grid = document.getElementById('examPresetGrid');
-  grid.innerHTML = '';
-  const list = activeExamFilter === 'all' ? EXAMS : EXAMS.filter(e => e.exam === activeExamFilter);
-  list.forEach(ex => {
-    const d = mode === 'photo' ? ex.photo : ex.sign;
-    const btn = document.createElement('button');
-    btn.className = 'exam-preset' + (selectedExam === ex ? ' active' : '');
-    btn.innerHTML = `<span class="ep-name">${ex.name}</span><span class="ep-dim">${d.w} × ${d.h} px</span><span class="ep-kb">Max ${d.maxKb} KB</span>`;
-    btn.addEventListener('click', () => {
-      selectedExam = ex;
-      document.querySelectorAll('.exam-preset').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      fillFromExam(ex);
-    });
-    grid.appendChild(btn);
-  });
-}
-renderExamGrid();
-
-function fillFromExam(ex) {
-  const d = mode === 'photo' ? ex.photo : ex.sign;
-  document.getElementById('wInput').value = d.w;
-  document.getElementById('hInput').value = d.h;
-  // Set KB pill
-  targetKb = d.maxKb;
-  document.querySelectorAll('.kb-pill').forEach(p => p.classList.toggle('active', +p.dataset.kb === d.maxKb));
-  // Clear custom input
-  document.getElementById('customKb').value = '';
-  // Show info note
-  const box = document.getElementById('examInfoBox');
-  document.getElementById('examInfoText').textContent = ex.note;
-  box.style.display = 'flex';
-}
-
-// ─── WIDTH/HEIGHT LOCK ───────────────────────────────────────────────────────
-document.getElementById('wInput').addEventListener('input', () => {
-  if (document.getElementById('lockRatio').checked && origW && !adjH) {
-    adjW = true;
-    document.getElementById('hInput').value = Math.round(+document.getElementById('wInput').value * origH / origW);
-    adjW = false;
-  }
-});
-document.getElementById('hInput').addEventListener('input', () => {
-  if (document.getElementById('lockRatio').checked && origH && !adjW) {
-    adjH = true;
-    document.getElementById('wInput').value = Math.round(+document.getElementById('hInput').value * origW / origH);
-    adjH = false;
-  }
-});
-
-// ─── KB PILLS ────────────────────────────────────────────────────────────────
-document.getElementById('kbPills').addEventListener('click', e => {
-  const pill = e.target.closest('.kb-pill');
-  if (!pill) return;
-  targetKb = +pill.dataset.kb;
-  document.querySelectorAll('.kb-pill').forEach(p => p.classList.remove('active'));
-  pill.classList.add('active');
-  document.getElementById('customKb').value = '';
-});
-
-document.getElementById('customKbApply').addEventListener('click', () => {
-  const v = +document.getElementById('customKb').value;
-  if (v > 0) {
-    targetKb = v;
-    document.querySelectorAll('.kb-pill').forEach(p => p.classList.remove('active'));
-  }
-});
-
-// ─── FILE LOADING ────────────────────────────────────────────────────────────
-const dropZone = document.getElementById('dropZone');
-document.getElementById('dropZone').addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
-document.getElementById('dropZone').addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
-document.getElementById('dropZone').addEventListener('drop', e => {
-  e.preventDefault(); dropZone.classList.remove('dragging');
-  const f = e.dataTransfer.files[0];
-  if (f && f.type.startsWith('image/')) loadFile(f);
-});
-document.getElementById('fileInput').addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
-document.addEventListener('paste', e => {
-  for (const item of (e.clipboardData || e.originalEvent.clipboardData).items) {
-    if (item.type.startsWith('image/')) { loadFile(item.getAsFile()); break; }
-  }
-});
-document.getElementById('removeBtn').addEventListener('click', resetFile);
-
-function loadFile(file) {
+function load(file) {
   origFile = file;
   const url = URL.createObjectURL(file);
   const img = new Image();
   img.onload = () => {
     origImg = img; origW = img.naturalWidth; origH = img.naturalHeight;
-    document.getElementById('fileThumbnail').src = url;
-    document.getElementById('fileName').textContent = file.name;
-    document.getElementById('fileDim').textContent = `${origW}×${origH}px · ${fmtBytes(file.size)}`;
-    document.getElementById('fileBar').classList.add('visible');
-    document.getElementById('origPrev').src = url;
-    document.getElementById('origSz').textContent = fmtBytes(file.size);
-    document.getElementById('origMeta').textContent = `${origW} × ${origH} px`;
+    document.getElementById('fthumb').src = url;
+    document.getElementById('fname').textContent = file.name;
+    document.getElementById('fdim').textContent = `${origW}×${origH}px · ${fmt(file.size)}`;
+    document.getElementById('fbar').classList.add('on');
+    document.getElementById('oprev').src = url;
+    document.getElementById('osz').textContent = fmt(file.size);
+    document.getElementById('ometa').textContent = `${origW} × ${origH} px`;
     document.getElementById('goBtn').disabled = false;
-    document.getElementById('resultSection').classList.remove('visible');
-    resultDataUrl = null;
+    document.getElementById('res').classList.remove('on');
+    resultUrl = null;
+    // Prefill dims
+    if (!document.getElementById('wi').value) document.getElementById('wi').value = origW;
+    if (!document.getElementById('hi').value) document.getElementById('hi').value = origH;
   };
   img.src = url;
 }
 
-function resetFile() {
-  origFile = null; origImg = null;
-  document.getElementById('fileInput').value = '';
-  document.getElementById('fileBar').classList.remove('visible');
+function reset() {
+  origFile = origImg = null;
+  document.getElementById('fi').value = '';
+  document.getElementById('fbar').classList.remove('on');
   document.getElementById('goBtn').disabled = true;
-  document.getElementById('resultSection').classList.remove('visible');
+  document.getElementById('res').classList.remove('on');
 }
 
-// ─── GENERATE ────────────────────────────────────────────────────────────────
-document.getElementById('goBtn').addEventListener('click', generate);
+// ── ASPECT LOCK ───────────────────────────────────────
+document.getElementById('wi').addEventListener('input', () => {
+  if (document.getElementById('lock').checked && origW && !ah) {
+    aw = true; document.getElementById('hi').value = Math.round(+document.getElementById('wi').value * origH / origW); aw = false;
+  }
+});
+document.getElementById('hi').addEventListener('input', () => {
+  if (document.getElementById('lock').checked && origH && !aw) {
+    ah = true; document.getElementById('wi').value = Math.round(+document.getElementById('hi').value * origW / origH); ah = false;
+  }
+});
 
-async function generate() {
+// ── KB PILLS ──────────────────────────────────────────
+document.getElementById('pills').addEventListener('click', e => {
+  const p = e.target.closest('.pill');
+  if (!p) return;
+  targetKb = +p.dataset.kb;
+  document.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+  p.classList.add('on');
+  document.getElementById('customkb').value = '';
+});
+document.getElementById('customkb').addEventListener('input', function() {
+  if (+this.value > 0) {
+    targetKb = +this.value;
+    document.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+  }
+});
+
+// ── GENERATE ──────────────────────────────────────────
+document.getElementById('goBtn').addEventListener('click', go);
+
+async function go() {
   if (!origImg) return;
-  const w = parseInt(document.getElementById('wInput').value) || origW;
-  const h = parseInt(document.getElementById('hInput').value) || origH;
-  const whiteBg = mode === 'photo' && document.getElementById('whiteBg').checked;
-  const kb = targetKb;
+  const w = parseInt(document.getElementById('wi').value) || origW;
+  const h = parseInt(document.getElementById('hi').value) || origH;
+  const wb = document.getElementById('wbg').checked;
 
-  const prog = document.getElementById('progWrap');
-  const fill = document.getElementById('progFill');
-  const label = document.getElementById('progLabel');
-  prog.classList.add('visible');
-  fill.style.width = '20%'; label.textContent = 'Resizing image…';
+  const prog = document.getElementById('prog');
+  const pf = document.getElementById('pf');
+  const pl = document.getElementById('pl');
+  prog.classList.add('on'); pf.style.width = '15%'; pl.textContent = 'Resizing…';
   await tick();
 
-  // Draw at target dimensions
-  canvas.width = w; canvas.height = h;
-  ctx.clearRect(0, 0, w, h);
-  if (whiteBg) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
-  ctx.drawImage(origImg, 0, 0, w, h);
+  cv.width = w; cv.height = h;
+  cx.clearRect(0, 0, w, h);
+  if (wb) { cx.fillStyle = '#fff'; cx.fillRect(0, 0, w, h); }
+  cx.drawImage(origImg, 0, 0, w, h);
 
-  fill.style.width = '50%'; label.textContent = 'Compressing to target size…';
+  pf.style.width = '40%'; pl.textContent = 'Compressing to target size…';
   await tick();
 
-  let finalUrl;
-  if (kb > 0) {
-    finalUrl = await compressToKb(kb * 1024);
+  let url;
+  if (targetKb > 0) {
+    url = await compress(targetKb * 1024, pf, pl);
   } else {
-    finalUrl = canvas.toDataURL('image/jpeg', 0.92);
+    url = cv.toDataURL('image/jpeg', 0.92);
   }
 
-  fill.style.width = '100%'; label.textContent = 'Done!';
+  pf.style.width = '100%'; pl.textContent = 'Done!';
   await tick();
-  prog.classList.remove('visible');
+  prog.classList.remove('on');
 
-  // Show result
-  resultDataUrl = finalUrl;
-  const b64 = finalUrl.split(',')[1];
-  const bytes = Math.round(b64.length * 3 / 4);
-  const sizeLabel = fmtBytes(bytes);
-  const kbNum = bytes / 1024;
-  const underLimit = kb === 0 || kbNum <= kb;
+  resultUrl = url;
+  const bytes = Math.round((url.split(',')[1].length * 3) / 4);
+  const under = targetKb === 0 || bytes <= targetKb * 1024;
 
-  document.getElementById('newPrev').src = finalUrl;
-  document.getElementById('newSz').innerHTML = underLimit
-    ? `<span class="size-ok">${sizeLabel} ✓</span>`
-    : `<span class="size-warn">${sizeLabel} — try lower KB limit</span>`;
-  document.getElementById('newMeta').textContent = `${w} × ${h} px`;
-  document.getElementById('resultSection').classList.add('visible');
-  document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  document.getElementById('nprev').src = url;
+  document.getElementById('nsz').innerHTML = under
+    ? `<span class="ok">${fmt(bytes)} ✓</span>`
+    : `<span class="warn">${fmt(bytes)} — over limit</span>`;
+  document.getElementById('nmeta').textContent = `${w} × ${h} px`;
+  document.getElementById('res').classList.add('on');
+  document.getElementById('res').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-async function compressToKb(targetBytes) {
-  let lo = 0.01, hi = 1.0, best = canvas.toDataURL('image/jpeg', 0.5);
+async function compress(maxBytes, pf, pl) {
+  let lo = 0.01, hi = 1.0, best = cv.toDataURL('image/jpeg', 0.5);
   for (let i = 0; i < 15; i++) {
     const mid = (lo + hi) / 2;
-    const url = canvas.toDataURL('image/jpeg', mid);
-    const bytes = Math.round((url.split(',')[1].length * 3) / 4);
-    document.getElementById('progFill').style.width = (50 + i*3) + '%';
-    document.getElementById('progLabel').textContent = `Trying ${Math.round(mid*100)}% quality → ${fmtBytes(bytes)}`;
-    if (bytes <= targetBytes) { best = url; lo = mid; }
-    else hi = mid;
+    const url = cv.toDataURL('image/jpeg', mid);
+    const b = Math.round(url.split(',')[1].length * 3 / 4);
+    pf.style.width = (40 + i * 3.5) + '%';
+    pl.textContent = `Quality ${Math.round(mid*100)}% → ${fmt(b)}`;
+    if (b <= maxBytes) { best = url; lo = mid; } else hi = mid;
     await tick();
   }
   return best;
 }
 
-function tick() { return new Promise(r => setTimeout(r, 10)); }
+function tick() { return new Promise(r => setTimeout(r, 8)); }
 
-// ─── DOWNLOAD MODAL ──────────────────────────────────────────────────────────
-document.getElementById('dlTrigger').addEventListener('click', () => {
-  if (!resultDataUrl) return;
+// ── DOWNLOAD ──────────────────────────────────────────
+document.getElementById('dlBtn').addEventListener('click', () => {
+  if (!resultUrl) return;
   const base = (origFile?.name || 'image').replace(/\.[^.]+$/, '');
-  const examSuffix = selectedExam ? '_' + selectedExam.name.toLowerCase().replace(/[^a-z0-9]/g, '_') : '';
-  document.getElementById('dlName').value = (mode === 'photo' ? 'photo' : 'signature') + examSuffix;
-  document.getElementById('dlExt').textContent = 'Will save as .jpg — ready to upload on your exam form';
-  document.getElementById('dlModal').classList.add('visible');
-  setTimeout(() => { const i = document.getElementById('dlName'); i.focus(); i.select(); }, 50);
+  document.getElementById('dname').value = base;
+  document.getElementById('dext').textContent = 'Will save as .jpg';
+  document.getElementById('modal').classList.add('on');
+  setTimeout(() => { const i = document.getElementById('dname'); i.focus(); i.select(); }, 40);
 });
 
-document.getElementById('modalCancel').addEventListener('click', () => document.getElementById('dlModal').classList.remove('visible'));
-document.getElementById('dlModal').addEventListener('click', e => { if (e.target === document.getElementById('dlModal')) document.getElementById('dlModal').classList.remove('visible'); });
-document.getElementById('dlName').addEventListener('keydown', e => { if (e.key === 'Enter') doDownload(); });
-document.getElementById('modalSave').addEventListener('click', doDownload);
+document.getElementById('mcancel').addEventListener('click', () => document.getElementById('modal').classList.remove('on'));
+document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('on'); });
+document.getElementById('dname').addEventListener('keydown', e => { if (e.key === 'Enter') save(); });
+document.getElementById('msave').addEventListener('click', save);
 
-function doDownload() {
-  const name = (document.getElementById('dlName').value.trim() || 'image').replace(/[<>:"/\\|?*]/g, '_');
-  const link = document.getElementById('hiddenLink');
-  link.href = resultDataUrl;
-  link.download = name + '.jpg';
-  link.click();
-  document.getElementById('dlModal').classList.remove('visible');
+function save() {
+  const name = (document.getElementById('dname').value.trim() || 'image').replace(/[<>:"/\\|?*]/g, '_');
+  const a = document.getElementById('dl');
+  a.href = resultUrl; a.download = name + '.jpg'; a.click();
+  document.getElementById('modal').classList.remove('on');
 }
 
-// ─── UTILS ───────────────────────────────────────────────────────────────────
-function fmtBytes(b) {
+function fmt(b) {
   if (b < 1024) return b + ' B';
-  if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
-  return (b/1024/1024).toFixed(2) + ' MB';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(2) + ' MB';
 }
 </script>
 </body>
