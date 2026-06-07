@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PhotoSign — Resize Photo & Signature for Any Form | Free, No Login</title>
-<meta name="description" content="Resize your photo or signature to exact pixel size and KB limit for SSC, UPSC, AFCAT, NDA, RRB, IBPS and any govt form. Free, instant, no login required."/>
-<meta name="keywords" content="photo resize, signature resize, SSC photo resize, UPSC photo size, AFCAT photo, govt exam photo, resize image online, compress photo KB, free image resizer India"/>
-<meta property="og:title" content="PhotoSign — Resize Photo & Signature for Any Form"/>
-<meta property="og:description" content="Enter the size your form needs. We resize and compress instantly. Free. No login. Files never leave your device."/>
+<title>PhotoSign — Free Photo & Signature Resizer | Resize Image to Exact Pixels & KB</title>
+<meta name="description" content="Resize your photo or signature to any pixel size and compress to exact KB for any application form. Free, instant, no login, files never leave your device."/>
+<meta name="keywords" content="photo resize online free, signature resize, resize image to KB, compress photo to 50KB, resize image pixels, photo resizer no login, image compressor free, resize photo for form, compress image size online"/>
+<meta property="og:title" content="PhotoSign — Free Photo & Signature Resizer"/>
+<meta property="og:description" content="Enter the size your form needs. Resize to exact pixels and compress to KB instantly. Free. No login. Completely private."/>
 <meta property="og:type" content="website"/>
 <link rel="canonical" href="https://kbajrang.github.io/resizeforjob/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -162,9 +162,22 @@ main{max-width:520px;margin:0 auto;padding:28px 14px 72px}
 .ms:hover{background:var(--pri-h)}
 
 /* FOOTER */
-footer{background:var(--card);border-top:1px solid var(--border);padding:20px;text-align:center}
-.footer-top{font-size:.78rem;color:var(--muted);margin-bottom:6px}
-.footer-seo{font-size:.7rem;color:var(--muted-l);max-width:480px;margin:0 auto;line-height:1.6}
+footer{background:var(--card);border-top:1px solid var(--border);padding:16px 20px;text-align:center}
+.footer-main{font-size:.72rem;color:var(--muted);margin-bottom:4px}
+.footer-dev{font-size:.68rem;color:var(--muted-l);margin-bottom:6px}
+.footer-dev a{color:var(--pri);text-decoration:none}
+.footer-dev a:hover{text-decoration:underline}
+.footer-seo{font-size:.62rem;color:var(--muted-l);max-width:520px;margin:0 auto;line-height:1.6}
+
+/* RATING */
+.rating-bar{display:none;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-bottom:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.rating-bar.on{display:block}
+.rating-bar p{font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:8px}
+.stars{display:flex;justify-content:center;gap:6px}
+.star{font-size:1.6rem;cursor:pointer;transition:transform .15s;line-height:1;border:none;background:none;padding:0}
+.star:hover{transform:scale(1.2)}
+.rating-thanks{display:none;font-size:.82rem;color:var(--green);font-weight:600;margin-top:6px}
+.rating-thanks.on{display:block}
 
 canvas{display:none}
 </style>
@@ -181,7 +194,7 @@ canvas{display:none}
 </header>
 
 <div class="hero">
-  <p class="hero-eyebrow">For SSC · UPSC · AFCAT · NDA · RRB · IBPS · Any Form</p>
+  <p class="hero-eyebrow">Works for any application form — job, exam, visa, college</p>
   <h1>Resize Photo &amp; Signature<br/>to <em>Exact Size</em> in Seconds</h1>
   <p>Your form says "photo must be 200×230 px, max 50 KB"?<br/>Just enter those numbers — we do the rest.</p>
   <div class="steps-row">
@@ -301,6 +314,19 @@ canvas{display:none}
       ⬇️ &nbsp; Download — Ready to Upload on Form
     </button>
 
+    <!-- RATING -->
+    <div class="rating-bar" id="ratingBar">
+      <p>Did this save you time? Rate us 😊</p>
+      <div class="stars">
+        <button class="star" data-v="1">⭐</button>
+        <button class="star" data-v="2">⭐</button>
+        <button class="star" data-v="3">⭐</button>
+        <button class="star" data-v="4">⭐</button>
+        <button class="star" data-v="5">⭐</button>
+      </div>
+      <div class="rating-thanks" id="ratingThanks">Thank you! Glad it helped 🙌</div>
+    </div>
+
     <div class="priv">
       🔒 <span><strong>100% private.</strong> Your image is processed entirely on your device. Nothing is uploaded to any server. Safe for Aadhaar, passport photos and signatures.</span>
     </div>
@@ -324,8 +350,9 @@ canvas{display:none}
 </div>
 
 <footer>
-  <p class="footer-top">PhotoSign · Free forever · No ads · No watermarks · 🇮🇳 Made for Indian students</p>
-  <p class="footer-seo">Resize and compress photos and signatures for SSC CGL, SSC CHSL, UPSC CSE, NDA, AFCAT, CDS, RRB NTPC, RRB Group D, IBPS PO, SBI PO, NEET, JEE Main, CUET and all government job application forms. Works on mobile and desktop.</p>
+  <p class="footer-main">PhotoSign · Free forever · No ads · No watermarks</p>
+  <p class="footer-dev">Built by <strong>Bajrang Kailasa</strong> · Suggestions &amp; feedback: <a href="mailto:kailasabajrang6@gmail.com">kailasabajrang6@gmail.com</a></p>
+  <p class="footer-seo">Free online photo and signature resizer. Resize image to exact pixels and compress to KB for any application form — job applications, government exams, visa forms, college admissions, and online portals. Works on mobile and desktop. No upload, no login, completely free.</p>
 </footer>
 
 <canvas id="cv"></canvas>
@@ -464,6 +491,7 @@ document.getElementById('go').addEventListener('click',async()=>{
     :`<span class="warn-badge">${fmt(bytes)} !</span>`;
   document.getElementById('nmeta').textContent=`${w} × ${h} px`;
   document.getElementById('res').classList.add('on');
+  if(!rated) document.getElementById('ratingBar').classList.add('on');
   document.getElementById('res').scrollIntoView({behavior:'smooth',block:'nearest'});
 });
 
@@ -498,6 +526,17 @@ function save(){
   const a=document.getElementById('dlLink');a.href=url;a.download=n+'.jpg';a.click();
   document.getElementById('ov').classList.remove('on');
 }
+
+// ── RATING ───────────────────────────────────────────────────────────
+let rated=false;
+document.querySelectorAll('.star').forEach(s=>{
+  s.addEventListener('click',()=>{
+    if(rated)return;rated=true;
+    const v=+s.dataset.v;
+    document.querySelectorAll('.star').forEach((x,i)=>{x.textContent=i<v?'⭐':'☆'});
+    document.getElementById('ratingThanks').classList.add('on');
+  });
+});
 
 // ── UTILS ────────────────────────────────────────────────────────────
 function fmt(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB'}
