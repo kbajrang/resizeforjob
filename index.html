@@ -498,7 +498,11 @@ document.getElementById('go').addEventListener('click',async()=>{
   const bytes=Math.round(url.split(',')[1].length*3/4);
   const under=kb===0||bytes<=kb*1024;
   document.getElementById('nThumb').src=url;
-  document.getElementById('nsz').innerHTML=under?`<span class="ok-b">${fmt(bytes)} ✓</span>`:`<span class="warn-b">${fmt(bytes)}</span>`;
+  const nszEl=document.getElementById('nsz');
+  const nszSpan=document.createElement('span');
+  nszSpan.className=under?'ok-b':'warn-b';
+  nszSpan.textContent=fmt(bytes)+(under?' ✓':'');
+  nszEl.textContent='';nszEl.appendChild(nszSpan);
   document.getElementById('compare').classList.add('on');
   document.getElementById('dlBtn').style.display='flex';
   if(!rated)document.getElementById('rating').classList.add('on');
