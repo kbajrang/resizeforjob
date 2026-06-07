@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResizeForJob — Free Image Resizer for Job Applications</title>
+  <meta name="description" content="Resize images instantly for job applications, passports, LinkedIn, resumes — free, no login, no upload. Your files never leave your device." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --text: #1e293b;
+      --muted: #64748b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .badge {
+      background: #ecfdf5;
+      color: var(--success);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #a7f3d0;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 16px 80px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span { color: var(--primary); }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin: 0 auto 8px;
+    }
+
+    .trust {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .trust-item svg { color: var(--success); flex-shrink: 0; }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .drop-zone:hover, .drop-zone.dragging {
+      border-color: var(--primary);
+      background: #f5f3ff;
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-icon {
+      width: 56px;
+      height: 56px;
+      background: #ede9fe;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .drop-zone h2 { font-size: 1.15rem; font-weight: 600; margin-bottom: 6px; }
+    .drop-zone p { color: var(--muted); font-size: 0.9rem; }
+    .drop-zone .browse { color: var(--primary); font-weight: 600; }
+
+    /* Presets */
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .preset-btn {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, background 0.15s;
+      font-family: inherit;
+    }
+
+    .preset-btn:hover, .preset-btn.active {
+      border-color: var(--primary);
+      background: #f5f3ff;
+    }
+
+    .preset-btn .preset-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .preset-btn .preset-size {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* Controls */
+    .controls-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 500px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--bg);
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    input[type="number"]:focus, select:focus {
+      border-color: var(--primary);
+    }
+
+    .lock-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s;
+    }
+
+    .toggle input:checked + .toggle-slider { background: var(--primary); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+    .toggle-label { font-size: 0.88rem; font-weight: 500; }
+
+    .quality-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .quality-row label { margin: 0; white-space: nowrap; }
+
+    input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+    }
+
+    .quality-val {
+      font-size: 0.88rem;
+      font-weight: 600;
+      width: 36px;
+      text-align: right;
+    }
+
+    /* Preview */
+    .preview-section {
+      display: none;
+      gap: 24px;
+    }
+
+    .preview-section.visible { display: flex; flex-direction: column; }
+
+    .preview-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .preview-row { grid-template-columns: 1fr; }
+    }
+
+    .preview-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .preview-card-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background: #f1f5f9;
+      display: block;
+    }
+
+    .preview-meta {
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Download button */
+    .download-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      text-decoration: none;
+    }
+
+    .download-btn:hover { background: var(--primary-hover); }
+    .download-btn:active { transform: scale(0.98); }
+    .download-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+    .resize-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 24px;
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 12px;
+    }
+
+    .resize-btn:hover { background: #f5f3ff; }
+
+    /* File info bar */
+    .file-info {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+
+    .file-info.visible { display: flex; }
+
+    .file-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .file-details { flex: 1; min-width: 0; }
+    .file-name { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-dim { font-size: 0.78rem; color: var(--muted); }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px;
+      border-radius: 4px;
+      line-height: 1;
+    }
+    .remove-btn:hover { color: var(--danger); background: #fef2f2; }
+
+    /* Savings badge */
+    .savings {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #ecfdf5;
+      color: var(--success);
+      border-radius: 999px;
+      padding: 2px 8px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .privacy-note {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: #15803d;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .section-gap { margin-top: 28px; }
+
+    canvas { display: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">✦ ResizeForJob</a>
+  <span class="badge">100% Free · No Login</span>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Resize Images for <span>Job Applications</span><br/>in Seconds</h1>
+    <p>Passport photo, profile picture, resume photo — get the exact size required. Free, instant, private.</p>
+    <div class="trust">
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        No upload to server
+      </span>
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        No login required
+      </span>
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        Files stay on your device
+      </span>
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        Completely free
+      </span>
+    </div>
+  </div>
+
+  <!-- Drop zone -->
+  <div class="drop-zone" id="dropZone">
+    <input type="file" id="fileInput" accept="image/*" />
+    <div class="drop-icon">
+      <svg width="26" height="26" fill="none" stroke="#4f46e5" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+    </div>
+    <h2>Drop your image here</h2>
+    <p>or <span class="browse">browse files</span> — JPG, PNG, WEBP, GIF supported</p>
+  </div>
+
+  <!-- File info -->
+  <div class="file-info" id="fileInfo">
+    <img id="fileThumbnail" class="file-thumb" src="" alt="" />
+    <div class="file-details">
+      <div class="file-name" id="fileName">image.jpg</div>
+      <div class="file-dim" id="fileDim">Loading…</div>
+    </div>
+    <button class="remove-btn" id="removeBtn" title="Remove image">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-card" id="controlsCard">
+
+    <div class="section-title">Quick Presets for Job Applications</div>
+    <div class="presets" id="presetsGrid">
+      <button class="preset-btn" data-w="35" data-h="45" data-label="Passport Photo">
+        <span class="preset-name">Passport Photo</span>
+        <span class="preset-size">35 × 45 mm</span>
+      </button>
+      <button class="preset-btn" data-w="200" data-h="200" data-label="LinkedIn">
+        <span class="preset-name">LinkedIn Profile</span>
+        <span class="preset-size">200 × 200 px</span>
+      </button>
+      <button class="preset-btn" data-w="400" data-h="400" data-label="Profile Photo">
+        <span class="preset-name">Profile Photo</span>
+        <span class="preset-size">400 × 400 px</span>
+      </button>
+      <button class="preset-btn" data-w="150" data-h="200" data-label="Resume Photo">
+        <span class="preset-name">Resume Photo</span>
+        <span class="preset-size">150 × 200 px</span>
+      </button>
+      <button class="preset-btn" data-w="300" data-h="300" data-label="WhatsApp DP">
+        <span class="preset-name">WhatsApp DP</span>
+        <span class="preset-size">300 × 300 px</span>
+      </button>
+      <button class="preset-btn" data-w="800" data-h="600" data-label="General">
+        <span class="preset-name">General Web</span>
+        <span class="preset-size">800 × 600 px</span>
+      </button>
+      <button class="preset-btn" data-w="1280" data-h="720" data-label="HD">
+        <span class="preset-name">HD / Banner</span>
+        <span class="preset-size">1280 × 720 px</span>
+      </button>
+      <button class="preset-btn" data-w="51" data-h="51" data-label="Naukri">
+        <span class="preset-name">Naukri.com</span>
+        <span class="preset-size">51 × 51 px</span>
+      </button>
+    </div>
+
+    <div class="section-gap">
+      <div class="section-title">Custom Size</div>
+      <div class="controls-grid">
+        <div>
+          <label for="widthInput">Width (px)</label>
+          <input type="number" id="widthInput" min="1" max="8000" placeholder="e.g. 400" />
+        </div>
+        <div>
+          <label for="heightInput">Height (px)</label>
+          <input type="number" id="heightInput" min="1" max="8000" placeholder="e.g. 400" />
+        </div>
+      </div>
+
+      <div class="lock-row">
+        <label class="toggle">
+          <input type="checkbox" id="lockAspect" checked />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Lock aspect ratio</span>
+      </div>
+
+      <div class="quality-row">
+        <label for="qualityRange">Quality</label>
+        <input type="range" id="qualityRange" min="10" max="100" value="90" step="5" />
+        <span class="quality-val" id="qualityVal">90%</span>
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <label for="formatSelect">Output Format</label>
+        <select id="formatSelect">
+          <option value="image/jpeg">JPEG (smaller size, best for photos)</option>
+          <option value="image/png">PNG (lossless, supports transparency)</option>
+          <option value="image/webp">WEBP (modern, smallest size)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="resize-btn" id="resizeBtn" disabled>
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M21 2H3v18l4-4h14V2z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/>
+      </svg>
+      Resize Image
+    </button>
+
+  </div>
+
+  <!-- Preview + Download -->
+  <div class="preview-section" id="previewSection">
+    <div class="preview-row">
+      <div class="preview-card">
+        <div class="preview-card-header">
+          <span>Original</span>
+          <span id="origSize">—</span>
+        </div>
+        <img id="origPreview" src="" alt="Original" />
+        <div class="preview-meta" id="origMeta">—</div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-card-header">
+          <span>Resized</span>
+          <span id="newSize">—</span>
+        </div>
+        <img id="newPreview" src="" alt="Resized" />
+        <div class="preview-meta" id="newMeta">—</div>
+      </div>
+    </div>
+
+    <a id="downloadBtn" class="download-btn" download="resized-image.jpg">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Download Resized Image
+    </a>
+
+    <div class="privacy-note">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span><strong>Your privacy is protected.</strong> This tool works entirely in your browser. Your image is never uploaded to any server — it's processed locally using your device's compute power and deleted from memory when you close the tab.</span>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>ResizeForJob &mdash; Free forever. No sign up. No ads. No nonsense.</p>
+  <p style="margin-top:6px;">Built to help job seekers. Share with someone who needs it 💙</p>
+</footer>
+
+<canvas id="canvas"></canvas>
+
+<script>
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const fileInfo = document.getElementById('fileInfo');
+  const fileThumbnail = document.getElementById('fileThumbnail');
+  const fileName = document.getElementById('fileName');
+  const fileDim = document.getElementById('fileDim');
+  const removeBtn = document.getElementById('removeBtn');
+  const widthInput = document.getElementById('widthInput');
+  const heightInput = document.getElementById('heightInput');
+  const lockAspect = document.getElementById('lockAspect');
+  const qualityRange = document.getElementById('qualityRange');
+  const qualityVal = document.getElementById('qualityVal');
+  const formatSelect = document.getElementById('formatSelect');
+  const resizeBtn = document.getElementById('resizeBtn');
+  const previewSection = document.getElementById('previewSection');
+  const origPreview = document.getElementById('origPreview');
+  const newPreview = document.getElementById('newPreview');
+  const origSize = document.getElementById('origSize');
+  const newSize = document.getElementById('newSize');
+  const origMeta = document.getElementById('origMeta');
+  const newMeta = document.getElementById('newMeta');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  let currentFile = null;
+  let origImg = null;
+  let origW = 0, origH = 0;
+  let adjustingWidth = false, adjustingHeight = false;
+
+  // Drag and drop
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragging');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadFile(file);
+  });
+
+  fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) loadFile(e.target.files[0]);
+  });
+
+  removeBtn.addEventListener('click', reset);
+
+  function loadFile(file) {
+    currentFile = file;
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      origImg = img;
+      origW = img.naturalWidth;
+      origH = img.naturalHeight;
+
+      fileThumbnail.src = url;
+      fileName.textContent = file.name;
+      fileDim.textContent = `${origW} × ${origH} px · ${formatBytes(file.size)}`;
+      fileInfo.classList.add('visible');
+
+      widthInput.value = origW;
+      heightInput.value = origH;
+
+      // Auto-detect format
+      if (file.type === 'image/png') formatSelect.value = 'image/png';
+      else if (file.type === 'image/webp') formatSelect.value = 'image/webp';
+      else formatSelect.value = 'image/jpeg';
+
+      resizeBtn.disabled = false;
+      previewSection.classList.remove('visible');
+      origPreview.src = url;
+      origSize.textContent = formatBytes(file.size);
+      origMeta.textContent = `${origW} × ${origH} px`;
+    };
+    img.src = url;
+  }
+
+  function reset() {
+    currentFile = null;
+    origImg = null;
+    fileInput.value = '';
+    fileInfo.classList.remove('visible');
+    previewSection.classList.remove('visible');
+    resizeBtn.disabled = true;
+    widthInput.value = '';
+    heightInput.value = '';
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  // Aspect ratio lock
+  widthInput.addEventListener('input', () => {
+    if (lockAspect.checked && origW && !adjustingHeight) {
+      adjustingWidth = true;
+      const ratio = origH / origW;
+      heightInput.value = Math.round(widthInput.value * ratio);
+      adjustingWidth = false;
+    }
+    clearPreset();
+  });
+
+  heightInput.addEventListener('input', () => {
+    if (lockAspect.checked && origH && !adjustingWidth) {
+      adjustingHeight = true;
+      const ratio = origW / origH;
+      widthInput.value = Math.round(heightInput.value * ratio);
+      adjustingHeight = false;
+    }
+    clearPreset();
+  });
+
+  qualityRange.addEventListener('input', () => {
+    qualityVal.textContent = qualityRange.value + '%';
+  });
+
+  // Presets
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const w = parseInt(btn.dataset.w);
+      const h = parseInt(btn.dataset.h);
+      widthInput.value = w;
+      heightInput.value = h;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  function clearPreset() {
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  // Resize
+  resizeBtn.addEventListener('click', () => {
+    if (!origImg) return;
+    const w = parseInt(widthInput.value) || origW;
+    const h = parseInt(heightInput.value) || origH;
+    const quality = parseInt(qualityRange.value) / 100;
+    const format = formatSelect.value;
+
+    canvas.width = w;
+    canvas.height = h;
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(origImg, 0, 0, w, h);
+
+    const dataUrl = canvas.toDataURL(format, quality);
+    newPreview.src = dataUrl;
+    newMeta.textContent = `${w} × ${h} px`;
+
+    // Estimate output size
+    const base64Length = dataUrl.length - ('data:' + format + ';base64,').length;
+    const sizeBytes = Math.round((base64Length * 3) / 4);
+    newSize.textContent = formatBytes(sizeBytes);
+
+    // Set download
+    const ext = format === 'image/jpeg' ? 'jpg' : format === 'image/png' ? 'png' : 'webp';
+    const baseName = (currentFile?.name || 'image').replace(/\.[^.]+$/, '');
+    downloadBtn.href = dataUrl;
+    downloadBtn.download = `${baseName}_${w}x${h}.${ext}`;
+
+    previewSection.classList.add('visible');
+    previewSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+</script>
+</body>
+</html>
