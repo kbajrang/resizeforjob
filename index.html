@@ -3,184 +3,171 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ResizeForJob — Free Image Resizer for Job Applications</title>
-<meta name="description" content="Resize, crop, compress & convert images for job applications, passports, visas, LinkedIn — free, no login, files never leave your device."/>
+<title>PhotoSign — Photo & Signature Resizer for Indian Govt Exams</title>
+<meta name="description" content="Resize photo and signature for SSC CGL, AFCAT, UPSC, NDA, RRB, IBPS, SBI PO and all Indian govt job exams. Free, no login, files never leave your device."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f8fafc;--card:#fff;--border:#e2e8f0;
-  --primary:#4f46e5;--primary-h:#4338ca;--primary-l:#ede9fe;
-  --text:#1e293b;--muted:#64748b;--muted-l:#94a3b8;
-  --success:#10b981;--danger:#ef4444;--warn:#f59e0b;
+  --bg:#f6f7fb;--card:#fff;--border:#e2e8f0;
+  --primary:#1a56db;--primary-h:#1e429f;--primary-l:#ebf5ff;
+  --orange:#e3a008;--orange-l:#fdf6b2;
+  --text:#111928;--muted:#6b7280;--muted-l:#9ca3af;
+  --success:#057a55;--success-l:#def7ec;
+  --danger:#e02424;--danger-l:#fde8e8;
   --radius:12px;--radius-s:8px;
 }
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER */
-header{background:var(--card);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:1.15rem;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:6px}
-.header-badges{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.badge{background:#ecfdf5;color:var(--success);font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid #a7f3d0;white-space:nowrap}
-.badge-warn{background:#fffbeb;color:#92400e;border-color:#fde68a}
+header{background:var(--primary);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:1.15rem;font-weight:700;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo-icon{background:rgba(255,255,255,.2);border-radius:8px;padding:5px 8px;font-size:1rem}
+.header-right{font-size:.75rem;color:rgba(255,255,255,.8);text-align:right}
+.header-right strong{color:#fff}
 
-/* MAIN LAYOUT */
-main{max-width:1020px;margin:0 auto;padding:32px 16px 80px}
+/* HERO BANNER */
+.hero{background:linear-gradient(135deg,#1a56db 0%,#1e429f 100%);color:#fff;text-align:center;padding:36px 20px 40px}
+.hero h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;margin-bottom:8px;line-height:1.25}
+.hero h1 span{color:#fcd34d}
+.hero p{font-size:.95rem;opacity:.9;max-width:520px;margin:0 auto 18px}
+.trust-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.trust-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:500}
 
-/* HERO */
-.hero{text-align:center;margin-bottom:32px}
-.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.2;margin-bottom:10px}
-.hero h1 span{color:var(--primary)}
-.hero p{color:var(--muted);max-width:520px;margin:0 auto 12px}
-.trust{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-.trust-item{display:flex;align-items:center;gap:5px;font-size:.8rem;color:var(--muted);font-weight:500}
-.trust-item svg{color:var(--success);flex-shrink:0}
+/* EXAM CHIPS */
+.exams-bar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.exams-bar::-webkit-scrollbar{display:none}
+.exam-chip{flex-shrink:0;padding:5px 13px;border:1.5px solid var(--border);border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);transition:all .15s;font-family:inherit}
+.exam-chip:hover,.exam-chip.active{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
+
+/* MAIN */
+main{max-width:860px;margin:0 auto;padding:24px 14px 80px}
+
+/* MODE TOGGLE */
+.mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;border:1px solid var(--border)}
+.mode-btn{padding:14px;text-align:center;cursor:pointer;background:var(--bg);border:none;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--muted);transition:all .15s}
+.mode-btn.active{background:var(--primary);color:#fff}
+.mode-btn .mode-icon{font-size:1.3rem;display:block;margin-bottom:3px}
+.mode-btn .mode-sub{font-size:.72rem;font-weight:400;opacity:.8;display:block}
+
+/* STEP CARD */
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+.step-header{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.step-num{width:26px;height:26px;background:var(--primary);color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-header h3{font-size:.95rem;font-weight:600}
+.step-header p{font-size:.78rem;color:var(--muted);margin-top:1px}
+.step-body{padding:16px}
 
 /* DROP ZONE */
-.drop-zone{border:2px dashed var(--border);border-radius:var(--radius);background:var(--card);padding:40px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;margin-bottom:16px}
+.drop-zone{border:2px dashed var(--border);border-radius:var(--radius-s);padding:32px 16px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:var(--bg)}
 .drop-zone:hover,.drop-zone.dragging{border-color:var(--primary);background:var(--primary-l)}
 .drop-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.drop-icon{width:52px;height:52px;background:var(--primary-l);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
-.drop-zone h2{font-size:1.1rem;font-weight:600;margin-bottom:5px}
-.drop-zone p{color:var(--muted);font-size:.87rem}
+.drop-icon{width:48px;height:48px;background:var(--primary-l);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.drop-zone h4{font-size:.95rem;font-weight:600;margin-bottom:4px}
+.drop-zone p{font-size:.82rem;color:var(--muted)}
 .browse{color:var(--primary);font-weight:600}
-.paste-hint{font-size:.75rem;color:var(--muted-l);margin-top:6px}
 
-/* FILE INFO BAR */
-.file-info{display:none;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;margin-bottom:16px}
-.file-info.visible{display:flex}
-.file-thumb{width:44px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0}
+/* FILE PREVIEW ROW */
+.file-bar{display:none;align-items:center;gap:10px;padding:10px 12px;background:var(--success-l);border:1px solid #84e1bc;border-radius:var(--radius-s);margin-bottom:12px}
+.file-bar.visible{display:flex}
+.file-thumb{width:42px;height:42px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0}
 .file-details{flex:1;min-width:0}
-.file-name{font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.file-dim{font-size:.75rem;color:var(--muted)}
-.remove-btn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:4px;line-height:1;flex-shrink:0}
-.remove-btn:hover{color:var(--danger);background:#fef2f2}
+.file-name{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--success)}
+.file-dim{font-size:.72rem;color:var(--muted)}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:4px;flex-shrink:0}
+.remove-btn:hover{color:var(--danger);background:var(--danger-l)}
 
-/* TABS */
-.tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:5px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:1;min-width:80px;padding:8px 14px;border:none;background:none;border-radius:var(--radius-s);cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:500;color:var(--muted);transition:all .15s;white-space:nowrap;text-align:center}
-.tab.active{background:var(--primary);color:#fff;font-weight:600}
-.tab:hover:not(.active){background:var(--primary-l);color:var(--primary)}
+/* EXAM PRESETS GRID */
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px}
+.exam-preset{border:1.5px solid var(--border);border-radius:var(--radius-s);padding:10px 12px;cursor:pointer;background:var(--bg);text-align:left;font-family:inherit;transition:all .15s}
+.exam-preset:hover,.exam-preset.active{border-color:var(--primary);background:var(--primary-l)}
+.exam-preset .ep-name{font-size:.83rem;font-weight:700;display:block;color:var(--text)}
+.exam-preset .ep-dim{font-size:.72rem;color:var(--primary);font-weight:600;margin:2px 0}
+.exam-preset .ep-kb{font-size:.7rem;color:var(--muted)}
 
-/* PANEL */
-.panel{display:none}
-.panel.active{display:block}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
-.section-title{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px}
-
-/* PRESETS */
-.preset-categories{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.cat-btn{padding:4px 12px;border:1.5px solid var(--border);border-radius:999px;background:var(--bg);font-size:.78rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;color:var(--text)}
-.cat-btn.active,.cat-btn:hover{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
-.presets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:7px}
-.preset-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-s);padding:9px 11px;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit}
-.preset-btn:hover,.preset-btn.active{border-color:var(--primary);background:var(--primary-l)}
-.preset-name{font-size:.82rem;font-weight:600;display:block;margin-bottom:2px;color:var(--text)}
-.preset-size{font-size:.72rem;color:var(--muted)}
-.preset-flag{font-size:.75rem;margin-right:3px}
-
-/* CONTROLS GRID */
-.controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:480px){.controls-grid{grid-template-columns:1fr}}
-.controls-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
-@media(max-width:480px){.controls-grid-3{grid-template-columns:1fr 1fr}}
-label{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:5px}
-input[type="number"],select,input[type="text"]{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--radius-s);font-family:inherit;font-size:.92rem;color:var(--text);background:var(--bg);transition:border-color .15s;outline:none}
-input[type="number"]:focus,select:focus,input[type="text"]:focus{border-color:var(--primary)}
-input[type="number"]:disabled,select:disabled{opacity:.5;cursor:not-allowed}
+/* CUSTOM INPUTS */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:420px){.row2{grid-template-columns:1fr}}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+@media(max-width:480px){.row3{grid-template-columns:1fr 1fr}}
+label{display:block;font-size:.75rem;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+input[type="number"],select{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--radius-s);font-family:inherit;font-size:.92rem;color:var(--text);background:#fff;outline:none;transition:border-color .15s}
+input[type="number"]:focus,select:focus{border-color:var(--primary)}
 
 /* TOGGLE */
-.toggle-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.toggle{position:relative;width:38px;height:20px;flex-shrink:0}
+.toggle-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.toggle{position:relative;width:36px;height:20px;flex-shrink:0}
 .toggle input{opacity:0;width:0;height:0}
-.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:999px;cursor:pointer;transition:background .2s}
-.toggle-slider::before{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s}
-.toggle input:checked+.toggle-slider{background:var(--primary)}
-.toggle input:checked+.toggle-slider::before{transform:translateX(18px)}
-.toggle-label{font-size:.85rem;font-weight:500;color:var(--text)}
+.ts{position:absolute;inset:0;background:#d1d5db;border-radius:999px;cursor:pointer;transition:background .2s}
+.ts::before{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s}
+.toggle input:checked+.ts{background:var(--primary)}
+.toggle input:checked+.ts::before{transform:translateX(16px)}
+.toggle-label{font-size:.83rem;color:var(--text)}
 
-/* QUALITY SLIDER */
-.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.slider-row label{margin:0;white-space:nowrap;flex-shrink:0}
-input[type="range"]{flex:1;accent-color:var(--primary);height:4px}
-.slider-val{font-size:.85rem;font-weight:600;width:40px;text-align:right;flex-shrink:0}
-
-/* ROTATE FLIP BUTTONS */
-.icon-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.icon-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-s);background:var(--bg);cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:500;transition:all .15s;color:var(--text)}
-.icon-btn:hover{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
-.icon-btn.active{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
-
-/* BUTTONS */
-.btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 24px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:.97rem;font-weight:600;cursor:pointer;transition:background .15s,transform .1s}
-.btn-primary:hover{background:var(--primary-h)}
-.btn-primary:active{transform:scale(.98)}
-.btn-primary:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
-.btn-outline{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 24px;background:#fff;color:var(--primary);border:2px solid var(--primary);border-radius:var(--radius);font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;transition:background .15s;margin-bottom:10px}
-.btn-outline:hover{background:var(--primary-l)}
-.btn-outline:disabled{border-color:var(--border);color:var(--muted);cursor:not-allowed}
-
-/* PREVIEW */
-.preview-section{display:none;margin-top:4px}
-.preview-section.visible{display:block}
-.preview-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:580px){.preview-row{grid-template-columns:1fr}}
-.preview-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.preview-card-hdr{padding:8px 13px;border-bottom:1px solid var(--border);font-size:.77rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
-.preview-card img{width:100%;height:190px;object-fit:contain;background:#f1f5f9;display:block}
-.preview-meta{padding:6px 13px;font-size:.75rem;color:var(--muted)}
-.savings-badge{display:inline-flex;align-items:center;gap:3px;font-size:.72rem;font-weight:600;background:#ecfdf5;color:var(--success);border-radius:999px;padding:2px 8px;border:1px solid #a7f3d0}
-.warn-badge{background:#fffbeb;color:#92400e;border-color:#fde68a}
-
-/* DOWNLOAD MODAL OVERLAY */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:16px}
-.modal-overlay.visible{display:flex}
-.modal{background:var(--card);border-radius:var(--radius);padding:28px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.modal h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
-.modal p{font-size:.85rem;color:var(--muted);margin-bottom:18px}
-.modal label{color:var(--text);font-size:.85rem;font-weight:600;margin-bottom:7px}
-.modal input{margin-bottom:16px}
-.modal-actions{display:flex;gap:10px}
-.modal-actions .btn-primary{flex:1}
-.modal-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-s);background:none;font-family:inherit;font-size:.92rem;font-weight:500;cursor:pointer;color:var(--text);transition:background .15s}
-.modal-cancel:hover{background:var(--bg)}
-
-/* PRIVACY */
-.privacy-note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius-s);padding:11px 14px;font-size:.79rem;color:#15803d;display:flex;align-items:flex-start;gap:8px;margin-top:16px}
-
-/* SEPARATOR */
-.sep{height:1px;background:var(--border);margin:16px 0}
-
-/* FILTER BUTTONS */
-.filter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:7px;margin-bottom:14px}
-.filter-btn{padding:8px;border:1.5px solid var(--border);border-radius:var(--radius-s);background:var(--bg);cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:500;text-align:center;transition:all .15s}
-.filter-btn:hover,.filter-btn.active{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
-
-/* CROP OVERLAY */
-#cropCanvas{display:none}
-.crop-container{position:relative;display:none;margin-bottom:14px;overflow:hidden;border-radius:var(--radius-s);border:1px solid var(--border);background:#f1f5f9;max-height:400px;user-select:none}
-.crop-container.visible{display:block}
-#cropImg{display:block;width:100%;height:100%;object-fit:contain;max-height:380px}
-.crop-overlay{position:absolute;inset:0;pointer-events:none}
+/* KB PRESETS */
+.kb-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.kb-pill{padding:5px 14px;border:1.5px solid var(--border);border-radius:999px;font-size:.78rem;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;transition:all .15s}
+.kb-pill:hover,.kb-pill.active{border-color:var(--primary);background:var(--primary-l);color:var(--primary)}
+.kb-custom-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+.kb-go-btn{padding:9px 18px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-s);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s}
+.kb-go-btn:hover{background:var(--primary-h)}
 
 /* PROGRESS */
-.progress-wrap{display:none;margin-bottom:12px}
-.progress-wrap.visible{display:block}
-.progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden}
-.progress-fill{height:100%;background:var(--primary);border-radius:999px;transition:width .3s}
+.prog-wrap{display:none;margin-top:10px}
+.prog-wrap.visible{display:block}
+.prog-bar{height:7px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:4px}
+.prog-fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s}
+.prog-label{font-size:.75rem;color:var(--muted)}
 
-/* KB TARGET */
-.kb-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-bottom:12px}
-.kb-btn{padding:9px 16px;border:1.5px solid var(--primary);border-radius:var(--radius-s);background:var(--primary-l);color:var(--primary);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
-.kb-btn:hover{background:var(--primary);color:#fff}
+/* ACTION BTN */
+.action-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s,transform .1s;letter-spacing:.01em}
+.action-btn:hover{background:var(--primary-h)}
+.action-btn:active{transform:scale(.98)}
+.action-btn:disabled{background:#d1d5db;color:#9ca3af;cursor:not-allowed}
 
-/* INFO TIP */
-.tip{font-size:.75rem;color:var(--muted-l);margin-top:4px}
+/* RESULT */
+.result-section{display:none}
+.result-section.visible{display:block}
+.result-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:540px){.result-row{grid-template-columns:1fr}}
+.result-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card)}
+.result-card-hdr{padding:8px 13px;border-bottom:1px solid var(--border);font-size:.75rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
+.result-card img{width:100%;height:180px;object-fit:contain;background:#f9fafb;display:block}
+.result-card-meta{padding:6px 13px;font-size:.73rem;color:var(--muted)}
+.size-ok{color:var(--success);font-weight:600}
+.size-warn{color:var(--orange);font-weight:600}
+
+/* DOWNLOAD BTN */
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:#057a55;color:#fff;border:none;border-radius:var(--radius);font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s;text-decoration:none;margin-bottom:12px}
+.dl-btn:hover{background:#046c4e}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.visible{display:flex}
+.modal{background:#fff;border-radius:var(--radius);padding:26px;width:100%;max-width:400px;box-shadow:0 24px 64px rgba(0,0,0,.18)}
+.modal h3{font-size:1rem;font-weight:700;margin-bottom:5px}
+.modal p{font-size:.82rem;color:var(--muted);margin-bottom:16px}
+.modal label{text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--text);margin-bottom:6px}
+.modal input{margin-bottom:6px}
+.modal-hint{font-size:.73rem;color:var(--muted-l);margin-bottom:16px}
+.modal-actions{display:flex;gap:10px}
+.modal-cancel{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:var(--radius-s);background:none;font-family:inherit;font-size:.9rem;cursor:pointer;color:var(--text)}
+.modal-cancel:hover{background:var(--bg)}
+.modal-save{flex:2;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-s);font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.modal-save:hover{background:var(--primary-h)}
+
+/* INFO BOX */
+.info-box{background:var(--primary-l);border:1px solid #c3ddfd;border-radius:var(--radius-s);padding:11px 14px;font-size:.8rem;color:#1e429f;display:flex;gap:8px;align-items:flex-start;margin-top:12px}
+
+/* PRIVACY */
+.privacy{background:#f0fdf4;border:1px solid #a7f3d0;border-radius:var(--radius-s);padding:10px 14px;font-size:.78rem;color:#065f46;display:flex;gap:7px;align-items:flex-start;margin-top:14px}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:16px 0}
 
 /* FOOTER */
-footer{text-align:center;padding:24px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--border)}
+footer{text-align:center;padding:20px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
 
 canvas{display:none}
 </style>
@@ -189,322 +176,208 @@ canvas{display:none}
 
 <header>
   <a class="logo" href="#">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
-    ResizeForJob
+    <span class="logo-icon">📋</span>
+    PhotoSign
   </a>
-  <div class="header-badges">
-    <span class="badge">100% Free</span>
-    <span class="badge">No Login</span>
-    <span class="badge">Files Stay on Device</span>
+  <div class="header-right">
+    <strong>For Indian Govt Job Aspirants</strong><br/>
+    SSC · UPSC · AFCAT · NDA · RRB · IBPS
   </div>
 </header>
 
+<div class="hero">
+  <h1>Photo & Signature Resizer<br/>for <span>Govt Job Forms</span></h1>
+  <p>Get the exact photo and signature size required for SSC CGL, AFCAT, UPSC, NDA, RRB, IBPS and all Indian exam forms — in seconds.</p>
+  <div class="trust-row">
+    <span class="trust-pill">✓ No upload to server</span>
+    <span class="trust-pill">✓ No login needed</span>
+    <span class="trust-pill">✓ 100% free</span>
+    <span class="trust-pill">✓ Works offline</span>
+  </div>
+</div>
+
+<!-- EXAM QUICK SELECT -->
+<div class="exams-bar" id="examBar">
+  <button class="exam-chip active" data-exam="all">All Exams</button>
+  <button class="exam-chip" data-exam="ssc">SSC CGL / CHSL / MTS</button>
+  <button class="exam-chip" data-exam="upsc">UPSC CSE / NDA</button>
+  <button class="exam-chip" data-exam="afcat">AFCAT / CDS</button>
+  <button class="exam-chip" data-exam="rrb">RRB / Railway</button>
+  <button class="exam-chip" data-exam="bank">IBPS / SBI / Bank</button>
+  <button class="exam-chip" data-exam="state">State PSC / Govt</button>
+  <button class="exam-chip" data-exam="entrance">NEET / JEE / CUET</button>
+</div>
+
 <main>
-  <div class="hero">
-    <h1>Resize Images for <span>Job Applications</span></h1>
-    <p>Passport photos, visa photos, resume photos, LinkedIn — get the exact size required in seconds. Free forever.</p>
-    <div class="trust">
-      <span class="trust-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No server upload</span>
-      <span class="trust-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Works offline</span>
-      <span class="trust-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No watermark</span>
-      <span class="trust-item"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Completely free</span>
-    </div>
-  </div>
 
-  <!-- DROP ZONE -->
-  <div class="drop-zone" id="dropZone">
-    <input type="file" id="fileInput" accept="image/*"/>
-    <div class="drop-icon">
-      <svg width="24" height="24" fill="none" stroke="#4f46e5" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    </div>
-    <h2>Drop your image here</h2>
-    <p>or <span class="browse">click to browse</span> — JPG, PNG, WEBP, GIF, BMP supported</p>
-    <p class="paste-hint">You can also paste an image with Ctrl+V / Cmd+V</p>
-  </div>
-
-  <!-- FILE INFO -->
-  <div class="file-info" id="fileInfo">
-    <img id="fileThumbnail" class="file-thumb" src="" alt=""/>
-    <div class="file-details">
-      <div class="file-name" id="fileName">image.jpg</div>
-      <div class="file-dim" id="fileDim">—</div>
-    </div>
-    <button class="remove-btn" id="removeBtn" title="Remove image">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  <!-- MODE TOGGLE -->
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="modePhoto">
+      <span class="mode-icon">🤳</span>
+      Passport Photo
+      <span class="mode-sub">For form upload</span>
+    </button>
+    <button class="mode-btn" id="modeSign">
+      <span class="mode-icon">✍️</span>
+      Signature
+      <span class="mode-sub">For form upload</span>
     </button>
   </div>
 
-  <!-- TABS -->
-  <div class="tabs" id="tabBar">
-    <button class="tab active" data-tab="resize">Resize</button>
-    <button class="tab" data-tab="crop">Crop</button>
-    <button class="tab" data-tab="adjust">Adjust</button>
-    <button class="tab" data-tab="compress">Compress</button>
-    <button class="tab" data-tab="convert">Convert</button>
+  <!-- STEP 1: UPLOAD -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div>
+        <h3 id="uploadTitle">Upload Your Photo</h3>
+        <p id="uploadHint">JPG, PNG or JPEG — white background preferred for govt photos</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="file-bar" id="fileBar">
+        <img id="fileThumbnail" class="file-thumb" src="" alt=""/>
+        <div class="file-details">
+          <div class="file-name" id="fileName">—</div>
+          <div class="file-dim" id="fileDim">—</div>
+        </div>
+        <button class="remove-btn" id="removeBtn">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*"/>
+        <div class="drop-icon">
+          <svg width="22" height="22" fill="none" stroke="#1a56db" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h4>Drop image here or <span class="browse">click to browse</span></h4>
+        <p>Supports JPG, PNG, WEBP · Ctrl+V to paste</p>
+      </div>
+    </div>
   </div>
 
-  <!-- ===== RESIZE PANEL ===== -->
-  <div class="panel active" id="panel-resize">
-    <div class="card">
-      <div class="section-title">Quick Presets — Job Applications</div>
-      <div class="preset-categories" id="catBar">
-        <button class="cat-btn active" data-cat="all">All</button>
-        <button class="cat-btn" data-cat="india">🇮🇳 India</button>
-        <button class="cat-btn" data-cat="us">🇺🇸 US</button>
-        <button class="cat-btn" data-cat="uk">🇬🇧 UK</button>
-        <button class="cat-btn" data-cat="global">🌍 Global</button>
-        <button class="cat-btn" data-cat="jobs">💼 Job Sites</button>
-        <button class="cat-btn" data-cat="social">📱 Social</button>
+  <!-- STEP 2: PICK EXAM PRESET -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div>
+        <h3>Pick Your Exam</h3>
+        <p>Select from below — dimensions and size limit auto-fill</p>
       </div>
-      <div class="presets-grid" id="presetsGrid"></div>
     </div>
+    <div class="step-body">
+      <div class="exam-grid" id="examPresetGrid"></div>
+    </div>
+  </div>
 
-    <div class="card">
-      <div class="section-title">Custom Size</div>
-      <div style="display:flex;gap:8px;align-items:end;margin-bottom:12px">
-        <div style="flex:1">
-          <label for="unitSelect">Unit</label>
-          <select id="unitSelect">
-            <option value="px">Pixels (px)</option>
-            <option value="mm">Millimeters (mm)</option>
-            <option value="cm">Centimeters (cm)</option>
-            <option value="in">Inches (in)</option>
-          </select>
-        </div>
-        <div style="flex:1" id="dpiWrap" style="display:none">
-          <label for="dpiInput">DPI</label>
-          <input type="number" id="dpiInput" value="300" min="72" max="600" step="1"/>
-        </div>
+  <!-- STEP 3: SETTINGS -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div>
+        <h3>Size &amp; File Settings</h3>
+        <p>Auto-filled from exam preset — adjust if needed</p>
       </div>
-      <div class="controls-grid">
+    </div>
+    <div class="step-body">
+      <div class="row2">
         <div>
-          <label for="widthInput">Width</label>
-          <input type="number" id="widthInput" min="1" max="10000" placeholder="e.g. 400"/>
+          <label>Width (px)</label>
+          <input type="number" id="wInput" min="1" max="5000" placeholder="e.g. 200"/>
         </div>
         <div>
-          <label for="heightInput">Height</label>
-          <input type="number" id="heightInput" min="1" max="10000" placeholder="e.g. 400"/>
+          <label>Height (px)</label>
+          <input type="number" id="hInput" min="1" max="5000" placeholder="e.g. 230"/>
         </div>
       </div>
+
       <div class="toggle-row">
-        <label class="toggle"><input type="checkbox" id="lockAspect" checked/><span class="toggle-slider"></span></label>
+        <label class="toggle"><input type="checkbox" id="lockRatio" checked/><span class="ts"></span></label>
         <span class="toggle-label">Lock aspect ratio</span>
       </div>
-      <div class="toggle-row">
-        <label class="toggle"><input type="checkbox" id="addWhiteBg"/><span class="toggle-slider"></span></label>
-        <span class="toggle-label">Add white background (good for passports)</span>
+      <div class="toggle-row" id="whiteBgRow">
+        <label class="toggle"><input type="checkbox" id="whiteBg" checked/><span class="ts"></span></label>
+        <span class="toggle-label">White background (required for most govt photo forms)</span>
       </div>
-      <div class="controls-grid" style="margin-bottom:8px">
+
+      <div class="divider"></div>
+
+      <label style="text-transform:none;letter-spacing:0;font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:8px;display:block">Target file size</label>
+      <p style="font-size:.8rem;color:var(--muted);margin-bottom:10px">Govt portals usually reject files above 20–50 KB. Pick a limit to compress automatically.</p>
+      <div class="kb-pills" id="kbPills">
+        <button class="kb-pill active" data-kb="20">20 KB</button>
+        <button class="kb-pill" data-kb="30">30 KB</button>
+        <button class="kb-pill" data-kb="50">50 KB</button>
+        <button class="kb-pill" data-kb="100">100 KB</button>
+        <button class="kb-pill" data-kb="200">200 KB</button>
+        <button class="kb-pill" data-kb="0">No limit</button>
+      </div>
+      <div class="kb-custom-row">
         <div>
-          <label for="qualityRange2">Quality</label>
-          <div class="slider-row" style="margin-bottom:0">
-            <input type="range" id="qualityRange2" min="10" max="100" value="90" step="5"/>
-            <span class="slider-val" id="qualityVal2">90%</span>
-          </div>
+          <label>Or type custom limit (KB)</label>
+          <input type="number" id="customKb" min="1" max="10000" placeholder="e.g. 40"/>
         </div>
-        <div>
-          <label for="formatSelect2">Format</label>
-          <select id="formatSelect2">
-            <option value="image/jpeg">JPEG</option>
-            <option value="image/png">PNG</option>
-            <option value="image/webp">WEBP</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <button class="btn-outline" id="resizeBtn" disabled>
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-      Apply Resize
-    </button>
-  </div>
-
-  <!-- ===== CROP PANEL ===== -->
-  <div class="panel" id="panel-crop">
-    <div class="card">
-      <div class="section-title">Crop Aspect Ratio</div>
-      <div class="icon-btn-row" id="cropRatioRow">
-        <button class="icon-btn active" data-ratio="free">Free</button>
-        <button class="icon-btn" data-ratio="1:1">1:1 Square</button>
-        <button class="icon-btn" data-ratio="4:5">4:5 Portrait</button>
-        <button class="icon-btn" data-ratio="3:4">3:4 Portrait</button>
-        <button class="icon-btn" data-ratio="2:3">2:3</button>
-        <button class="icon-btn" data-ratio="16:9">16:9</button>
-        <button class="icon-btn" data-ratio="35:45">35:45 Passport</button>
-      </div>
-      <div class="crop-container visible" id="cropContainer">
-        <img id="cropImg" src="" alt=""/>
-      </div>
-      <p class="tip" style="margin-bottom:12px">Interactive crop coming — use the resize tab with exact pixel dimensions for precise passport crops.</p>
-      <div class="controls-grid">
-        <div>
-          <label for="cropW">Crop Width (px)</label>
-          <input type="number" id="cropW" min="1" placeholder="e.g. 600"/>
-        </div>
-        <div>
-          <label for="cropH">Crop Height (px)</label>
-          <input type="number" id="cropH" min="1" placeholder="e.g. 600"/>
-        </div>
-      </div>
-      <div class="controls-grid">
-        <div>
-          <label for="cropX">X Offset (px)</label>
-          <input type="number" id="cropX" value="0" min="0"/>
-        </div>
-        <div>
-          <label for="cropY">Y Offset (px)</label>
-          <input type="number" id="cropY" value="0" min="0"/>
-        </div>
-      </div>
-    </div>
-    <button class="btn-outline" id="cropBtn" disabled>
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 2 6 8 2 8"/><polyline points="18 22 18 16 22 16"/><path d="M6 8L18 20"/><path d="M2 14 14 2"/></svg>
-      Apply Crop
-    </button>
-  </div>
-
-  <!-- ===== ADJUST PANEL ===== -->
-  <div class="panel" id="panel-adjust">
-    <div class="card">
-      <div class="section-title">Rotate & Flip</div>
-      <div class="icon-btn-row">
-        <button class="icon-btn" id="rot90" title="Rotate 90° clockwise">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.5 15a9 9 0 11-2.8-6.3L23 10"/></svg>Rotate 90°
-        </button>
-        <button class="icon-btn" id="rot180">↺ 180°</button>
-        <button class="icon-btn" id="rot270">↺ 270°</button>
-        <button class="icon-btn" id="flipH">↔ Flip H</button>
-        <button class="icon-btn" id="flipV">↕ Flip V</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">Filters</div>
-      <div class="filter-grid">
-        <button class="filter-btn active" data-filter="none">Original</button>
-        <button class="filter-btn" data-filter="grayscale">Grayscale</button>
-        <button class="filter-btn" data-filter="sepia">Sepia</button>
-        <button class="filter-btn" data-filter="invert">Invert</button>
-        <button class="filter-btn" data-filter="blur">Blur</button>
-        <button class="filter-btn" data-filter="sharpen">Sharpen</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">White Background</div>
-      <div class="toggle-row">
-        <label class="toggle"><input type="checkbox" id="whiteBgAdj"/><span class="toggle-slider"></span></label>
-        <span class="toggle-label">Replace transparent / colored background with white</span>
-      </div>
-      <p class="tip">Required for most passport & visa photos</p>
-    </div>
-
-    <button class="btn-outline" id="adjustBtn" disabled>
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 105.07 19.07"/></svg>
-      Apply Adjustments
-    </button>
-  </div>
-
-  <!-- ===== COMPRESS PANEL ===== -->
-  <div class="panel" id="panel-compress">
-
-    <div class="card">
-      <div class="section-title">Reduce to Target File Size (KB)</div>
-      <p style="font-size:.84rem;color:var(--muted);margin-bottom:12px">Most job portals have a photo size limit. Pick a portal below or enter your own target — we'll compress automatically.</p>
-
-      <div class="section-title" style="margin-bottom:8px">Common portal limits</div>
-      <div class="icon-btn-row" style="flex-wrap:wrap;gap:7px;margin-bottom:14px" id="kbPresets">
-        <button class="icon-btn" data-kb="20"><strong>20 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Govt portals</span></button>
-        <button class="icon-btn" data-kb="50"><strong>50 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Job portals</span></button>
-        <button class="icon-btn" data-kb="100"><strong>100 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Profile photo</span></button>
-        <button class="icon-btn" data-kb="200"><strong>200 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Social profile</span></button>
-        <button class="icon-btn" data-kb="500"><strong>500 KB</strong><span style="font-size:.7rem;color:var(--muted);display:block">Resume attach</span></button>
+        <button class="kb-go-btn" id="customKbApply">Set</button>
       </div>
 
-      <div class="kb-row">
-        <div>
-          <label for="targetKb">Or enter custom target (KB)</label>
-          <input type="number" id="targetKb" min="1" max="10000" placeholder="e.g. 75"/>
-        </div>
-        <button class="kb-btn" id="targetKbBtn">Compress →</button>
+      <div class="info-box" id="examInfoBox" style="display:none">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="examInfoText"></span>
       </div>
-
-      <div class="progress-wrap" id="compressProgress">
-        <p style="font-size:.78rem;color:var(--muted);margin-bottom:5px" id="compressStatus">Compressing…</p>
-        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">Compress by Quality (manual)</div>
-      <div class="slider-row">
-        <label for="compressQ">Quality</label>
-        <input type="range" id="compressQ" min="1" max="100" value="70" step="1"/>
-        <span class="slider-val" id="compressQVal">70%</span>
-      </div>
-      <p class="tip" style="margin-bottom:12px">60–80% is a good balance for most photos.</p>
-      <button class="btn-outline" id="compressBtn" disabled>Compress at This Quality</button>
     </div>
   </div>
 
-  <!-- ===== CONVERT PANEL ===== -->
-  <div class="panel" id="panel-convert">
-    <div class="card">
-      <div class="section-title">Convert Format</div>
-      <div class="icon-btn-row" id="convertBtns">
-        <button class="icon-btn" data-fmt="image/jpeg">→ JPEG</button>
-        <button class="icon-btn" data-fmt="image/png">→ PNG</button>
-        <button class="icon-btn" data-fmt="image/webp">→ WEBP</button>
-      </div>
-      <div class="sep"></div>
-      <p style="font-size:.83rem;color:var(--muted)">
-        <strong>JPEG</strong> — Best for photos, smallest size, no transparency.<br/>
-        <strong>PNG</strong> — Lossless, supports transparency, larger size.<br/>
-        <strong>WEBP</strong> — Modern format, best compression, wide browser support.
-      </p>
-    </div>
-    <button class="btn-outline" id="convertBtn" disabled>Convert Image</button>
+  <!-- STEP 4: GENERATE -->
+  <button class="action-btn" id="goBtn" disabled>
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+    Generate &amp; Download
+  </button>
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap" id="progWrap">
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <p class="prog-label" id="progLabel">Processing…</p>
   </div>
 
-  <!-- ===== PREVIEW + DOWNLOAD ===== -->
-  <div class="preview-section" id="previewSection">
-    <div class="sep"></div>
-    <div class="preview-row">
-      <div class="preview-card">
-        <div class="preview-card-hdr"><span>Original</span><span id="origSizeLabel">—</span></div>
-        <img id="origPreview" src="" alt="Original"/>
-        <div class="preview-meta" id="origMeta">—</div>
+  <!-- RESULT -->
+  <div class="result-section" id="resultSection">
+    <div class="divider"></div>
+    <div class="result-row">
+      <div class="result-card">
+        <div class="result-card-hdr"><span>Original</span><span id="origSz">—</span></div>
+        <img id="origPrev" src="" alt="Original"/>
+        <div class="result-card-meta" id="origMeta">—</div>
       </div>
-      <div class="preview-card">
-        <div class="preview-card-hdr"><span>Result</span><span id="newSizeLabel">—</span></div>
-        <img id="newPreview" src="" alt="Result"/>
-        <div class="preview-meta" id="newMeta">—</div>
+      <div class="result-card">
+        <div class="result-card-hdr"><span>Result</span><span id="newSz">—</span></div>
+        <img id="newPrev" src="" alt="Result"/>
+        <div class="result-card-meta" id="newMeta">—</div>
       </div>
     </div>
-    <button class="btn-primary" id="downloadTrigger">
+    <button class="dl-btn" id="dlTrigger">
       <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download Image
+      Download — Ready to Upload on Form
     </button>
-    <div class="privacy-note">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span><strong>Your image never leaves your device.</strong> All processing happens in your browser using the Canvas API. Nothing is uploaded, stored, or tracked.</span>
+
+    <div class="privacy">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>Your image is processed entirely on your device. Nothing is uploaded, stored or shared. Safe to use for govt documents.</span>
     </div>
   </div>
 
 </main>
 
-<!-- DOWNLOAD NAME MODAL -->
-<div class="modal-overlay" id="downloadModal">
+<!-- DOWNLOAD MODAL -->
+<div class="modal-overlay" id="dlModal">
   <div class="modal">
-    <h3>Name your file</h3>
-    <p>Give this image a meaningful name before saving.</p>
-    <label for="downloadName">File name</label>
-    <input type="text" id="downloadName" placeholder="e.g. passport_photo_john"/>
-    <p class="tip" style="margin-bottom:14px" id="downloadExt">Extension will be added automatically (.jpg)</p>
+    <h3>Save as…</h3>
+    <p>Name your file before saving. Use something meaningful like <em>photo_john_ssc</em> or <em>signature_upsc</em>.</p>
+    <label>File name</label>
+    <input type="text" id="dlName" placeholder="e.g. photo_ssc_cgl"/>
+    <p class="modal-hint" id="dlExt">Will save as .jpg</p>
     <div class="modal-actions">
       <button class="modal-cancel" id="modalCancel">Cancel</button>
-      <button class="btn-primary" id="modalDownload">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <button class="modal-save" id="modalSave">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Save File
       </button>
     </div>
@@ -512,515 +385,297 @@ canvas{display:none}
 </div>
 
 <footer>
-  <p>ResizeForJob — Free forever. No sign up. No ads. No watermarks.</p>
-  <p style="margin-top:5px">Built for job seekers. Share it with someone who needs it 💙</p>
+  <p>PhotoSign — Free forever · No ads · No watermarks · Built for Indian govt job aspirants 🇮🇳</p>
 </footer>
 
 <canvas id="canvas"></canvas>
 <a id="hiddenLink" style="display:none"></a>
 
 <script>
-// ─── STATE ───────────────────────────────────────────
-let origFile = null;
-let origImg  = null;
-let origW = 0, origH = 0;
+// ─── EXAM DATA ───────────────────────────────────────────────────────────────
+// Each entry: { name, exam, photo: {w,h,maxKb}, sign: {w,h,maxKb}, note }
+const EXAMS = [
+  // SSC
+  { name:'SSC CGL',      exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB JPG, white background. Signature: 10–20 KB JPG.' },
+  { name:'SSC CHSL',     exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Same as SSC CGL requirements.' },
+  { name:'SSC MTS',      exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo max 50 KB, signature max 20 KB.' },
+  { name:'SSC CPO',      exam:'ssc',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
+  // UPSC
+  { name:'UPSC CSE',     exam:'upsc', photo:{w:300,h:400,maxKb:300}, sign:{w:300,h:80,maxKb:300}, note:'Photo max 300 KB, signature max 300 KB. JPEG only.' },
+  { name:'NDA / NA',     exam:'upsc', photo:{w:200,h:230,maxKb:40},  sign:{w:140,h:60,maxKb:20},  note:'Photo 3.5×4.5 cm, max 40 KB. Signature max 20 KB.' },
+  { name:'CDS',          exam:'upsc', photo:{w:200,h:230,maxKb:40},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–40 KB. Signature: 10–20 KB.' },
+  // AFCAT
+  { name:'AFCAT',        exam:'afcat',photo:{w:200,h:240,maxKb:40},  sign:{w:140,h:60,maxKb:30},  note:'Photo 3.5×4.5 cm, 10–40 KB. Signature 3.5×1.5 cm, 10–30 KB.' },
+  { name:'INET (Navy)',  exam:'afcat',photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo max 50 KB. Signature max 20 KB.' },
+  // RRB
+  { name:'RRB NTPC',     exam:'rrb',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB JPG. Signature: 10–20 KB JPG.' },
+  { name:'RRB Group D',  exam:'rrb',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo max 50 KB. Signature max 20 KB.' },
+  { name:'RRB JE / ALP', exam:'rrb',  photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Same as RRB NTPC.' },
+  // Banking
+  { name:'IBPS PO / Clerk', exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo: 20–50 KB. Signature: 10–20 KB. JPEG only.' },
+  { name:'SBI PO / Clerk',  exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
+  { name:'RBI Grade B',     exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo max 50 KB. Signature max 20 KB.' },
+  { name:'NABARD',          exam:'bank', photo:{w:200,h:230,maxKb:50}, sign:{w:140,h:60,maxKb:20}, note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
+  // State
+  { name:'State PSC',    exam:'state',photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Varies by state. Common: photo 50 KB, signature 20 KB.' },
+  { name:'DSSSB',        exam:'state',photo:{w:200,h:230,maxKb:50},  sign:{w:140,h:60,maxKb:20},  note:'Photo: 20–50 KB. Signature: 10–20 KB.' },
+  // Entrance
+  { name:'NEET UG',      exam:'entrance', photo:{w:200,h:230,maxKb:200}, sign:{w:140,h:60,maxKb:30}, note:'Photo: 10–200 KB JPEG. Signature: 4–30 KB JPEG.' },
+  { name:'JEE Main',     exam:'entrance', photo:{w:200,h:230,maxKb:500}, sign:{w:140,h:60,maxKb:500},note:'Photo max 500 KB. Signature max 500 KB.' },
+  { name:'CUET',         exam:'entrance', photo:{w:200,h:230,maxKb:300}, sign:{w:140,h:60,maxKb:100},note:'Photo max 300 KB. Signature max 100 KB.' },
+  { name:'GATE',         exam:'entrance', photo:{w:200,h:230,maxKb:500}, sign:{w:140,h:60,maxKb:500},note:'Photo max 500 KB. Signature max 500 KB.' },
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let mode = 'photo'; // 'photo' | 'sign'
+let origFile = null, origImg = null, origW = 0, origH = 0;
 let resultDataUrl = null;
-let resultFormat = 'image/jpeg';
-let currentRotation = 0; // degrees
-let flipHState = false, flipVState = false;
-let activeFilter = 'none';
-let adjustingW = false, adjustingH = false;
+let selectedExam = null;
+let targetKb = 20; // default
+let adjW = false, adjH = false;
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-// ─── PRESETS ─────────────────────────────────────────
-const PRESETS = [
-  // India
-  {name:'Passport (India)',  w:35,  h:45,  unit:'mm', cat:'india', flag:'🇮🇳'},
-  {name:'Visa (India)',      w:51,  h:51,  unit:'mm', cat:'india', flag:'🇮🇳'},
-  {name:'Aadhar Photo',      w:200, h:200, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Job Portal Photo',  w:200, h:200, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Job Portal (Med)',  w:300, h:300, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Job Portal (Lg)',   w:400, h:400, unit:'px', cat:'india', flag:'🇮🇳'},
-  {name:'Govt Job Portal',   w:50,  h:50,  unit:'mm', cat:'india', flag:'🇮🇳'},
-  // US
-  {name:'US Passport',       w:2,   h:2,   unit:'in', cat:'us', flag:'🇺🇸'},
-  {name:'US Visa',           w:2,   h:2,   unit:'in', cat:'us', flag:'🇺🇸'},
-  {name:'USCIS / Green Card',w:2,   h:2,   unit:'in', cat:'us', flag:'🇺🇸'},
-  {name:'LinkedIn (US)',     w:400, h:400, unit:'px', cat:'us', flag:'🇺🇸'},
-  // UK
-  {name:'UK Passport',       w:35,  h:45,  unit:'mm', cat:'uk', flag:'🇬🇧'},
-  {name:'UK Visa',           w:35,  h:45,  unit:'mm', cat:'uk', flag:'🇬🇧'},
-  {name:'Biometric (UK)',    w:600, h:750, unit:'px', cat:'uk', flag:'🇬🇧'},
-  // Global
-  {name:'EU Passport',       w:35,  h:45,  unit:'mm', cat:'global', flag:'🇪🇺'},
-  {name:'Schengen Visa',     w:35,  h:45,  unit:'mm', cat:'global', flag:'🌍'},
-  {name:'China Visa',        w:33,  h:48,  unit:'mm', cat:'global', flag:'🇨🇳'},
-  {name:'Canada Passport',   w:50,  h:70,  unit:'mm', cat:'global', flag:'🇨🇦'},
-  {name:'Australia Pass.',   w:35,  h:45,  unit:'mm', cat:'global', flag:'🇦🇺'},
-  {name:'UAE Visa',          w:43,  h:55,  unit:'mm', cat:'global', flag:'🇦🇪'},
-  {name:'Japan Visa',        w:45,  h:45,  unit:'mm', cat:'global', flag:'🇯🇵'},
-  {name:'Saudi Visa',        w:51,  h:51,  unit:'mm', cat:'global', flag:'🇸🇦'},
-  {name:'Singapore Visa',    w:35,  h:45,  unit:'mm', cat:'global', flag:'🇸🇬'},
-  // Job Sites
-  {name:'Resume Photo',      w:150, h:200, unit:'px', cat:'jobs', flag:'📄'},
-  {name:'CV Photo (3x4cm)',  w:30,  h:40,  unit:'mm', cat:'jobs', flag:'📄'},
-  {name:'CV Square',         w:300, h:300, unit:'px', cat:'jobs', flag:'📄'},
-  {name:'Profile Photo (Sm)',w:200, h:200, unit:'px', cat:'jobs', flag:'💼'},
-  {name:'Profile Photo (Md)',w:300, h:300, unit:'px', cat:'jobs', flag:'💼'},
-  {name:'Govt Form Photo',   w:3.5, h:4.5, unit:'cm', cat:'jobs', flag:'🏛️'},
-  // Social
-  {name:'Profile Photo',     w:400, h:400, unit:'px', cat:'social', flag:'👤'},
-  {name:'Profile Banner',    w:1584,h:396, unit:'px', cat:'social', flag:'🖼️'},
-  {name:'Messenger DP',      w:500, h:500, unit:'px', cat:'social', flag:'💬'},
-  {name:'Square Profile',    w:400, h:400, unit:'px', cat:'social', flag:'🟦'},
-  {name:'Small Profile',     w:180, h:180, unit:'px', cat:'social', flag:'👤'},
-  {name:'Square Post',       w:1080,h:1080,unit:'px', cat:'social', flag:'📸'},
-];
+// ─── MODE SWITCH ─────────────────────────────────────────────────────────────
+document.getElementById('modePhoto').addEventListener('click', () => setMode('photo'));
+document.getElementById('modeSign').addEventListener('click', () => setMode('sign'));
 
-// Convert preset to px
-function presetToPx(p, dpi) {
-  dpi = dpi || 300;
-  if (p.unit === 'px') return {w: p.w, h: p.h};
-  if (p.unit === 'mm') return {w: Math.round(p.w/25.4*dpi), h: Math.round(p.h/25.4*dpi)};
-  if (p.unit === 'cm') return {w: Math.round(p.w/2.54*dpi), h: Math.round(p.h/2.54*dpi)};
-  if (p.unit === 'in') return {w: Math.round(p.w*dpi), h: Math.round(p.h*dpi)};
-  return {w: p.w, h: p.h};
+function setMode(m) {
+  mode = m;
+  document.getElementById('modePhoto').classList.toggle('active', m === 'photo');
+  document.getElementById('modeSign').classList.toggle('active', m === 'sign');
+  document.getElementById('uploadTitle').textContent = m === 'photo' ? 'Upload Your Photo' : 'Upload Your Signature';
+  document.getElementById('uploadHint').textContent = m === 'photo'
+    ? 'JPG, PNG or JPEG — white background preferred for govt photos'
+    : 'Sign on white paper, take a clear photo or scan it';
+  document.getElementById('whiteBgRow').style.display = m === 'photo' ? '' : 'none';
+  // If exam already selected, re-fill dims
+  if (selectedExam) fillFromExam(selectedExam);
+  renderExamGrid();
 }
 
-function presetSizeLabel(p) {
-  if (p.unit === 'px') return `${p.w}×${p.h}px`;
-  if (p.unit === 'mm') return `${p.w}×${p.h}mm`;
-  if (p.unit === 'cm') return `${p.w}×${p.h}cm`;
-  if (p.unit === 'in') return `${p.w}"×${p.h}"`;
-  return '';
-}
+// ─── EXAM BAR FILTER ─────────────────────────────────────────────────────────
+let activeExamFilter = 'all';
+document.getElementById('examBar').addEventListener('click', e => {
+  const chip = e.target.closest('.exam-chip');
+  if (!chip) return;
+  activeExamFilter = chip.dataset.exam;
+  document.querySelectorAll('.exam-chip').forEach(c => c.classList.toggle('active', c.dataset.exam === activeExamFilter));
+  renderExamGrid();
+});
 
-// Render presets
-let activeCat = 'all';
-function renderPresets() {
-  const grid = document.getElementById('presetsGrid');
+function renderExamGrid() {
+  const grid = document.getElementById('examPresetGrid');
   grid.innerHTML = '';
-  PRESETS.filter(p => activeCat === 'all' || p.cat === activeCat).forEach(p => {
+  const list = activeExamFilter === 'all' ? EXAMS : EXAMS.filter(e => e.exam === activeExamFilter);
+  list.forEach(ex => {
+    const d = mode === 'photo' ? ex.photo : ex.sign;
     const btn = document.createElement('button');
-    btn.className = 'preset-btn';
-    btn.innerHTML = `<span class="preset-name"><span class="preset-flag">${p.flag}</span>${p.name}</span><span class="preset-size">${presetSizeLabel(p)}</span>`;
+    btn.className = 'exam-preset' + (selectedExam === ex ? ' active' : '');
+    btn.innerHTML = `<span class="ep-name">${ex.name}</span><span class="ep-dim">${d.w} × ${d.h} px</span><span class="ep-kb">Max ${d.maxKb} KB</span>`;
     btn.addEventListener('click', () => {
-      const dpi = parseInt(document.getElementById('dpiInput').value) || 300;
-      const px = presetToPx(p, dpi);
-      document.getElementById('unitSelect').value = 'px';
-      document.getElementById('widthInput').value = px.w;
-      document.getElementById('heightInput').value = px.h;
-      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      selectedExam = ex;
+      document.querySelectorAll('.exam-preset').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      switchTab('resize');
+      fillFromExam(ex);
     });
     grid.appendChild(btn);
   });
 }
-renderPresets();
+renderExamGrid();
 
-document.getElementById('catBar').addEventListener('click', e => {
-  const btn = e.target.closest('.cat-btn');
-  if (!btn) return;
-  activeCat = btn.dataset.cat;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderPresets();
-});
-
-// ─── TABS ─────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+function fillFromExam(ex) {
+  const d = mode === 'photo' ? ex.photo : ex.sign;
+  document.getElementById('wInput').value = d.w;
+  document.getElementById('hInput').value = d.h;
+  // Set KB pill
+  targetKb = d.maxKb;
+  document.querySelectorAll('.kb-pill').forEach(p => p.classList.toggle('active', +p.dataset.kb === d.maxKb));
+  // Clear custom input
+  document.getElementById('customKb').value = '';
+  // Show info note
+  const box = document.getElementById('examInfoBox');
+  document.getElementById('examInfoText').textContent = ex.note;
+  box.style.display = 'flex';
 }
-document.getElementById('tabBar').addEventListener('click', e => {
-  const t = e.target.closest('.tab');
-  if (t) switchTab(t.dataset.tab);
+
+// ─── WIDTH/HEIGHT LOCK ───────────────────────────────────────────────────────
+document.getElementById('wInput').addEventListener('input', () => {
+  if (document.getElementById('lockRatio').checked && origW && !adjH) {
+    adjW = true;
+    document.getElementById('hInput').value = Math.round(+document.getElementById('wInput').value * origH / origW);
+    adjW = false;
+  }
+});
+document.getElementById('hInput').addEventListener('input', () => {
+  if (document.getElementById('lockRatio').checked && origH && !adjW) {
+    adjH = true;
+    document.getElementById('wInput').value = Math.round(+document.getElementById('hInput').value * origW / origH);
+    adjH = false;
+  }
 });
 
-// ─── FILE LOADING ─────────────────────────────────────
-const dropZone = document.getElementById('dropZone');
-const fileInput = document.getElementById('fileInput');
+// ─── KB PILLS ────────────────────────────────────────────────────────────────
+document.getElementById('kbPills').addEventListener('click', e => {
+  const pill = e.target.closest('.kb-pill');
+  if (!pill) return;
+  targetKb = +pill.dataset.kb;
+  document.querySelectorAll('.kb-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  document.getElementById('customKb').value = '';
+});
 
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
-dropZone.addEventListener('drop', e => {
+document.getElementById('customKbApply').addEventListener('click', () => {
+  const v = +document.getElementById('customKb').value;
+  if (v > 0) {
+    targetKb = v;
+    document.querySelectorAll('.kb-pill').forEach(p => p.classList.remove('active'));
+  }
+});
+
+// ─── FILE LOADING ────────────────────────────────────────────────────────────
+const dropZone = document.getElementById('dropZone');
+document.getElementById('dropZone').addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+document.getElementById('dropZone').addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
+document.getElementById('dropZone').addEventListener('drop', e => {
   e.preventDefault(); dropZone.classList.remove('dragging');
   const f = e.dataTransfer.files[0];
   if (f && f.type.startsWith('image/')) loadFile(f);
 });
-fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
-
-// Paste support
+document.getElementById('fileInput').addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 document.addEventListener('paste', e => {
-  const items = (e.clipboardData || e.originalEvent.clipboardData).items;
-  for (const item of items) {
-    if (item.type.startsWith('image/')) {
-      loadFile(item.getAsFile());
-      break;
-    }
+  for (const item of (e.clipboardData || e.originalEvent.clipboardData).items) {
+    if (item.type.startsWith('image/')) { loadFile(item.getAsFile()); break; }
   }
 });
-
-document.getElementById('removeBtn').addEventListener('click', reset);
+document.getElementById('removeBtn').addEventListener('click', resetFile);
 
 function loadFile(file) {
   origFile = file;
   const url = URL.createObjectURL(file);
   const img = new Image();
   img.onload = () => {
-    origImg = img;
-    origW = img.naturalWidth;
-    origH = img.naturalHeight;
-    // Reset transform state
-    currentRotation = 0; flipHState = false; flipVState = false; activeFilter = 'none';
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'none'));
-    document.getElementById('whiteBgAdj').checked = false;
-    document.getElementById('addWhiteBg').checked = false;
-
-    // File info bar
+    origImg = img; origW = img.naturalWidth; origH = img.naturalHeight;
     document.getElementById('fileThumbnail').src = url;
     document.getElementById('fileName').textContent = file.name;
-    document.getElementById('fileDim').textContent = `${origW} × ${origH} px · ${fmtBytes(file.size)}`;
-    document.getElementById('fileInfo').classList.add('visible');
-
-    // Default size inputs
-    document.getElementById('widthInput').value = origW;
-    document.getElementById('heightInput').value = origH;
-
-    // Set default format
-    if (file.type === 'image/png') { document.getElementById('formatSelect2').value = 'image/png'; resultFormat = 'image/png'; }
-    else if (file.type === 'image/webp') { document.getElementById('formatSelect2').value = 'image/webp'; resultFormat = 'image/webp'; }
-    else { document.getElementById('formatSelect2').value = 'image/jpeg'; resultFormat = 'image/jpeg'; }
-
-    // Crop tab image
-    document.getElementById('cropImg').src = url;
-    document.getElementById('cropW').value = origW;
-    document.getElementById('cropH').value = origH;
-    document.getElementById('cropX').value = 0;
-    document.getElementById('cropY').value = 0;
-
-    // Enable action buttons
-    ['resizeBtn','cropBtn','adjustBtn','compressBtn','convertBtn'].forEach(id => {
-      document.getElementById(id).disabled = false;
-    });
-
-    // Original preview
-    document.getElementById('origPreview').src = url;
-    document.getElementById('origSizeLabel').textContent = fmtBytes(file.size);
+    document.getElementById('fileDim').textContent = `${origW}×${origH}px · ${fmtBytes(file.size)}`;
+    document.getElementById('fileBar').classList.add('visible');
+    document.getElementById('origPrev').src = url;
+    document.getElementById('origSz').textContent = fmtBytes(file.size);
     document.getElementById('origMeta').textContent = `${origW} × ${origH} px`;
-
-    document.getElementById('previewSection').classList.remove('visible');
+    document.getElementById('goBtn').disabled = false;
+    document.getElementById('resultSection').classList.remove('visible');
     resultDataUrl = null;
   };
   img.src = url;
 }
 
-function reset() {
-  origFile = null; origImg = null; resultDataUrl = null;
-  fileInput.value = '';
-  document.getElementById('fileInfo').classList.remove('visible');
-  document.getElementById('previewSection').classList.remove('visible');
-  ['resizeBtn','cropBtn','adjustBtn','compressBtn','convertBtn'].forEach(id => {
-    document.getElementById(id).disabled = true;
-  });
-  document.getElementById('widthInput').value = '';
-  document.getElementById('heightInput').value = '';
-  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+function resetFile() {
+  origFile = null; origImg = null;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileBar').classList.remove('visible');
+  document.getElementById('goBtn').disabled = true;
+  document.getElementById('resultSection').classList.remove('visible');
 }
 
-// ─── UNIT / DPI ───────────────────────────────────────
-document.getElementById('unitSelect').addEventListener('change', function() {
-  const isPx = this.value === 'px';
-  document.getElementById('dpiWrap').style.display = isPx ? 'none' : 'block';
-});
+// ─── GENERATE ────────────────────────────────────────────────────────────────
+document.getElementById('goBtn').addEventListener('click', generate);
 
-// ─── ASPECT RATIO LOCK ────────────────────────────────
-document.getElementById('widthInput').addEventListener('input', () => {
-  if (document.getElementById('lockAspect').checked && origW && !adjustingH) {
-    adjustingW = true;
-    document.getElementById('heightInput').value = Math.round(+document.getElementById('widthInput').value * origH / origW);
-    adjustingW = false;
-  }
-  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-});
-document.getElementById('heightInput').addEventListener('input', () => {
-  if (document.getElementById('lockAspect').checked && origH && !adjustingW) {
-    adjustingH = true;
-    document.getElementById('widthInput').value = Math.round(+document.getElementById('heightInput').value * origW / origH);
-    adjustingH = false;
-  }
-  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-});
-
-// Quality sliders
-document.getElementById('qualityRange2').addEventListener('input', function() {
-  document.getElementById('qualityVal2').textContent = this.value + '%';
-});
-document.getElementById('compressQ').addEventListener('input', function() {
-  document.getElementById('compressQVal').textContent = this.value + '%';
-});
-
-// ─── DRAW HELPERS ─────────────────────────────────────
-function applyFilter(imageData, filter) {
-  const d = imageData.data;
-  if (filter === 'grayscale') {
-    for (let i = 0; i < d.length; i += 4) {
-      const g = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];
-      d[i]=d[i+1]=d[i+2]=g;
-    }
-  } else if (filter === 'sepia') {
-    for (let i = 0; i < d.length; i += 4) {
-      const r=d[i],g=d[i+1],b=d[i+2];
-      d[i]  = Math.min(255, r*.393+g*.769+b*.189);
-      d[i+1]= Math.min(255, r*.349+g*.686+b*.168);
-      d[i+2]= Math.min(255, r*.272+g*.534+b*.131);
-    }
-  } else if (filter === 'invert') {
-    for (let i = 0; i < d.length; i += 4) {
-      d[i]=255-d[i]; d[i+1]=255-d[i+1]; d[i+2]=255-d[i+2];
-    }
-  }
-  return imageData;
-}
-
-function renderToCanvas(targetW, targetH, opts={}) {
-  const {whiteBg=false, rotation=0, flipH=false, flipV=false, filter='none', srcX=0, srcY=0, srcW=0, srcH=0} = opts;
-  const sw = srcW || origW;
-  const sh = srcH || origH;
-  const rot90 = rotation % 180 !== 0;
-  const cw = rot90 ? targetH : targetW;
-  const ch = rot90 ? targetW : targetH;
-  canvas.width = cw; canvas.height = ch;
-  ctx.clearRect(0, 0, cw, ch);
-  if (whiteBg) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cw, ch); }
-  ctx.save();
-  ctx.translate(cw/2, ch/2);
-  if (rotation) ctx.rotate(rotation * Math.PI / 180);
-  ctx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
-  ctx.drawImage(origImg, srcX, srcY, sw, sh, -targetW/2, -targetH/2, targetW, targetH);
-  ctx.restore();
-  if (filter !== 'none' && filter !== 'blur' && filter !== 'sharpen') {
-    const id = ctx.getImageData(0, 0, cw, ch);
-    ctx.putImageData(applyFilter(id, filter), 0, 0);
-  }
-}
-
-function canvasToDataUrl(format, quality) {
-  format = format || resultFormat;
-  quality = quality !== undefined ? quality : parseInt(document.getElementById('qualityRange2').value)/100;
-  return canvas.toDataURL(format, quality);
-}
-
-function getInputPx() {
-  const unit = document.getElementById('unitSelect').value;
-  const dpi = parseInt(document.getElementById('dpiInput').value) || 300;
-  let w = parseFloat(document.getElementById('widthInput').value) || origW;
-  let h = parseFloat(document.getElementById('heightInput').value) || origH;
-  if (unit === 'mm') { w = Math.round(w/25.4*dpi); h = Math.round(h/25.4*dpi); }
-  else if (unit === 'cm') { w = Math.round(w/2.54*dpi); h = Math.round(h/2.54*dpi); }
-  else if (unit === 'in') { w = Math.round(w*dpi); h = Math.round(h*dpi); }
-  else { w = Math.round(w); h = Math.round(h); }
-  return {w, h};
-}
-
-function showResult(dataUrl, format) {
-  resultDataUrl = dataUrl;
-  resultFormat = format;
-  document.getElementById('newPreview').src = dataUrl;
-  // Compute result dimensions
-  const tmpImg = new Image();
-  tmpImg.onload = () => {
-    document.getElementById('newMeta').textContent = `${tmpImg.naturalWidth} × ${tmpImg.naturalHeight} px`;
-  };
-  tmpImg.src = dataUrl;
-  // Size estimate
-  const b64 = dataUrl.split(',')[1];
-  const bytes = Math.round(b64.length * 3/4);
-  document.getElementById('newSizeLabel').textContent = fmtBytes(bytes);
-  document.getElementById('previewSection').classList.add('visible');
-  document.getElementById('previewSection').scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-// ─── RESIZE ───────────────────────────────────────────
-document.getElementById('resizeBtn').addEventListener('click', () => {
+async function generate() {
   if (!origImg) return;
-  const {w, h} = getInputPx();
-  const whiteBg = document.getElementById('addWhiteBg').checked;
-  const format = document.getElementById('formatSelect2').value;
-  renderToCanvas(w, h, {whiteBg, rotation:currentRotation, flipH:flipHState, flipV:flipVState, filter:activeFilter});
-  const quality = parseInt(document.getElementById('qualityRange2').value)/100;
-  showResult(canvasToDataUrl(format, quality), format);
-});
+  const w = parseInt(document.getElementById('wInput').value) || origW;
+  const h = parseInt(document.getElementById('hInput').value) || origH;
+  const whiteBg = mode === 'photo' && document.getElementById('whiteBg').checked;
+  const kb = targetKb;
 
-// ─── CROP ─────────────────────────────────────────────
-document.getElementById('cropBtn').addEventListener('click', () => {
-  if (!origImg) return;
-  const cw = parseInt(document.getElementById('cropW').value) || origW;
-  const ch = parseInt(document.getElementById('cropH').value) || origH;
-  const cx = parseInt(document.getElementById('cropX').value) || 0;
-  const cy = parseInt(document.getElementById('cropY').value) || 0;
-  canvas.width = cw; canvas.height = ch;
-  ctx.clearRect(0, 0, cw, ch);
-  ctx.drawImage(origImg, cx, cy, cw, ch, 0, 0, cw, ch);
-  const format = document.getElementById('formatSelect2').value;
-  showResult(canvasToDataUrl(format), format);
-});
+  const prog = document.getElementById('progWrap');
+  const fill = document.getElementById('progFill');
+  const label = document.getElementById('progLabel');
+  prog.classList.add('visible');
+  fill.style.width = '20%'; label.textContent = 'Resizing image…';
+  await tick();
 
-document.getElementById('cropRatioRow').addEventListener('click', e => {
-  const btn = e.target.closest('.icon-btn');
-  if (!btn || !btn.dataset.ratio) return;
-  document.querySelectorAll('#cropRatioRow .icon-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const ratio = btn.dataset.ratio;
-  if (ratio === 'free') return;
-  const [rw, rh] = ratio.split(':').map(Number);
-  if (origW && origH) {
-    const maxW = origW, maxH = Math.round(maxW * rh / rw);
-    document.getElementById('cropW').value = maxW;
-    document.getElementById('cropH').value = maxH;
-    document.getElementById('cropX').value = 0;
-    document.getElementById('cropY').value = Math.max(0, Math.round((origH - maxH)/2));
+  // Draw at target dimensions
+  canvas.width = w; canvas.height = h;
+  ctx.clearRect(0, 0, w, h);
+  if (whiteBg) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
+  ctx.drawImage(origImg, 0, 0, w, h);
+
+  fill.style.width = '50%'; label.textContent = 'Compressing to target size…';
+  await tick();
+
+  let finalUrl;
+  if (kb > 0) {
+    finalUrl = await compressToKb(kb * 1024);
+  } else {
+    finalUrl = canvas.toDataURL('image/jpeg', 0.92);
   }
-});
 
-// ─── ADJUST ───────────────────────────────────────────
-document.getElementById('rot90').addEventListener('click', () => { currentRotation = (currentRotation + 90) % 360; });
-document.getElementById('rot180').addEventListener('click', () => { currentRotation = (currentRotation + 180) % 360; });
-document.getElementById('rot270').addEventListener('click', () => { currentRotation = (currentRotation + 270) % 360; });
-document.getElementById('flipH').addEventListener('click', () => { flipHState = !flipHState; });
-document.getElementById('flipV').addEventListener('click', () => { flipVState = !flipVState; });
+  fill.style.width = '100%'; label.textContent = 'Done!';
+  await tick();
+  prog.classList.remove('visible');
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeFilter = btn.dataset.filter;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
+  // Show result
+  resultDataUrl = finalUrl;
+  const b64 = finalUrl.split(',')[1];
+  const bytes = Math.round(b64.length * 3 / 4);
+  const sizeLabel = fmtBytes(bytes);
+  const kbNum = bytes / 1024;
+  const underLimit = kb === 0 || kbNum <= kb;
 
-document.getElementById('adjustBtn').addEventListener('click', () => {
-  if (!origImg) return;
-  const whiteBg = document.getElementById('whiteBgAdj').checked;
-  const format = document.getElementById('formatSelect2').value;
-  renderToCanvas(origW, origH, {whiteBg, rotation:currentRotation, flipH:flipHState, flipV:flipVState, filter:activeFilter});
-  showResult(canvasToDataUrl(format), format);
-});
+  document.getElementById('newPrev').src = finalUrl;
+  document.getElementById('newSz').innerHTML = underLimit
+    ? `<span class="size-ok">${sizeLabel} ✓</span>`
+    : `<span class="size-warn">${sizeLabel} — try lower KB limit</span>`;
+  document.getElementById('newMeta').textContent = `${w} × ${h} px`;
+  document.getElementById('resultSection').classList.add('visible');
+  document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
-// ─── COMPRESS ─────────────────────────────────────────
-document.getElementById('compressBtn').addEventListener('click', () => {
-  if (!origImg) return;
-  const q = parseInt(document.getElementById('compressQ').value)/100;
-  canvas.width = origW; canvas.height = origH;
-  ctx.clearRect(0, 0, origW, origH);
-  ctx.drawImage(origImg, 0, 0);
-  const fmt = 'image/jpeg';
-  showResult(canvas.toDataURL(fmt, q), fmt);
-});
-
-// KB preset quick-select buttons
-document.getElementById('kbPresets').addEventListener('click', e => {
-  const btn = e.target.closest('[data-kb]');
-  if (!btn) return;
-  document.getElementById('targetKb').value = btn.dataset.kb;
-  document.querySelectorAll('#kbPresets [data-kb]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  // Auto-trigger compression
-  document.getElementById('targetKbBtn').click();
-});
-
-document.getElementById('targetKbBtn').addEventListener('click', async () => {
-  if (!origImg) return;
-  const targetBytes = parseFloat(document.getElementById('targetKb').value) * 1024;
-  if (!targetBytes) return;
-
-  const progress = document.getElementById('compressProgress');
-  const fill = document.getElementById('progressFill');
-  const status = document.getElementById('compressStatus');
-  progress.classList.add('visible');
-
-  canvas.width = origW; canvas.height = origH;
-  ctx.clearRect(0, 0, origW, origH);
-  ctx.drawImage(origImg, 0, 0);
-
-  let lo = 0.01, hi = 1.0, bestUrl = null;
-  for (let i = 0; i < 14; i++) {
+async function compressToKb(targetBytes) {
+  let lo = 0.01, hi = 1.0, best = canvas.toDataURL('image/jpeg', 0.5);
+  for (let i = 0; i < 15; i++) {
     const mid = (lo + hi) / 2;
-    fill.style.width = ((i+1)/14*100) + '%';
     const url = canvas.toDataURL('image/jpeg', mid);
     const bytes = Math.round((url.split(',')[1].length * 3) / 4);
-    if (bytes <= targetBytes) { bestUrl = url; lo = mid; }
+    document.getElementById('progFill').style.width = (50 + i*3) + '%';
+    document.getElementById('progLabel').textContent = `Trying ${Math.round(mid*100)}% quality → ${fmtBytes(bytes)}`;
+    if (bytes <= targetBytes) { best = url; lo = mid; }
     else hi = mid;
-    status.textContent = `Trying quality ${Math.round(mid*100)}% → ${fmtBytes(bytes)} (target: ${fmtBytes(targetBytes)})`;
-    await new Promise(r => setTimeout(r, 10));
+    await tick();
   }
-  progress.classList.remove('visible');
-  if (bestUrl) showResult(bestUrl, 'image/jpeg');
-  else { status.textContent = 'Could not reach target — image already small or too much detail.'; progress.classList.add('visible'); }
-});
-
-// ─── CONVERT ──────────────────────────────────────────
-let pendingConvertFmt = null;
-document.getElementById('convertBtns').addEventListener('click', e => {
-  const btn = e.target.closest('.icon-btn');
-  if (!btn || !btn.dataset.fmt) return;
-  document.querySelectorAll('#convertBtns .icon-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  pendingConvertFmt = btn.dataset.fmt;
-});
-
-document.getElementById('convertBtn').addEventListener('click', () => {
-  if (!origImg) return;
-  const fmt = pendingConvertFmt || 'image/jpeg';
-  canvas.width = origW; canvas.height = origH;
-  if (fmt === 'image/jpeg') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, origW, origH); }
-  else ctx.clearRect(0, 0, origW, origH);
-  ctx.drawImage(origImg, 0, 0);
-  showResult(canvas.toDataURL(fmt, 0.92), fmt);
-});
-
-// ─── DOWNLOAD MODAL ──────────────────────────────────
-document.getElementById('downloadTrigger').addEventListener('click', () => {
-  if (!resultDataUrl) return;
-  const base = (origFile?.name || 'image').replace(/\.[^.]+$/, '');
-  document.getElementById('downloadName').value = base;
-  const ext = resultFormat === 'image/png' ? 'png' : resultFormat === 'image/webp' ? 'webp' : 'jpg';
-  document.getElementById('downloadExt').textContent = `Extension will be added automatically (.${ext})`;
-  document.getElementById('downloadModal').classList.add('visible');
-  setTimeout(() => {
-    const inp = document.getElementById('downloadName');
-    inp.focus(); inp.select();
-  }, 50);
-});
-
-document.getElementById('modalCancel').addEventListener('click', () => {
-  document.getElementById('downloadModal').classList.remove('visible');
-});
-
-document.getElementById('downloadModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('downloadModal'))
-    document.getElementById('downloadModal').classList.remove('visible');
-});
-
-document.getElementById('downloadName').addEventListener('keydown', e => {
-  if (e.key === 'Enter') triggerDownload();
-});
-
-document.getElementById('modalDownload').addEventListener('click', triggerDownload);
-
-function triggerDownload() {
-  const name = (document.getElementById('downloadName').value.trim() || 'resized_image').replace(/[<>:"/\\|?*]/g, '_');
-  const ext = resultFormat === 'image/png' ? 'png' : resultFormat === 'image/webp' ? 'webp' : 'jpg';
-  const link = document.getElementById('hiddenLink');
-  link.href = resultDataUrl;
-  link.download = `${name}.${ext}`;
-  link.click();
-  document.getElementById('downloadModal').classList.remove('visible');
+  return best;
 }
 
-// ─── UTILS ───────────────────────────────────────────
+function tick() { return new Promise(r => setTimeout(r, 10)); }
+
+// ─── DOWNLOAD MODAL ──────────────────────────────────────────────────────────
+document.getElementById('dlTrigger').addEventListener('click', () => {
+  if (!resultDataUrl) return;
+  const base = (origFile?.name || 'image').replace(/\.[^.]+$/, '');
+  const examSuffix = selectedExam ? '_' + selectedExam.name.toLowerCase().replace(/[^a-z0-9]/g, '_') : '';
+  document.getElementById('dlName').value = (mode === 'photo' ? 'photo' : 'signature') + examSuffix;
+  document.getElementById('dlExt').textContent = 'Will save as .jpg — ready to upload on your exam form';
+  document.getElementById('dlModal').classList.add('visible');
+  setTimeout(() => { const i = document.getElementById('dlName'); i.focus(); i.select(); }, 50);
+});
+
+document.getElementById('modalCancel').addEventListener('click', () => document.getElementById('dlModal').classList.remove('visible'));
+document.getElementById('dlModal').addEventListener('click', e => { if (e.target === document.getElementById('dlModal')) document.getElementById('dlModal').classList.remove('visible'); });
+document.getElementById('dlName').addEventListener('keydown', e => { if (e.key === 'Enter') doDownload(); });
+document.getElementById('modalSave').addEventListener('click', doDownload);
+
+function doDownload() {
+  const name = (document.getElementById('dlName').value.trim() || 'image').replace(/[<>:"/\\|?*]/g, '_');
+  const link = document.getElementById('hiddenLink');
+  link.href = resultDataUrl;
+  link.download = name + '.jpg';
+  link.click();
+  document.getElementById('dlModal').classList.remove('visible');
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
 function fmtBytes(b) {
   if (b < 1024) return b + ' B';
   if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
